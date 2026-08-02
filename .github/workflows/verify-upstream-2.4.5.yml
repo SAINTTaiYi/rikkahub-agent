@@ -1,0 +1,90 @@
+name: Verify upstream 2.4.5 integration
+
+on:
+  push:
+    branches:
+      - integration/upstream-2.4.5-agent-first
+    paths:
+      - .github/workflows/verify-upstream-2.4.5.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-2.4.5-verification
+  cancel-in-progress: false
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out integration branch with submodules
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: integration/upstream-2.4.5-agent-first
+          submodules: recursive
+
+      - name: Fix Room lightweight conversation projections
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          python3 <<'PY'
+          from pathlib import Path
+          path = Path('app/src/main/java/me/rerere/rikkahub/data/db/dao/ConversationDAO.kt')
+          source = path.read_text()
+          old = 'SELECT id, assistantId, title, isPinned, createAt, updateAt'
+          new = 'SELECT id, assistantId, folderId, title, isPinned, createAt, updateAt'
+          count = source.count(old)
+          if count != 2:
+              raise SystemExit(f'Expected two lightweight projections, found {count}')
+          path.write_text(source.replace(old, new))
+          PY
+
+          git rm -f --ignore-unmatch .github/upstream-2.4.5-agent-first-compile.txt
+          git add app/src/main/java/me/rerere/rikkahub/data/db/dao/ConversationDAO.kt
+          git commit -m "fix: include folder in lightweight conversation queries"
+          git push origin HEAD:integration/upstream-2.4.5-agent-first
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Compile debug Kotlin
+        shell: bash
+        run: |
+          set +e
+          chmod +x gradlew
+          ./gradlew :app:compileDebugKotlin 2>&1 | tee /tmp/upstream-2.4.5-compile.log
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -ne 0 ]; then
+            {
+              echo "Upstream 2.4.5 integration compile failure"
+              echo "Branch commit: $(git rev-parse HEAD)"
+              echo
+              grep -E '^e: |^w: |FAILURE:|What went wrong|Compilation error|\[ksp\]' /tmp/upstream-2.4.5-compile.log | tail -n 300 || true
+              echo
+              echo "Last 120 build-log lines:"
+              tail -n 120 /tmp/upstream-2.4.5-compile.log
+            } > .github/upstream-2.4.5-agent-first-compile.txt
+            git add .github/upstream-2.4.5-agent-first-compile.txt
+            git commit -m "ci: record upstream verification diagnostics"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+            exit "$status"
+          fi
