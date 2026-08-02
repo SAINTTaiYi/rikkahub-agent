@@ -11,7 +11,6 @@ import me.rerere.ai.core.MessageRole
 import me.rerere.ai.core.TokenUsage
 import me.rerere.ai.provider.Model
 import me.rerere.ai.util.json
-import kotlin.math.roundToInt
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlin.uuid.Uuid
@@ -305,12 +304,8 @@ fun List<UIMessagePart>.isEmptyUIMessage(): Boolean {
     }
 }
 
-/**
- * 截断后保留的消息条数占上限的比例
- *
- * 越小则截断点前进的步幅越大, 连续命中缓存的轮数越多, 但一次丢弃的上下文也越多
- */
-private const val CONTEXT_KEEP_RATIO = 0.5f
+fun List<UIMessage>.limitContext(size: Int): List<UIMessage> {
+    if (size <= 0 || this.size <= size) return this
 
     // Move the boundary in large deterministic strides instead of sliding it by one message on
     // every turn. For limit=40 the first overflow keeps roughly 20 messages, then the same prefix
@@ -326,7 +321,7 @@ private const val CONTEXT_KEEP_RATIO = 0.5f
 private fun List<UIMessage>.alignContextStart(startIndex: Int): Int {
     var adjustedStartIndex = startIndex
 
-    // 循环往前查找, 直到满足所有依赖条件
+    // 循环往前查找，直到满足所有依赖条件
     var needsAdjustment = true
     val visitedIndices = mutableSetOf<Int>()
 

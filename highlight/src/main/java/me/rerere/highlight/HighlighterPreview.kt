@@ -20,7 +20,7 @@ private fun HighlightTextPreview(
         color = Color(0xFF282C34),
         contentColor = Color(0xFFABB2BF),
     ) {
-        CodeHighlightText(
+        HighlightText(
             code = sample.code,
             language = sample.language,
             modifier = Modifier.padding(16.dp),
