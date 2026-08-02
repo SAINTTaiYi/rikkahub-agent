@@ -40,18 +40,23 @@ jobs:
           fi
 
           if ! git merge --no-ff -X ours "$upstream_sha" -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"; then
-            conflicts="$(git diff --name-only --diff-filter=U)"
-            git merge --abort
-            {
-              echo "Agent-first merge still has unresolved conflicts"
-              echo "Upstream commit: $upstream_sha"
-              echo
-              printf '%s\n' "$conflicts"
-            } > .github/upstream-2.4.5-agent-first-unresolved.txt
-            git add .github/upstream-2.4.5-agent-first-unresolved.txt
-            git commit -m "ci: record unresolved agent-first conflicts"
-            git push origin HEAD:integration/upstream-2.4.5-agent-first
-            exit 1
+            mapfile -d '' conflicts < <(git diff --name-only --diff-filter=U -z)
+            printf 'Resolving %d residual file-state conflicts in favor of Agent\n' "${#conflicts[@]}"
+            for file in "${conflicts[@]}"; do
+              if git cat-file -e ":2:$file" 2>/dev/null; then
+                git checkout --ours -- "$file"
+                git add -- "$file"
+              else
+                git rm --ignore-unmatch -- "$file"
+              fi
+            done
+
+            if git diff --name-only --diff-filter=U | grep -q .; then
+              echo "::error::Unmerged paths remain after Agent-first resolution"
+              git diff --name-only --diff-filter=U
+              exit 1
+            fi
+            git commit -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
           fi
 
           git push origin HEAD:integration/upstream-2.4.5-agent-first
