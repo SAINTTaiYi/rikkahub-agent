@@ -11,7 +11,6 @@ import me.rerere.tts.provider.providers.MiMoTTSProvider
 import me.rerere.tts.provider.providers.MiniMaxTTSProvider
 import me.rerere.tts.provider.providers.OpenAITTSProvider
 import me.rerere.tts.provider.providers.QwenTTSProvider
-import me.rerere.tts.provider.providers.StepTTSProvider
 import me.rerere.tts.provider.providers.SystemTTSProvider
 import me.rerere.tts.provider.providers.XAITTSProvider
 import me.rerere.tts.provider.providers.GenericHttpTTSProvider

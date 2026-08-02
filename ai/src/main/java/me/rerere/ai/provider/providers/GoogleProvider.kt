@@ -45,7 +45,7 @@ import me.rerere.ai.provider.deliverProviderChunk
 import me.rerere.ai.provider.providers.vertex.ServiceAccountTokenProvider
 import me.rerere.ai.registry.ModelRegistry
 import me.rerere.ai.ui.GoogleThoughtMetadata
-import me.rerere.ai.ui.ImageAspectRatio
+import me.rerere.ai.ui.ImageGenSize
 import me.rerere.ai.ui.ImageGenerationItem
 import me.rerere.ai.ui.MessageChunk
 import me.rerere.ai.ui.GenerationTerminal
@@ -896,11 +896,13 @@ class GoogleProvider(private val client: OkHttpClient, context: Context? = null)
                 putJsonObject("parameters") {
                     put("sampleCount", params.numOfImages)
                     put(
-                        "aspectRatio", when (params.aspectRatio) {
-                            ImageAspectRatio.SQUARE -> "1:1"
-                            ImageAspectRatio.LANDSCAPE -> "16:9"
-                            ImageAspectRatio.PORTRAIT -> "9:16"
-                        }
+                        "aspectRatio", when (params.size) {
+                        ImageGenSize.LANDSCAPE_1536.value,
+                        ImageGenSize.LANDSCAPE_1792.value -> "16:9"
+                        ImageGenSize.PORTRAIT_1536.value,
+                        ImageGenSize.PORTRAIT_1792.value -> "9:16"
+                        else -> "1:1"
+                    }
                     )
                 }
             }.mergeCustomBody(params.customBody)
