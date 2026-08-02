@@ -34,6 +34,19 @@ class ChatCompletionsAPIUsageTest {
     }
 
     @Test
+    fun `moonshot top level cached tokens are parsed`() {
+        val usage = parseChatCompletionsTokenUsage(
+            Json.parseToJsonElement(
+                """{"prompt_tokens":17,"completion_tokens":3,"total_tokens":20,"cached_tokens":11}""",
+            ).jsonObject,
+        )!!
+
+        assertEquals(11, usage.cachedTokens)
+        assertEquals(17, usage.promptTokens)
+        assertEquals(20, usage.totalTokens)
+    }
+
+    @Test
     fun `largest valid cache field wins across compatible response shapes`() {
         val usage = parseChatCompletionsTokenUsage(
             Json.parseToJsonElement(
