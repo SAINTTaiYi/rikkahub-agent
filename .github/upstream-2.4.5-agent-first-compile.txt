@@ -1,86 +1,198 @@
 Agent-first upstream 2.4.5 compile failure
-Branch commit: 74c644e3096356781e6168f5e3907e59e7ad95d0
+Branch commit: b51358a05187c8f3a5b40a874009bb8c3dd46ae5
 
 w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/local-llm/build.gradle.kts:26:35: 'fun setSrcDirs(srcDirs: Iterable<*>): Any' is deprecated. Use `directories` mutable set instead.
 w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/build.gradle.kts:25:20: 'fun srcDir(srcDir: Any): Any' is deprecated. Use `directories` mutable set instead.
-FAILURE: Build failed with an exception.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/highlight/src/main/java/me/rerere/highlight/HighlighterPreview.kt:23:9 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:238:21 Unresolved reference 'parseUsageMeta'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:305:33 Unresolved reference 'parseUsageMeta'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:742:77 Unresolved reference 'toGoogleReplayPart'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:840:5 Unresolved reference 'private'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:840:38 Anonymous functions with names are prohibited.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:862:5 Unresolved reference 'private'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:862:17 Anonymous functions with names are prohibited.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:14 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:14 Function invocation 'suspend(...)' expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:14 'suspend' function can only be called in the form of a modifier of a lambda: suspend { ... }.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:21 Syntax error: Expecting ','.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:22 Too many arguments for 'fun put(key: String, element: JsonElement): JsonElement?'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:26 Anonymous functions with names are prohibited.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:881:17 Unresolved reference 'ImageGenerationParams'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:882:13 Unresolved reference 'ImageGenerationItem'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:891:46 Unresolved reference 'prompt'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:894:17 Unresolved reference 'putJsonObject'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:895:47 Unresolved reference 'numOfImages'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:897:40 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:897:53 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:898:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:899:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:900:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:904:38 Unresolved reference 'customBody'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:909:56 Unresolved reference 'model'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:911:38 Unresolved reference 'model'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:919:37 Unresolved reference 'customHeaders'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:942:21 Unresolved reference 'ImageGenerationItem'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:957:6 Syntax error: Expecting ')'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:958:2 Syntax error: Missing '}.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:34:24 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:279:33 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:279:46 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:280:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:281:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:282:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:332:37 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:332:50 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:333:25 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:334:25 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:335:25 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:394:25 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:394:38 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:395:21 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:396:21 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:397:21 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:318:26 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:319:19 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:320:20 'this' is not defined in this context.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:320:25 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:320:32 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:322:52 Unresolved reference 'lastIndex'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:5 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:12 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:19 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:20 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:37 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:38 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:48 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:49 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:51 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:55 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:56 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:60 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:324:1 Syntax error: Expecting a top level declaration.
+FAILURE: Build completed with 2 failures.
 * What went wrong:
+   > Compilation error. See log for more details
+* What went wrong:
+   > Compilation error. See log for more details
 
 Last 120 build-log lines:
-Downloading https://services.gradle.org/distributions/gradle-9.5.0-bin.zip
-.............10%.............20%..............30%.............40%.............50%..............60%.............70%..............80%.............90%.............100%
+> Task :app:generateDebugLocaleConfig
+> Task :app:packageDebugResources
+> Task :web:processDebugNavigationResources
+> Task :common:compileDebugKotlin
+> Task :document:compileDebugKotlin
+> Task :highlight:compileDebugKotlin
+> Task :common:compileDebugJavaWithJavac NO-SOURCE
+> Task :common:bundleLibCompileToJarDebug
+> Task :app:processDebugNavigationResources
 
-Welcome to Gradle 9.5.0!
+> Task :highlight:compileDebugKotlin FAILED
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/highlight/src/main/java/me/rerere/highlight/HighlighterPreview.kt:23:9 Unresolved reference 'CodeHighlightText'.
 
-Here are the highlights of this release:
- - Task provenance in reports and failure messages
- - Type-safe accessors for precompiled Kotlin Settings plugins
+> Task :app:parseDebugLocalResources
+> Task :document:compileDebugJavaWithJavac
 
-For more details see https://docs.gradle.org/9.5.0/release-notes.html
+> Task :ai:compileDebugKotlin
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:238:21 Unresolved reference 'parseUsageMeta'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:305:33 Unresolved reference 'parseUsageMeta'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:742:77 Unresolved reference 'toGoogleReplayPart'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:840:5 Unresolved reference 'private'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:840:38 Anonymous functions with names are prohibited.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:862:5 Unresolved reference 'private'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:862:17 Anonymous functions with names are prohibited.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:14 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:14 Function invocation 'suspend(...)' expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:14 'suspend' function can only be called in the form of a modifier of a lambda: suspend { ... }.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:21 Syntax error: Expecting ','.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:22 Too many arguments for 'fun put(key: String, element: JsonElement): JsonElement?'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:879:26 Anonymous functions with names are prohibited.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:881:17 Unresolved reference 'ImageGenerationParams'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:882:13 Unresolved reference 'ImageGenerationItem'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:891:46 Unresolved reference 'prompt'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:894:17 Unresolved reference 'putJsonObject'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:895:47 Unresolved reference 'numOfImages'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:897:40 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:897:53 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:898:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:899:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:900:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:904:38 Unresolved reference 'customBody'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:909:56 Unresolved reference 'model'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:911:38 Unresolved reference 'model'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:919:37 Unresolved reference 'customHeaders'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:942:21 Unresolved reference 'ImageGenerationItem'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:957:6 Syntax error: Expecting ')'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt:958:2 Syntax error: Missing '}.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:34:24 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:279:33 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:279:46 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:280:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:281:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:282:29 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:332:37 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:332:50 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:333:25 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:334:25 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:335:25 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:394:25 'when' expression must be exhaustive. Add an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:394:38 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:395:21 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:396:21 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:397:21 Unresolved reference 'ImageAspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:318:26 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:319:19 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:320:20 'this' is not defined in this context.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:320:25 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:320:32 Unresolved reference 'size'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:322:52 Unresolved reference 'lastIndex'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:5 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:12 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:19 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:20 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:37 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:38 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:48 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:49 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:51 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:55 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:56 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:323:60 Syntax error: Expecting a top level declaration.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/ui/Message.kt:324:1 Syntax error: Expecting a top level declaration.
 
-Starting a Gradle Daemon (subsequent builds will be faster)
-Calculating task graph as no cached configuration is available for tasks: :app:compileDebugKotlin
+> Task :ai:compileDebugKotlin FAILED
 
-> Configure project :local-llm
-w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/local-llm/build.gradle.kts:26:35: 'fun setSrcDirs(srcDirs: Iterable<*>): Any' is deprecated. Use `directories` mutable set instead.
+[Incubating] Problems report is available at: file:///home/runner/work/rikkahub-agent/rikkahub-agent/build/reports/problems/problems-report.html
 
-> Configure project :material3
-w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/build.gradle.kts:25:20: 'fun srcDir(srcDir: Any): Any' is deprecated. Use `directories` mutable set instead.
+FAILURE: Build completed with 2 failures.
 
-> Task :common:preBuild UP-TO-DATE
-> Task :app:preBuild UP-TO-DATE
-> Task :document:preBuild UP-TO-DATE
-> Task :ai:preBuild UP-TO-DATE
-> Task :ai:preDebugBuild UP-TO-DATE
-> Task :common:preDebugBuild UP-TO-DATE
-> Task :common:processDebugNavigationResources
-> Task :common:generateDebugResources
-> Task :ai:processDebugNavigationResources
-> Task :ai:generateDebugResources
-> Task :common:javaPreCompileDebug
-> Task :app:preDebugBuild UP-TO-DATE
-> Task :ai:javaPreCompileDebug
-> Task :app:generateDebugBuildConfig
-> Task :ai:extractDebugSupportedLocales
-> Task :ai:packageDebugResources
-> Task :common:packageDebugResources
-> Task :app:extractDebugSupportedLocales
-> Task :app:mapDebugSourceSetPaths
-> Task :common:extractDebugSupportedLocales
-> Task :document:preDebugBuild UP-TO-DATE
-> Task :document:extractDebugSupportedLocales
-> Task :highlight:preBuild UP-TO-DATE
-> Task :highlight:preDebugBuild UP-TO-DATE
-> Task :highlight:extractDebugSupportedLocales
-> Task :local-llm:preBuild UP-TO-DATE
-> Task :local-llm:preDebugBuild UP-TO-DATE
-> Task :local-llm:extractDebugSupportedLocales
-> Task :material3:preBuild UP-TO-DATE
-> Task :material3:preDebugBuild UP-TO-DATE
-> Task :material3:extractDebugSupportedLocales
-> Task :search:preBuild UP-TO-DATE
-> Task :search:preDebugBuild UP-TO-DATE
-> Task :search:extractDebugSupportedLocales
-> Task :speech:preBuild UP-TO-DATE
-> Task :speech:preDebugBuild UP-TO-DATE
-> Task :speech:extractDebugSupportedLocales
-> Task :web:installWebUiDeps FAILED
-> Task :common:parseDebugLocalResources
-> Task :ai:parseDebugLocalResources
-> Task :app:compileDebugAidl
-
-FAILURE: Build failed with an exception.
-
+1: Task failed with an exception.
+-----------
 * What went wrong:
-Execution failed for task ':web:installWebUiDeps' (registered in build file 'web/build.gradle.kts').
-> A problem occurred starting process 'command 'bun''
+Execution failed for task ':highlight:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Compilation error. See log for more details
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
 > Run with --info or --debug option to get more log output.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
+==============================================================================
 
-BUILD FAILED in 3m 45s
-23 actionable tasks: 23 executed
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':ai:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+BUILD FAILED in 4m
+56 actionable tasks: 56 executed
 Configuration cache entry stored.
