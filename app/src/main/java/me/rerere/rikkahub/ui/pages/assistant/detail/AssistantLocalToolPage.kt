@@ -7,7 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -87,7 +86,7 @@ fun AssistantLocalToolPage(id: String) {
         containerColor = CustomColors.topBarColors.containerColor,
     ) { innerPadding ->
         AssistantLocalToolContent(
-            innerPadding = innerPadding,
+            modifier = Modifier.padding(innerPadding),
             assistant = assistant,
             onUpdate = { vm.update(it) },
             // Transform-based path used by the per-tool toggles. Each tap runs inside
@@ -102,34 +101,11 @@ fun AssistantLocalToolPage(id: String) {
 
 @Composable
 private fun AssistantLocalToolContent(
-    innerPadding: PaddingValues,
+    modifier: Modifier = Modifier,
     assistant: Assistant,
     onUpdate: (Assistant) -> Unit,
     onUpdateAssistant: ((Assistant) -> Assistant) -> Unit,
 ) {
-    val context = LocalContext.current
-    val toaster = LocalToaster.current
-    val permissionRequiredText =
-        stringResource(R.string.assistant_page_local_tools_screen_time_permission_required)
-
-    val calendarPermissionState = rememberPermissionState(
-        permissions = setOf(
-            PermissionInfo(
-                permission = Manifest.permission.READ_CALENDAR,
-                displayName = { Text(stringResource(R.string.permission_calendar_read)) },
-                usage = { Text(stringResource(R.string.permission_calendar_read_desc)) },
-                required = true
-            ),
-            PermissionInfo(
-                permission = Manifest.permission.WRITE_CALENDAR,
-                displayName = { Text(stringResource(R.string.permission_calendar_write)) },
-                usage = { Text(stringResource(R.string.permission_calendar_write_desc)) },
-                required = true
-            ),
-        )
-    )
-    PermissionManager(permissionState = calendarPermissionState)
-
     fun toggleLocalTool(option: LocalToolOption, enabled: Boolean) {
         // Use the transform path so rapid taps (especially through a permission-grant
         // round-trip to system Settings) all serialise against the actual current state
@@ -315,11 +291,10 @@ private fun AssistantLocalToolContent(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
+            .padding(16.dp)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
-            .padding(innerPadding)
             .imePadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -397,34 +372,6 @@ private fun AssistantLocalToolContent(
                     Switch(
                         checked = assistant.localTools.contains(LocalToolOption.AskUser),
                         onCheckedChange = { toggleLocalTool(LocalToolOption.AskUser, it) }
-                    )
-                }
-            )
-            item(
-                headlineContent = {
-                    Text(stringResource(R.string.assistant_page_local_tools_screen_time_title))
-                },
-                supportingContent = {
-                    Text(stringResource(R.string.assistant_page_local_tools_screen_time_desc))
-                },
-                trailingContent = {
-                    Switch(
-                        checked = assistant.localTools.contains(LocalToolOption.ScreenTime),
-                        onCheckedChange = { toggleLocalTool(LocalToolOption.ScreenTime, it) }
-                    )
-                }
-            )
-            item(
-                headlineContent = {
-                    Text(stringResource(R.string.assistant_page_local_tools_calendar_title))
-                },
-                supportingContent = {
-                    Text(stringResource(R.string.assistant_page_local_tools_calendar_desc))
-                },
-                trailingContent = {
-                    Switch(
-                        checked = assistant.localTools.contains(LocalToolOption.Calendar),
-                        onCheckedChange = { toggleLocalTool(LocalToolOption.Calendar, it) }
                     )
                 }
             )

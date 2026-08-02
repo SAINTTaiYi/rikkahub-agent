@@ -15,14 +15,16 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.ui.components.ui.FormItem
 import me.rerere.rikkahub.ui.components.ui.OutlinedNumberInput
-import me.rerere.rikkahub.ui.components.ui.SelectTextField
 import me.rerere.tts.provider.TTSProviderSetting
 import me.rerere.tts.provider.GenericHttpHeader
 
@@ -37,6 +39,7 @@ fun TTSProviderConfigure(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         // Provider type selector
+        var expanded by remember { mutableStateOf(false) }
         val providers = remember { TTSProviderSetting.Types }
 
         FormItem(
@@ -151,69 +154,8 @@ fun TTSProviderConfigure(
                             }
                         )
                     }
-                },
-                onOptionSelected = { providerClass ->
-                    val newSetting = when (providerClass) {
-                        TTSProviderSetting.OpenAI::class -> TTSProviderSetting.OpenAI(
-                            id = setting.id,
-                            name = "OpenAI TTS"
-                        )
-
-                        TTSProviderSetting.Gemini::class -> TTSProviderSetting.Gemini(
-                            id = setting.id,
-                            name = "Gemini TTS"
-                        )
-
-                        TTSProviderSetting.SystemTTS::class -> TTSProviderSetting.SystemTTS(
-                            id = setting.id,
-                            name = "System TTS"
-                        )
-
-                        TTSProviderSetting.MiniMax::class -> TTSProviderSetting.MiniMax(
-                            id = setting.id,
-                            name = "MiniMax TTS"
-                        )
-
-                        TTSProviderSetting.Qwen::class -> TTSProviderSetting.Qwen(
-                            id = setting.id,
-                            name = "Qwen TTS"
-                        )
-
-                        TTSProviderSetting.Groq::class -> TTSProviderSetting.Groq(
-                            id = setting.id,
-                            name = "Groq TTS"
-                        )
-
-                        TTSProviderSetting.XAI::class -> TTSProviderSetting.XAI(
-                            id = setting.id,
-                            name = "xAI TTS"
-                        )
-
-                        TTSProviderSetting.MiMo::class -> TTSProviderSetting.MiMo(
-                            id = setting.id,
-                            name = "MiMo TTS"
-                        )
-
-                        TTSProviderSetting.ElevenLabs::class -> TTSProviderSetting.ElevenLabs(
-                            id = setting.id,
-                            name = "ElevenLabs TTS"
-                        )
-
-                        TTSProviderSetting.FishAudio::class -> TTSProviderSetting.FishAudio(
-                            id = setting.id,
-                            name = "Fish Audio TTS"
-                        )
-
-                        TTSProviderSetting.Step::class -> TTSProviderSetting.Step(
-                            id = setting.id,
-                            name = "Step TTS"
-                        )
-
-                        else -> setting
-                    }
-                    onValueChange(newSetting)
                 }
-            )
+            }
         }
 
         // Name
