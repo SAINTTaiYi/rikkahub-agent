@@ -45,12 +45,10 @@ jobs:
           set -e
 
           if [ "$merge_status" -ne 0 ]; then
-            # These two files are Agent extensions and must remain intact.
             git checkout HEAD -- \
               app/src/main/java/me/rerere/rikkahub/data/ai/tools/LocalTools.kt \
               highlight/src/main/java/me/rerere/highlight/HighlightText.kt
 
-            # These paths are intentionally absent from the Agent branch.
             git rm -r -f --ignore-unmatch -- \
               AGENTS.md \
               CLAUDE.md \
@@ -68,7 +66,6 @@ jobs:
             fi
           fi
 
-          # Keep the fork's workflows unchanged; only product code is upgraded.
           rm -rf .github/workflows
           git checkout HEAD -- .github/workflows
           git add -A -- .github/workflows
@@ -78,6 +75,28 @@ jobs:
           fi
 
           git push origin HEAD:integration/upstream-2.4.5-agent-first
+
+      - name: Restore Agent integration boundary files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # The automatic merge corrupted function/API boundaries in these files.
+          # Restore the last known-good Agent variants and keep other 2.4.5 changes.
+          agent_baseline="6fdba2a578dc39f0ce071ff3a116a016c2965033"
+          git checkout "$agent_baseline" -- \
+            ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt \
+            ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt \
+            ai/src/main/java/me/rerere/ai/ui/Message.kt \
+            highlight/src/main/java/me/rerere/highlight/HighlighterPreview.kt
+          git rm -f --ignore-unmatch .github/upstream-2.4.5-agent-first-compile.txt
+
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: restore Agent provider and highlighter integration boundaries"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+          fi
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
