@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ultra-agent-build
@@ -24,61 +24,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           submodules: recursive
-
-      - name: Apply Ultra and standalone release settings
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          changes = [
-              (
-                  Path("ai/src/main/java/me/rerere/ai/core/Reasoning.kt"),
-                  r'XHIGH\(16_000, "xhigh"\);',
-                  'XHIGH(64_000, "xhigh");',
-              ),
-              (
-                  Path("app/src/main/res/values/strings.xml"),
-                  '<string name="reasoning_xhigh">XHigh</string>',
-                  '<string name="reasoning_xhigh">Ultra</string>',
-              ),
-              (
-                  Path("app/build.gradle.kts"),
-                  r'applicationId = "me\.rerere\.rikkahub"',
-                  'applicationId = "me.rerere.rikkahub.longagent"',
-              ),
-              (
-                  Path("app/build.gradle.kts"),
-                  'abiFilters += listOf("arm64-v8a", "x86_64")',
-                  'abiFilters += listOf("arm64-v8a")',
-              ),
-          ]
-          for path, old, new in changes:
-              text = path.read_text()
-              count = len(re.findall(old, text))
-              if count == 1:
-                  path.write_text(re.sub(old, new, text))
-              elif new in text:
-                  continue
-              else:
-                  raise SystemExit(f"Could not patch {path}: matches={count}")
-          PY
-          grep -F 'XHIGH(64_000, "xhigh");' ai/src/main/java/me/rerere/ai/core/Reasoning.kt
-          grep -F 'applicationId = "me.rerere.rikkahub.longagent"' app/build.gradle.kts
-          grep -F 'abiFilters += listOf("arm64-v8a")' app/build.gradle.kts
-
-      - name: Persist release settings
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ai/src/main/java/me/rerere/ai/core/Reasoning.kt app/src/main/res/values/strings.xml app/build.gradle.kts
-          if ! git diff --cached --quiet; then
-            git commit -m "Configure Ultra standalone release build [skip ci]"
-            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
 
       - uses: actions/setup-java@v4
         with:
@@ -100,7 +45,7 @@ jobs:
           EOF
           fi
 
-      - name: Build release APK
+      - name: Build unsigned release APK
         id: build
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx6g
@@ -113,35 +58,24 @@ jobs:
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           { grep -E '(^e: |\.kt:[0-9]+:[0-9]+:|^error:)' gradle-build.log | tail -n 40 || true; tail -n 60 gradle-build.log; } > gradle-build-diagnosis.log
 
-      - name: Persist bounded failure diagnosis
+      - name: Upload bounded failure diagnosis
         if: steps.build.outputs.exit_code != '0'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          cp gradle-build-diagnosis.log .github/build-ultra-release-error.log
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/build-ultra-release-error.log
-          if ! git diff --cached --quiet; then
-            git commit -m "Record Ultra release build failure [skip ci]"
-            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
-          exit 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: rikkahub-ultra-arm64-build-diagnosis
+          path: gradle-build-diagnosis.log
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Stop after build failure
+        if: steps.build.outputs.exit_code != '0'
+        run: exit 1
 
       - name: Verify and upload APK
         run: test -n "$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
       - uses: actions/upload-artifact@v4
         with:
-          name: rikkahub-ultra-long-agent-standalone-release
+          name: rikkahub-ultra-long-agent-arm64-unsigned-release
           path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 30
-
-      - name: Publish release APK
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
-          tag="ultra-agent-release-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Long Agent - Ultra release" --notes "Standalone package ID: me.rerere.rikkahub.longagent. Release-signed APK (arm64-v8a). Main-agent steps: Int.MAX_VALUE. Default turn budget: 4 hours, max: 8 hours. Ultra thinking budget: 64K tokens; xhigh effort for OpenAI/Codex-compatible APIs. Note: release signing requires repository secrets; if signing config is absent the APK may be unsigned and Android will refuse installation."
