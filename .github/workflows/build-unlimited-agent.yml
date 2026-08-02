@@ -29,7 +29,6 @@ jobs:
           persist-credentials: false
 
       - name: Remove the main-agent 32-step ceiling
-        id: patch
         shell: bash
         run: |
           python3 - <<'PY'
@@ -98,14 +97,42 @@ jobs:
           fi
 
       - name: Build installable debug APK
+        id: gradle_build
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx4g
+        shell: bash
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --stacktrace
+          set +e
+          ./gradlew assembleDebug --stacktrace 2>&1 | tee gradle-build.log
+          status=${PIPESTATUS[0]}
+          set -e
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          tail -n 300 gradle-build.log > gradle-build-tail.log
+
+      - name: Persist bounded failure diagnostics
+        if: steps.gradle_build.outputs.exit_code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          {
+            echo '## Gradle build failure'
+            echo
+            echo '```text'
+            cat gradle-build-tail.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          cp gradle-build-tail.log .github/build-unlimited-agent-error.log
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/build-unlimited-agent-error.log
+          git commit -m "Record bounded unlimited-agent build failure [skip ci]"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          exit 1
 
       - name: Verify APK output
-        id: apk
         shell: bash
         run: |
           mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
@@ -114,7 +141,6 @@ jobs:
             exit 1
           fi
           printf '%s\n' "${apks[@]}"
-          printf 'paths<<EOF\n%s\nEOF\n' "$(printf '%s\n' "${apks[@]}")" >> "$GITHUB_OUTPUT"
 
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
@@ -125,7 +151,6 @@ jobs:
           retention-days: 30
 
       - name: Commit the verified source patch
-        if: success()
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -142,7 +167,6 @@ jobs:
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Publish prerelease APK
-        if: success()
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
