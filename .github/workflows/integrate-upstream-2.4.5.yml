@@ -40,8 +40,18 @@ jobs:
           fi
 
           if ! git merge --no-ff "$upstream_sha" -m "merge: integrate upstream RikkaHub 2.4.5"; then
-            echo "::error::Upstream merge has conflicts in these files:"
-            git diff --name-only --diff-filter=U
+            conflicts="$(git diff --name-only --diff-filter=U)"
+            git merge --abort
+            {
+              echo "Official RikkaHub 2.4.5 merge conflicts"
+              echo "Upstream commit: $upstream_sha"
+              echo
+              printf '%s\n' "$conflicts"
+            } > .github/upstream-2.4.5-conflicts.txt
+            git add .github/upstream-2.4.5-conflicts.txt
+            git commit -m "ci: record upstream 2.4.5 merge conflicts"
+            git push origin HEAD:feature/upstream-2.4.5-stability
+            echo "::error::Upstream merge conflicts were recorded in .github/upstream-2.4.5-conflicts.txt"
             exit 1
           fi
 
