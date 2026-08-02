@@ -1,75 +1,7 @@
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:72:44 Unresolved reference 'onSecondaryContainer'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:73:32 Unresolved reference 'tertiary'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:74:34 Unresolved reference 'onTertiary'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:75:41 Unresolved reference 'tertiaryContainer'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:76:43 Unresolved reference 'onTertiaryContainer'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:77:34 Unresolved reference 'background'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:78:36 Unresolved reference 'onBackground'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:79:31 Unresolved reference 'surface'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:80:33 Unresolved reference 'onSurface'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:81:38 Unresolved reference 'surfaceVariant'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:82:40 Unresolved reference 'onSurfaceVariant'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:83:35 Unresolved reference 'surfaceTint'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:84:38 Unresolved reference 'inverseSurface'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:85:40 Unresolved reference 'inverseOnSurface'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:86:29 Unresolved reference 'error'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:87:31 Unresolved reference 'onError'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:88:38 Unresolved reference 'errorContainer'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:89:40 Unresolved reference 'onErrorContainer'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:90:31 Unresolved reference 'outline'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:91:38 Unresolved reference 'outlineVariant'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:92:29 Unresolved reference 'scrim'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:93:37 Unresolved reference 'surfaceBright'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:94:34 Unresolved reference 'surfaceDim'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:95:40 Unresolved reference 'surfaceContainer'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:96:44 Unresolved reference 'surfaceContainerHigh'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:97:47 Unresolved reference 'surfaceContainerHighest'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:98:43 Unresolved reference 'surfaceContainerLow'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:99:46 Unresolved reference 'surfaceContainerLowest'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:100:36 Unresolved reference 'primaryFixed'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:101:39 Unresolved reference 'primaryFixedDim'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:102:38 Unresolved reference 'onPrimaryFixed'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:103:45 Unresolved reference 'onPrimaryFixedVariant'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:104:38 Unresolved reference 'secondaryFixed'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:105:41 Unresolved reference 'secondaryFixedDim'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:106:40 Unresolved reference 'onSecondaryFixed'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:107:47 Unresolved reference 'onSecondaryFixedVariant'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:108:37 Unresolved reference 'tertiaryFixed'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:109:40 Unresolved reference 'tertiaryFixedDim'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:110:39 Unresolved reference 'onTertiaryFixed'.
-e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:111:46 Unresolved reference 'onTertiaryFixedVariant'.
-	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.executeMutable(LoadPreviousExecutionStateStep.java:23)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.executeMutable(HandleStaleOutputsStep.java:77)
-	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.executeMutable(HandleStaleOutputsStep.java:43)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$executeMutable$0(AssignMutableWorkspaceStep.java:34)
-	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:305)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.executeMutable(AssignMutableWorkspaceStep.java:30)
-	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.executeMutable(AssignMutableWorkspaceStep.java:21)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
-	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
-	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
-	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
-	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
-	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:56)
-	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:38)
-	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:68)
-	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:132)
-	... 30 more
-Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilation error. See log for more details
-	at org.jetbrains.kotlin.gradle.tasks.TasksUtilsKt.throwExceptionIfCompilationFailed(tasksUtils.kt:21)
-	at org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork.execute(BuildToolsApiCompilationWork.kt:320)
-	at org.gradle.workers.internal.DefaultWorkerServer.execute(DefaultWorkerServer.java:68)
-	at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:64)
-	at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:61)
-	at org.gradle.internal.classloader.ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:102)
-	at org.gradle.workers.internal.NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:61)
-	at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:44)
-	at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:41)
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/build.gradle.kts:20:25: Expecting an element
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/build.gradle.kts:20:26: Unexpected tokens (use ';' to separate expressions on the same line)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor$2.call(RunAsBuildOperationBuildActionExecutor.java:65)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor$2.call(RunAsBuildOperationBuildActionExecutor.java:61)
 	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
 	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
 	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
@@ -77,24 +9,54 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
 	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
 	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
-	at org.gradle.workers.internal.AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)
-	at org.gradle.workers.internal.NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:58)
-	at org.gradle.workers.internal.DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:176)
-	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:194)
-	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:127)
-	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:169)
-	at org.gradle.internal.Factories$1.create(Factories.java:30)
+	at org.gradle.launcher.exec.RunAsBuildOperationBuildActionExecutor.execute(RunAsBuildOperationBuildActionExecutor.java:61)
+	at org.gradle.launcher.exec.RunAsWorkerThreadBuildActionExecutor.lambda$execute$0(RunAsWorkerThreadBuildActionExecutor.java:36)
 	at org.gradle.internal.work.DefaultWorkerLeaseService.lambda$withLocksAcquired$0(DefaultWorkerLeaseService.java:275)
 	at org.gradle.internal.work.ResourceLockStatistics$1.measure(ResourceLockStatistics.java:43)
 	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocksAcquired(DefaultWorkerLeaseService.java:273)
 	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:265)
 	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:128)
-	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:133)
-	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:164)
-	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:133)
-	... 2 more
+	at org.gradle.launcher.exec.RunAsWorkerThreadBuildActionExecutor.execute(RunAsWorkerThreadBuildActionExecutor.java:36)
+	at org.gradle.tooling.internal.provider.continuous.ContinuousBuildActionExecutor.execute(ContinuousBuildActionExecutor.java:110)
+	at org.gradle.tooling.internal.provider.SubscribableBuildActionExecutor.execute(SubscribableBuildActionExecutor.java:64)
+	at org.gradle.internal.session.DefaultBuildSessionContext.execute(DefaultBuildSessionContext.java:46)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor$ActionImpl.apply(BuildSessionLifecycleBuildActionExecutor.java:106)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor$ActionImpl.apply(BuildSessionLifecycleBuildActionExecutor.java:94)
+	at org.gradle.internal.session.BuildSessionState.run(BuildSessionState.java:73)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor.execute(BuildSessionLifecycleBuildActionExecutor.java:67)
+	at org.gradle.internal.buildprocess.execution.BuildSessionLifecycleBuildActionExecutor.execute(BuildSessionLifecycleBuildActionExecutor.java:45)
+	at org.gradle.internal.buildprocess.execution.StartParamsValidatingActionExecutor.execute(StartParamsValidatingActionExecutor.java:57)
+	at org.gradle.internal.buildprocess.execution.StartParamsValidatingActionExecutor.execute(StartParamsValidatingActionExecutor.java:32)
+	at org.gradle.internal.buildprocess.execution.SessionFailureReportingActionExecutor.execute(SessionFailureReportingActionExecutor.java:51)
+	at org.gradle.internal.buildprocess.execution.SessionFailureReportingActionExecutor.execute(SessionFailureReportingActionExecutor.java:39)
+	at org.gradle.internal.buildprocess.execution.SetupLoggingActionExecutor.execute(SetupLoggingActionExecutor.java:47)
+	at org.gradle.internal.buildprocess.execution.SetupLoggingActionExecutor.execute(SetupLoggingActionExecutor.java:31)
+	at org.gradle.launcher.daemon.server.exec.ExecuteBuild.doBuild(ExecuteBuild.java:70)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.WatchForDisconnection.execute(WatchForDisconnection.java:39)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.ResetDeprecationLogger.execute(ResetDeprecationLogger.java:29)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.RequestStopIfSingleUsedDaemon.execute(RequestStopIfSingleUsedDaemon.java:35)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.ForwardClientInput.lambda$execute$0(ForwardClientInput.java:40)
+	at org.gradle.internal.daemon.clientinput.ClientInputForwarder.forwardInput(ClientInputForwarder.java:80)
+	at org.gradle.launcher.daemon.server.exec.ForwardClientInput.execute(ForwardClientInput.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.LogAndCheckHealth.execute(LogAndCheckHealth.java:64)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.LogToClient.doBuild(LogToClient.java:63)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment.doBuild(EstablishBuildEnvironment.java:84)
+	at org.gradle.launcher.daemon.server.exec.BuildCommandOnly.execute(BuildCommandOnly.java:37)
+	at org.gradle.launcher.daemon.server.api.DaemonCommandExecution.proceed(DaemonCommandExecution.java:104)
+	at org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy$1.run(StartBuildOrRespondWithBusy.java:52)
+	at org.gradle.launcher.daemon.server.DaemonStateCoordinator.lambda$runCommand$0(DaemonStateCoordinator.java:321)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
 
 
-BUILD FAILED in 4m 21s
-98 actionable tasks: 98 executed
+BUILD FAILED in 1m 10s
 Configuration cache entry stored.
