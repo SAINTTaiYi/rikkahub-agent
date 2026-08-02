@@ -2562,7 +2562,7 @@ class ChatService(
                 runControl = runControl,
                 isHeadless = isHeadless,
                 isSubAgent = subAgentProfile != null,
-                maxSteps = subAgentProfile?.generationMaxSteps() ?: 32,
+                maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE,
                 memoryToolAllowed = subAgentProfile?.allowsTool("memory_tool") ?: true,
                 invocationSurfaceContextProvider =
                     me.rerere.rikkahub.quickcapture.InvocationSurfaceContexts,
