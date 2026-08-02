@@ -23,6 +23,7 @@ jobs:
           ref: build/unlimited-agent-steps
           fetch-depth: 0
           persist-credentials: false
+          submodules: recursive
 
       - name: Apply long-running agent limits
         run: |
