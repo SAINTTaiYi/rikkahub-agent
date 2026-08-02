@@ -24,82 +24,57 @@ jobs:
           fetch-depth: 0
           ref: integration/upstream-2.4.5-agent-first
 
-      - name: Merge 2.4.5 while preserving Agent conflict paths
+      - name: Merge official RikkaHub 2.4.5
         shell: bash
         run: |
-          set -uo pipefail
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote add official https://github.com/rikkahub/rikkahub.git
           git fetch --no-tags official refs/tags/2.4.5:refs/tags/official-2.4.5
-
           upstream_sha="$(git rev-parse refs/tags/official-2.4.5^{commit})"
+
           if git merge-base --is-ancestor "$upstream_sha" HEAD; then
             echo "Official 2.4.5 is already integrated."
             exit 0
           fi
 
+          set +e
           git merge --no-ff -X ours "$upstream_sha" -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
           merge_status=$?
+          set -e
 
           if [ "$merge_status" -ne 0 ]; then
-            git diff --name-only --diff-filter=U -z > /tmp/agent-first-conflicts.zlist
-            resolution_status=0
-            conflict_count=0
+            # These two files are Agent extensions and must remain intact.
+            git checkout HEAD -- \
+              app/src/main/java/me/rerere/rikkahub/data/ai/tools/LocalTools.kt \
+              highlight/src/main/java/me/rerere/highlight/HighlightText.kt
 
-            while IFS= read -r -d '' file; do
-              conflict_count=$((conflict_count + 1))
-              echo "Restoring Agent path: $file"
-              rm -rf -- "$file"
+            # These paths are intentionally absent from the Agent branch.
+            git rm -r -f --ignore-unmatch -- \
+              AGENTS.md \
+              CLAUDE.md \
+              README_ZH_CN.md \
+              README_ZH_TW.md \
+              app/src/release/generated/baselineProfiles/baseline-prof.txt \
+              app/src/release/generated/baselineProfiles/startup-prof.txt
 
-              if git cat-file -e "HEAD:$file" 2>/dev/null; then
-                git checkout HEAD -- "$file" || resolution_status=1
-                git add -A -- "$file" || resolution_status=1
-              else
-                # The Agent side deleted this path; do not git-add it again.
-                git rm -r -f --ignore-unmatch -- "$file" || resolution_status=1
-              fi
-            done < /tmp/agent-first-conflicts.zlist
-
+            git add -A
             remaining="$(git diff --name-only --diff-filter=U)"
-            if [ "$resolution_status" -ne 0 ] || [ -n "$remaining" ]; then
-              {
-                echo "Agent-first path resolution failed"
-                echo "Upstream commit: $upstream_sha"
-                echo "Conflict paths processed: $conflict_count"
-                echo
-                echo "Remaining unmerged paths:"
-                printf '%s\n' "$remaining"
-                echo
-                echo "Index conflict entries:"
-                git ls-files -u
-              } > /tmp/agent-first-resolution.txt
-
-              git merge --abort
-              cp /tmp/agent-first-resolution.txt .github/upstream-2.4.5-agent-first-resolution.txt
-              git add .github/upstream-2.4.5-agent-first-resolution.txt
-              git commit -m "ci: record agent-first path resolution diagnostics"
-              git push origin HEAD:integration/upstream-2.4.5-agent-first
+            if [ -n "$remaining" ]; then
+              echo "::error::Unexpected unmerged paths remain:"
+              printf '%s\n' "$remaining"
               exit 1
             fi
           fi
 
-          # Keep fork CI unchanged; fork tokens may not push workflow modifications.
+          # Keep the fork's workflows unchanged; only product code is upgraded.
           rm -rf .github/workflows
           git checkout HEAD -- .github/workflows
           git add -A -- .github/workflows
 
           if git rev-parse -q --verify MERGE_HEAD >/dev/null; then
             git commit -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
-            if [ "$?" -ne 0 ]; then
-              git status --short > /tmp/agent-first-commit-status.txt
-              git merge --abort
-              cp /tmp/agent-first-commit-status.txt .github/upstream-2.4.5-agent-first-resolution.txt
-              git add .github/upstream-2.4.5-agent-first-resolution.txt
-              git commit -m "ci: record agent-first merge commit diagnostics"
-              git push origin HEAD:integration/upstream-2.4.5-agent-first
-              exit 1
-            fi
           fi
 
           git push origin HEAD:integration/upstream-2.4.5-agent-first
@@ -111,7 +86,7 @@ jobs:
           java-version: "17"
           cache: gradle
 
-      - name: Compile and preserve diagnostics
+      - name: Compile debug Kotlin
         shell: bash
         run: |
           set +e
