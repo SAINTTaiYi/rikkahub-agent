@@ -32,34 +32,16 @@ jobs:
 
           path = Path("app/src/main/java/me/rerere/rikkahub/execution/TermuxManagedExecution.kt")
           text = path.read_text()
-          old = '''        if (parsed.interactive) {
-            val deferred = scope.async { legacyTool.execute(args) }
-            return LegacyToolExecutionHandle(
-                executionId = "termux-interactive-${context.runId}",
-                result = deferred,
-            )
-        }
-'''
-          new = '''        // Direct capture matches the established Termux path and does not require a
-        // process identity. Reserve managed supervision for explicitly detached work.
-        if (parsed.interactive || !parsed.background) {
-            val deferred = scope.async { legacyTool.execute(args) }
-            return LegacyToolExecutionHandle(
-                executionId = if (parsed.interactive) {
-                    "termux-interactive-${context.runId}"
-                } else {
-                    "termux-capture-${context.runId}"
-                },
-                result = deferred,
-            )
-        }
-'''
-          if old in text:
-              if text.count(old) != 1:
-                  raise SystemExit("Ambiguous Termux capture patch")
-              path.write_text(text.replace(old, new, 1))
-          elif new not in text:
-              raise SystemExit("Expected Termux capture branch missing")
+          old = "if (parsed.interactive) {"
+          if old not in text:
+              raise SystemExit("Expected Termux interactive branch missing")
+          old_block = "if (parsed.interactive) {\n            val deferred = scope.async { legacyTool.execute(args) }\n            return LegacyToolExecutionHandle(\n                executionId = \"termux-interactive-${context.runId}\",\n                result = deferred,\n            )\n        }\n"
+          new_block = "if (parsed.interactive || !parsed.background) {\n            val deferred = scope.async { legacyTool.execute(args) }\n            return LegacyToolExecutionHandle(\n                executionId = if (parsed.interactive) \"termux-interactive-${context.runId}\" else \"termux-capture-${context.runId}\",\n                result = deferred,\n            )\n        }\n"
+          if old_block not in text:
+              raise SystemExit("Termux capture block mismatch")
+          if text.count(old_block) != 1:
+              raise SystemExit("Ambiguous Termux capture patch")
+          path.write_text(text.replace(old_block, new_block, 1))
           PY
           grep -F 'if (parsed.interactive || !parsed.background)' app/src/main/java/me/rerere/rikkahub/execution/TermuxManagedExecution.kt
 
