@@ -16,7 +16,6 @@ class WorkspaceManager(
     private val fileSystem = WorkspaceFileSystem(config)
 
     // 按 target 长度降序, 保证 /a/b 优先于 /a 匹配
-    private val sortedBindMounts = bindMounts.sortedByDescending { it.target.trimEnd('/').length }
 
     init {
         baseDir.mkdirs()
