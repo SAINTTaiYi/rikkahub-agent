@@ -1,63 +1,43 @@
-	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:134)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
-	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
-	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:134)
-	at org.gradle.internal.execution.steps.ExecuteStep$Mutable.execute(ExecuteStep.java:80)
-	at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
-	at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
-	at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
-	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:51)
-	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:29)
-	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.executeMutable(RemovePreviousOutputsStep.java:67)
-	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.executeMutable(RemovePreviousOutputsStep.java:39)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:42)
-	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:24)
-	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:69)
-	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:46)
-	at org.gradle.internal.execution.steps.ResolveInputChangesStep.executeMutable(ResolveInputChangesStep.java:39)
-	at org.gradle.internal.execution.steps.ResolveInputChangesStep.executeMutable(ResolveInputChangesStep.java:28)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
-	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$1(BuildCacheStep.java:76)
-	at org.gradle.internal.Either$Right.fold(Either.java:176)
-	at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
-	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:74)
-	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:49)
-	at org.gradle.internal.execution.steps.StoreExecutionStateStep.executeMutable(StoreExecutionStateStep.java:46)
-	at org.gradle.internal.execution.steps.StoreExecutionStateStep.executeMutable(StoreExecutionStateStep.java:35)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
-	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
-	at org.gradle.internal.execution.steps.ResolveMutableCachingStateStep.executeDelegate(ResolveMutableCachingStateStep.java:70)
-	at org.gradle.internal.execution.steps.ResolveMutableCachingStateStep.executeDelegate(ResolveMutableCachingStateStep.java:32)
-	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:69)
-	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:37)
-	at org.gradle.internal.execution.steps.ResolveChangesStep.executeMutable(ResolveChangesStep.java:63)
-	at org.gradle.internal.execution.steps.ResolveChangesStep.executeMutable(ResolveChangesStep.java:34)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.ValidateStep$Mutable.executeDelegate(ValidateStep.java:79)
-	at org.gradle.internal.execution.steps.ValidateStep$Mutable.executeDelegate(ValidateStep.java:65)
-	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:99)
-	at org.gradle.internal.execution.steps.ValidateStep$Mutable.execute(ValidateStep.java:65)
-	at org.gradle.internal.execution.steps.CaptureMutableStateBeforeExecutionStep.executeMutable(CaptureMutableStateBeforeExecutionStep.java:86)
-	at org.gradle.internal.execution.steps.CaptureMutableStateBeforeExecutionStep.execute(CaptureMutableStateBeforeExecutionStep.java:65)
-	at org.gradle.internal.execution.steps.CaptureMutableStateBeforeExecutionStep.execute(CaptureMutableStateBeforeExecutionStep.java:45)
-	at org.gradle.internal.execution.steps.SkipEmptyMutableWorkStep.executeWithNonEmptySources(SkipEmptyMutableWorkStep.java:210)
-	at org.gradle.internal.execution.steps.SkipEmptyMutableWorkStep.executeMutable(SkipEmptyMutableWorkStep.java:90)
-	at org.gradle.internal.execution.steps.SkipEmptyMutableWorkStep.executeMutable(SkipEmptyMutableWorkStep.java:53)
-	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
-	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
-	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.executeMutable(LoadPreviousExecutionStateStep.java:36)
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:72:44 Unresolved reference 'onSecondaryContainer'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:73:32 Unresolved reference 'tertiary'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:74:34 Unresolved reference 'onTertiary'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:75:41 Unresolved reference 'tertiaryContainer'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:76:43 Unresolved reference 'onTertiaryContainer'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:77:34 Unresolved reference 'background'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:78:36 Unresolved reference 'onBackground'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:79:31 Unresolved reference 'surface'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:80:33 Unresolved reference 'onSurface'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:81:38 Unresolved reference 'surfaceVariant'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:82:40 Unresolved reference 'onSurfaceVariant'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:83:35 Unresolved reference 'surfaceTint'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:84:38 Unresolved reference 'inverseSurface'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:85:40 Unresolved reference 'inverseOnSurface'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:86:29 Unresolved reference 'error'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:87:31 Unresolved reference 'onError'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:88:38 Unresolved reference 'errorContainer'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:89:40 Unresolved reference 'onErrorContainer'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:90:31 Unresolved reference 'outline'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:91:38 Unresolved reference 'outlineVariant'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:92:29 Unresolved reference 'scrim'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:93:37 Unresolved reference 'surfaceBright'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:94:34 Unresolved reference 'surfaceDim'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:95:40 Unresolved reference 'surfaceContainer'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:96:44 Unresolved reference 'surfaceContainerHigh'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:97:47 Unresolved reference 'surfaceContainerHighest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:98:43 Unresolved reference 'surfaceContainerLow'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:99:46 Unresolved reference 'surfaceContainerLowest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:100:36 Unresolved reference 'primaryFixed'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:101:39 Unresolved reference 'primaryFixedDim'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:102:38 Unresolved reference 'onPrimaryFixed'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:103:45 Unresolved reference 'onPrimaryFixedVariant'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:104:38 Unresolved reference 'secondaryFixed'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:105:41 Unresolved reference 'secondaryFixedDim'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:106:40 Unresolved reference 'onSecondaryFixed'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:107:47 Unresolved reference 'onSecondaryFixedVariant'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:108:37 Unresolved reference 'tertiaryFixed'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:109:40 Unresolved reference 'tertiaryFixedDim'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:110:39 Unresolved reference 'onTertiaryFixed'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt:111:46 Unresolved reference 'onTertiaryFixedVariant'.
 	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.executeMutable(LoadPreviousExecutionStateStep.java:23)
 	at org.gradle.internal.execution.steps.MutableStep.execute(MutableStep.java:26)
 	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.executeMutable(HandleStaleOutputsStep.java:77)
@@ -115,6 +95,6 @@ Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilat
 	... 2 more
 
 
-BUILD FAILED in 3m 38s
-92 actionable tasks: 92 executed
+BUILD FAILED in 3m 35s
+98 actionable tasks: 98 executed
 Configuration cache entry stored.
