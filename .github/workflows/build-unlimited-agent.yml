@@ -25,7 +25,7 @@ jobs:
           persist-credentials: false
           submodules: recursive
 
-      - name: Apply long-running agent limits
+      - name: Apply long-running agent limits and package ID
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -50,6 +50,12 @@ jobs:
                   r"\g<1>8L * 60L * 60L * 1_000L // 8 h",
                   r"(?m)^\s*const val MAX_TURN_BUDGET_MS\s*=\s*8L\s*\*\s*60L\s*\*\s*60L\s*\*\s*1_000L.*$",
               ),
+              (
+                  Path("app/build.gradle.kts"),
+                  r"(?m)^(\s*applicationId\s*=\s*)\"me\.rerere\.rikkahub\"\s*$",
+                  r"\g<1>\"me.rerere.rikkahub.longagent\"",
+                  r"(?m)^\s*applicationId\s*=\s*\"me\.rerere\.rikkahub\.longagent\"\s*$",
+              ),
           ]
           for path, old, new, already in changes:
               text = path.read_text()
@@ -64,6 +70,7 @@ jobs:
           grep -E "generationMaxSteps\(\).*Int\.MAX_VALUE" app/src/main/java/me/rerere/rikkahub/service/ChatService.kt
           grep -E "DEFAULT_TURN_BUDGET_MS.*4L \* 60L \* 60L" app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
           grep -E "MAX_TURN_BUDGET_MS.*8L \* 60L \* 60L" app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
+          grep -E "applicationId.*rikkahub\.longagent" app/build.gradle.kts
 
       - name: Persist requested source changes
         env:
@@ -71,9 +78,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
+          git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt app/build.gradle.kts
           if ! git diff --cached --quiet; then
-            git commit -m "Allow four-hour main-agent turns [skip ci]"
+            git commit -m "Add long-running agent package variant [skip ci]"
             git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
@@ -94,7 +101,7 @@ jobs:
         run: |
           if [ ! -f app/google-services.json ]; then
             cat > app/google-services.json <<'EOF'
-          {"project_info":{"project_number":"123456789000","project_id":"rikkahub-unlimited-local","storage_bucket":"rikkahub-unlimited-local.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:123456789000:android:0000000000000000","android_client_info":{"package_name":"me.rerere.rikkahub"}},"oauth_client":[],"api_key":[{"current_key":"AIzaSyDUMMY000000000000000000000000000"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}}],"configuration_version":"1"}
+          {"project_info":{"project_number":"123456789000","project_id":"rikkahub-unlimited-local","storage_bucket":"rikkahub-unlimited-local.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:123456789000:android:0000000000000000","android_client_info":{"package_name":"me.rerere.rikkahub.longagent"}},"oauth_client":[],"api_key":[{"current_key":"AIzaSyDUMMY000000000000000000000000000"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}}],"configuration_version":"1"}
           EOF
           fi
 
@@ -131,7 +138,7 @@ jobs:
         run: test -n "$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
       - uses: actions/upload-artifact@v4
         with:
-          name: rikkahub-agent-long-running-debug
+          name: rikkahub-agent-long-running-standalone-debug
           path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 30
@@ -141,5 +148,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
-          tag="long-agent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Agent - long-running turns" --notes "Main-agent steps: Int.MAX_VALUE. Default wall-clock turn budget: 4 hours. Configurable upper limit: 8 hours. Manual cancellation, loop detection, and individual tool timeouts remain enabled. Debug-signed APK."
+          tag="long-agent-standalone-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Long Agent - standalone" --notes "Standalone package ID: me.rerere.rikkahub.longagent. Main-agent steps: Int.MAX_VALUE. Default wall-clock turn budget: 4 hours. Configurable upper limit: 8 hours. Manual cancellation, loop detection, and individual tool timeouts remain enabled. Debug-signed APK."
