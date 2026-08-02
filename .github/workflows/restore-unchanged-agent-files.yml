@@ -52,11 +52,15 @@ jobs:
           ], text=True).splitlines())
 
           restore = errors - changed
-          explicit_agent_boundaries = {
+          restore.update({
               'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt',
               'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSpeechPage.kt',
+          })
+
+          expected_missing = {
+              'app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt',
+              'app/src/main/java/me/rerere/rikkahub/ui/activity/McpOAuthCallbackActivity.kt',
           }
-          restore.update(explicit_agent_boundaries)
 
           if len(errors) != 32:
               raise SystemExit(f'Expected 32 app error files, found {len(errors)}')
@@ -64,13 +68,17 @@ jobs:
               raise SystemExit(f'Expected 18 upstream-untouched error files, found {len(errors - changed)}')
 
           baseline = '6fdba2a578dc39f0ce071ff3a116a016c2965033'
-          missing = [p for p in sorted(restore) if subprocess.run(
+          missing = {p for p in restore if subprocess.run(
               ['git', 'cat-file', '-e', f'{baseline}:{p}'],
               stdout=subprocess.DEVNULL,
               stderr=subprocess.DEVNULL,
-          ).returncode]
-          if missing:
-              raise SystemExit(f'Agent baseline is missing: {missing}')
+          ).returncode}
+          if missing != expected_missing:
+              raise SystemExit(f'Unexpected Agent baseline gaps: {sorted(missing)}')
+
+          restore -= missing
+          if len(restore) != 18:
+              raise SystemExit(f'Expected 18 restorable Agent files, found {len(restore)}')
 
           subprocess.run(['git', 'checkout', baseline, '--', *sorted(restore)], check=True)
           Path('/tmp/restored-agent-files.txt').write_text('\n'.join(sorted(restore)) + '\n')
