@@ -13,7 +13,7 @@ import me.rerere.rikkahub.data.repository.LightConversationEntity
 @Dao
 interface ConversationDAO {
     @Query(
-        "SELECT id, assistant_id as assistantId, title, is_pinned as isPinned, " +
+        "SELECT id, assistant_id as assistantId, folder_id as folderId, title, is_pinned as isPinned, " +
             "create_at as createAt, update_at as updateAt FROM conversationentity " +
             "WHERE id != :excludeConversationId ORDER BY update_at DESC LIMIT :limit"
     )
@@ -65,7 +65,7 @@ interface ConversationDAO {
     suspend fun getConversationById(id: String): ConversationEntity?
 
     @Query(
-        "SELECT id, assistant_id as assistantId, title, is_pinned as isPinned, " +
+        "SELECT id, assistant_id as assistantId, folder_id as folderId, title, is_pinned as isPinned, " +
             "create_at as createAt, update_at as updateAt FROM conversationentity WHERE id = :id"
     )
     suspend fun getConversationSummaryById(id: String): LightConversationEntity?
