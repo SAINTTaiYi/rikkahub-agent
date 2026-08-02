@@ -53,7 +53,7 @@ jobs:
 
           restore = errors - changed
           explicit_agent_boundaries = {
-              'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/tts/TTSProviderConfigure.kt',
+              'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt',
               'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSpeechPage.kt',
           }
           restore.update(explicit_agent_boundaries)
