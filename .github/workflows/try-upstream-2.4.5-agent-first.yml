@@ -9,7 +9,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: upstream-2.4.5-agent-first
@@ -27,8 +26,6 @@ jobs:
 
       - name: Merge 2.4.5 while preserving Agent conflict paths
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -uo pipefail
           git config user.name "github-actions[bot]"
@@ -57,10 +54,11 @@ jobs:
 
               if git cat-file -e "HEAD:$file" 2>/dev/null; then
                 git checkout HEAD -- "$file" || resolution_status=1
+                git add -A -- "$file" || resolution_status=1
               else
+                # The Agent side deleted this path; do not git-add it again.
                 git rm -r -f --ignore-unmatch -- "$file" || resolution_status=1
               fi
-              git add -A -- "$file" || resolution_status=1
             done < /tmp/agent-first-conflicts.zlist
 
             remaining="$(git diff --name-only --diff-filter=U)"
@@ -76,12 +74,17 @@ jobs:
                 echo "Index conflict entries:"
                 git ls-files -u
               } > /tmp/agent-first-resolution.txt
-              gh pr comment 2 --body-file /tmp/agent-first-resolution.txt || true
+
+              git merge --abort
+              cp /tmp/agent-first-resolution.txt .github/upstream-2.4.5-agent-first-resolution.txt
+              git add .github/upstream-2.4.5-agent-first-resolution.txt
+              git commit -m "ci: record agent-first path resolution diagnostics"
+              git push origin HEAD:integration/upstream-2.4.5-agent-first
               exit 1
             fi
           fi
 
-          # Keep fork CI unchanged; GitHub tokens on forks may not push workflow changes.
+          # Keep fork CI unchanged; fork tokens may not push workflow modifications.
           rm -rf .github/workflows
           git checkout HEAD -- .github/workflows
           git add -A -- .github/workflows
@@ -90,20 +93,16 @@ jobs:
             git commit -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
             if [ "$?" -ne 0 ]; then
               git status --short > /tmp/agent-first-commit-status.txt
-              gh pr comment 2 --body-file /tmp/agent-first-commit-status.txt || true
+              git merge --abort
+              cp /tmp/agent-first-commit-status.txt .github/upstream-2.4.5-agent-first-resolution.txt
+              git add .github/upstream-2.4.5-agent-first-resolution.txt
+              git commit -m "ci: record agent-first merge commit diagnostics"
+              git push origin HEAD:integration/upstream-2.4.5-agent-first
               exit 1
             fi
           fi
 
-          if ! git push origin HEAD:integration/upstream-2.4.5-agent-first 2>/tmp/agent-first-push-error.txt; then
-            {
-              echo "Agent-first merge was created locally but could not be pushed."
-              echo
-              tail -n 80 /tmp/agent-first-push-error.txt
-            } > /tmp/agent-first-push-report.txt
-            gh pr comment 2 --body-file /tmp/agent-first-push-report.txt || true
-            exit 1
-          fi
+          git push origin HEAD:integration/upstream-2.4.5-agent-first
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -114,8 +113,6 @@ jobs:
 
       - name: Compile and preserve diagnostics
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set +e
           chmod +x gradlew
@@ -132,7 +129,9 @@ jobs:
               echo
               echo "Last 120 build-log lines:"
               tail -n 120 /tmp/upstream-2.4.5-compile.log
-            } > /tmp/upstream-2.4.5-compile-report.txt
-            gh pr comment 2 --body-file /tmp/upstream-2.4.5-compile-report.txt || true
+            } > .github/upstream-2.4.5-agent-first-compile.txt
+            git add .github/upstream-2.4.5-agent-first-compile.txt
+            git commit -m "ci: record agent-first compile diagnostics"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
             exit "$status"
           fi
