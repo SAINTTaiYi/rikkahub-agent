@@ -2,10 +2,8 @@ name: Build Unlimited Agent APK
 
 on:
   push:
-    branches:
-      - build/unlimited-agent-steps
-    paths:
-      - .github/workflows/build-unlimited-agent.yml
+    branches: [build/unlimited-agent-steps]
+    paths: [.github/workflows/build-unlimited-agent.yml]
   workflow_dispatch:
 
 permissions:
@@ -19,115 +17,76 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-
     steps:
-      - name: Check out source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: build/unlimited-agent-steps
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Remove the main-agent 32-step ceiling
-        shell: bash
+      - name: Remove main-agent 32-step ceiling
         run: |
           python3 - <<'PY'
           from pathlib import Path
-
           path = Path("app/src/main/java/me/rerere/rikkahub/service/ChatService.kt")
           text = path.read_text()
           old = "maxSteps = subAgentProfile?.generationMaxSteps() ?: 32,"
           new = "maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE,"
-          old_count = text.count(old)
-          new_count = text.count(new)
-          if old_count == 1 and new_count == 0:
+          if text.count(old) == 1 and new not in text:
               path.write_text(text.replace(old, new, 1))
-              print("Patched the main-agent step ceiling.")
-          elif old_count == 0 and new_count == 1:
-              print("The source is already patched.")
-          else:
-              raise SystemExit(
-                  f"Refusing an ambiguous patch: old={old_count}, new={new_count}"
-              )
+          elif text.count(new) != 1:
+              raise SystemExit("Refusing an ambiguous source patch")
           PY
-          grep -F "maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE," \
-            app/src/main/java/me/rerere/rikkahub/service/ChatService.kt
+          grep -F "maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE," app/src/main/java/me/rerere/rikkahub/service/ChatService.kt
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-
-      - name: Set up Gradle cache
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
-      - name: Create non-production Google Services config when absent
-        shell: bash
+      - name: Create non-production Google Services config
         run: |
           if [ ! -f app/google-services.json ]; then
             python3 - <<'PY'
-          import json
-          import re
+          import json, re
           from pathlib import Path
-
           gradle = Path("app/build.gradle.kts").read_text()
           match = re.search(r'applicationId\s*=\s*"([^"]+)"', gradle)
-          package_name = match.group(1) if match else "me.rerere.rikkahub"
+          package = match.group(1) if match else "me.rerere.rikkahub"
           data = {
-              "project_info": {
-                  "project_number": "123456789000",
-                  "project_id": "rikkahub-unlimited-local",
-                  "storage_bucket": "rikkahub-unlimited-local.appspot.com",
-              },
-              "client": [{
-                  "client_info": {
-                      "mobilesdk_app_id": "1:123456789000:android:0000000000000000",
-                      "android_client_info": {"package_name": package_name},
-                  },
-                  "oauth_client": [],
-                  "api_key": [{"current_key": "AIzaSyDUMMY000000000000000000000000000"}],
-                  "services": {"appinvite_service": {"other_platform_oauth_client": []}},
-              }],
-              "configuration_version": "1",
+            "project_info": {"project_number": "123456789000", "project_id": "rikkahub-unlimited-local", "storage_bucket": "rikkahub-unlimited-local.appspot.com"},
+            "client": [{"client_info": {"mobilesdk_app_id": "1:123456789000:android:0000000000000000", "android_client_info": {"package_name": package}}, "oauth_client": [], "api_key": [{"current_key": "AIzaSyDUMMY000000000000000000000000000"}], "services": {"appinvite_service": {"other_platform_oauth_client": []}}}],
+            "configuration_version": "1"
           }
           Path("app/google-services.json").write_text(json.dumps(data))
-          print(f"Generated config for {package_name}")
           PY
           fi
 
-      - name: Build installable debug APK
-        id: gradle_build
+      - name: Build debug APK
+        id: build
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx4g
-        shell: bash
         run: |
           chmod +x gradlew
           set +e
           ./gradlew assembleDebug --stacktrace 2>&1 | tee gradle-build.log
-          status=${PIPESTATUS[0]}
+          code=${PIPESTATUS[0]}
           set -e
-          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
-          tail -n 300 gradle-build.log > gradle-build-tail.log
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          tail -n 120 gradle-build.log > gradle-build-tail.log
 
-      - name: Persist bounded failure diagnostics
-        if: steps.gradle_build.outputs.exit_code != '0'
+      - name: Persist bounded failure diagnosis
+        if: steps.build.outputs.exit_code != '0'
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
         run: |
-          {
-            echo '## Gradle build failure'
-            echo
-            echo '```text'
-            cat gradle-build-tail.log
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
           cp gradle-build-tail.log .github/build-unlimited-agent-error.log
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -137,33 +96,19 @@ jobs:
           git push origin "HEAD:${GITHUB_REF_NAME}"
           exit 1
 
-      - name: Verify APK output
-        shell: bash
-        run: |
-          mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
-          if [ "${#apks[@]}" -eq 0 ]; then
-            echo "No APK was produced." >&2
-            exit 1
-          fi
-          printf '%s\n' "${apks[@]}"
-
-      - name: Upload workflow artifact
-        uses: actions/upload-artifact@v4
+      - name: Verify and upload APK
+        run: test -n "$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
+      - uses: actions/upload-artifact@v4
         with:
           name: rikkahub-agent-unlimited-debug
           path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 30
 
-      - name: Commit the verified source patch
+      - name: Commit verified source patch
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
         run: |
-          if git diff --quiet -- app/src/main/java/me/rerere/rikkahub/service/ChatService.kt; then
-            echo "Source patch already committed."
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt
@@ -174,13 +119,7 @@ jobs:
       - name: Publish prerelease APK
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
         run: |
           mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
           tag="unlimited-agent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          gh release create "$tag" "${apks[@]}" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$(git rev-parse HEAD)" \
-            --prerelease \
-            --title "RikkaHub Agent - unlimited steps" \
-            --notes "Main-agent maxSteps changed from 32 to Int.MAX_VALUE. Existing cancellation, wall-clock, and loop-guard protections remain enabled. Debug-signed APK: uninstall signature-incompatible builds first or use a separate Android profile."
+          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Agent - unlimited steps" --notes "Main-agent maxSteps changed from 32 to Int.MAX_VALUE. Cancellation, wall-clock, and loop-guard protections remain enabled. Debug-signed APK."
