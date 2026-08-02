@@ -1,0 +1,11 @@
+Agent-first merge still has unresolved conflicts
+Upstream commit: 5f39f1c1d2298cd88ce908a5a0858d4830885a6b
+
+AGENTS.md
+CLAUDE.md
+README_ZH_CN.md
+README_ZH_TW.md
+app/src/main/java/me/rerere/rikkahub/data/ai/tools/LocalTools.kt
+app/src/release/generated/baselineProfiles/baseline-prof.txt
+app/src/release/generated/baselineProfiles/startup-prof.txt
+highlight/src/main/java/me/rerere/highlight/HighlightText.kt
