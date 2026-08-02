@@ -26,7 +26,8 @@ data class Assistant(
     val systemPrompt: String = "",
     val temperature: Float? = null,
     val topP: Float? = null,
-    val contextMessageSize: Int = 0,
+    // 上下文消息条数上限, 超出后阶梯式截断; 0 表示不限制
+    val contextMessageLimit: Int = 0,
     val streamOutput: Boolean = true,
     val enableWebSearch: Boolean = false,
     val enableMemory: Boolean = false,
@@ -65,6 +66,7 @@ data class Assistant(
     val customBodies: List<CustomBody> = emptyList(),
     val mcpServers: Set<Uuid> = emptySet(),
     val localTools: List<LocalToolOption> = listOf(LocalToolOption.TimeInfo),
+    val enableWebSearch: Boolean = false, // 网络搜索开关(每个助手独立)
     val workspaceId: Uuid? = null,
     val background: String? = null, // 聊天页背景图地址(本地文件 URI 或网络 URL), 为 null 时无背景
     val backgroundOpacity: Float = 1.0f, // 背景图不透明度(0~1)
@@ -156,6 +158,19 @@ data class AssistantRegex(
     val affectingScope: Set<AssistantAffectScope> = setOf(),
     val visualOnly: Boolean = false, // 是否仅在视觉上影响
 )
+
+// 流式输出时每个chunk都会调用replaceRegexes，正则必须缓存编译结果，
+// 否则长回复期间会重复编译上万次；编译失败也缓存，避免反复构造异常
+private val regexCache = SimpleCache.builder<String, Result<Regex>>()
+    .expireAfterWrite(10, TimeUnit.MINUTES)
+    .build()
+
+private fun compileRegexCached(pattern: String): Regex? {
+    regexCache.getIfPresent(pattern)?.let { return it.getOrNull() }
+    val result = runCatching { Regex(pattern) }.onFailure { it.printStackTrace() }
+    regexCache.put(pattern, result)
+    return result.getOrNull()
+}
 
 fun String.replaceRegexes(
     assistant: Assistant?,

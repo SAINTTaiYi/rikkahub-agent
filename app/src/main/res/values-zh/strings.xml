@@ -92,7 +92,7 @@
   <string name="assistant_page_local_tools_javascript_engine_title">JavaScript 引擎</string>
   <string name="assistant_page_local_tools_time_info_desc">从设备获取当前日期、星期、时间和时区信息</string>
   <string name="assistant_page_local_tools_time_info_title">时间信息</string>
-  <string name="assistant_page_local_tools_tts_desc">让AI使用设备TTS引擎为您朗读文本</string>
+  <string name="assistant_page_local_tools_tts_desc">让AI使用您所选的TTS服务为您朗读文本</string>
   <string name="assistant_page_local_tools_tts_title">文字转语音</string>
   <string name="assistant_page_manage_memory_title">管理记忆</string>
   <string name="assistant_page_max_tokens">最大Token数</string>
@@ -113,7 +113,7 @@
   <string name="assistant_page_quick_message_title">标题</string>
   <string name="assistant_page_quick_messages">快捷消息</string>
   <string name="assistant_page_recent_chats">参考历史聊天记录</string>
-  <string name="assistant_page_recent_chats_desc">启用后，助手将参考最近的聊天历史记录来提供更有上下文的回应</string>
+  <string name="assistant_page_recent_chats_desc">启用后，允许助手在过去的对话中搜索相关信息</string>
   <string name="assistant_page_regex_affecting_scopes">影响范围：</string>
   <string name="assistant_page_regex_desc">定义正则表达式模式，在发送/接收消息前对其进行转换</string>
   <string name="assistant_page_regex_find_regex">查找正则表达式</string>
@@ -471,8 +471,6 @@
   <string name="placeholder_battery_level">电池电量</string>
   <string name="placeholder_char">助手名称</string>
   <string name="placeholder_current_date">日期</string>
-  <string name="placeholder_current_datetime">日期和时间</string>
-  <string name="placeholder_current_time">时间</string>
   <string name="placeholder_device_info">设备信息</string>
   <string name="placeholder_locale">语言环境</string>
   <string name="placeholder_model_id">模型ID</string>
@@ -634,6 +632,27 @@
   <string name="setting_asr_configure_volcengine_api_key_desc">Volcengine API密钥（X-Api-Key）</string>
   <string name="setting_asr_configure_volcengine_websocket_desc">Volcengine 流式 ASR 端点</string>
   <string name="setting_asr_configure_websocket_url">WebSocket URL</string>
+  <string name="setting_asr_configure_base_url">Base URL</string>
+  <string name="setting_asr_configure_sample_rate">采样率</string>
+  <string name="setting_asr_configure_segment_duration">分段时长</string>
+  <string name="setting_asr_configure_mimo_api_key_desc">小米 MiMo API Key（按量计费用 sk- 开头，Token 套餐用 tp- 开头）</string>
+  <string name="setting_asr_configure_mimo_base_url_desc">MiMo OpenAI 兼容 Base URL。sk- 密钥使用 https://api.xiaomimimo.com/v1，tp- 密钥使用 https://token-plan-cn.xiaomimimo.com/v1</string>
+  <string name="setting_asr_configure_mimo_model_desc">MiMo ASR 模型名，例如 mimo-v2.5-asr</string>
+  <string name="setting_asr_configure_mimo_language_desc">可选语言提示：auto / zh / en。留空则使用服务端默认（auto）</string>
+  <string name="setting_asr_configure_mimo_sample_rate_desc">PCM 录音采样率（Hz），ASR 推荐 16000</string>
+  <string name="setting_asr_configure_mimo_segment_desc">录音期间每 N 秒自动上传一段音频识别一次，0 表示禁用自动分段（仅 stop 时整体上传，16kHz 下最长约 3.9 分钟）</string>
+  <string name="setting_asr_configure_step_api_key_desc">阶跃星辰 API Key，从 https://platform.stepfun.com/interface-key 创建</string>
+  <string name="setting_asr_configure_step_base_url_desc">Step ASR Base URL。国内使用 https://api.stepfun.com，海外使用 https://api.stepfun.ai</string>
+  <string name="setting_asr_configure_step_model_desc">Step ASR 模型名，例如 stepaudio-2.5-asr（旗舰，最便宜）或 step-asr</string>
+  <string name="setting_asr_configure_step_language_desc">可选语言提示：auto / zh / en。留空则使用服务端默认（auto）</string>
+  <string name="setting_asr_configure_step_sample_rate_desc">PCM 录音采样率（Hz），ASR 推荐 16000</string>
+  <string name="setting_asr_configure_step_segment_desc">录音期间每 N 秒自动上传一段音频识别一次，0 表示禁用自动分段（仅 stop 时整体上传）</string>
+  <string name="setting_asr_configure_step_itn">逆文本归一化</string>
+  <string name="setting_asr_configure_step_itn_desc">把口语数字转成阿拉伯数字（如「三百」→「300」），方便后续处理</string>
+  <string name="setting_asr_configure_step_timestamp">返回时间戳</string>
+  <string name="setting_asr_configure_step_timestamp_desc">在 delta 事件里返回词级时间戳。rikkahub 当前不消费时间戳，默认关闭节省 token</string>
+  <string name="setting_asr_configure_step_hotwords">热词</string>
+  <string name="setting_asr_configure_step_hotwords_desc">逗号分隔的热词列表，提升专有名词、术语的识别准确率</string>
   <string name="setting_asr_page_add_provider">添加ASR提供商</string>
   <string name="setting_asr_page_default_name">ASR</string>
   <string name="setting_asr_page_edit_provider">编辑ASR提供商</string>
@@ -704,14 +723,22 @@
   <string name="setting_display_page_skip_crop_image_desc">导入图片或拍照后跳过裁剪界面</string>
   <string name="setting_display_page_skip_crop_image_title">跳过图片编辑</string>
   <string name="setting_display_page_title">显示设置</string>
-  <string name="setting_display_page_tts_only_read_quoted_desc">启用后，TTS 仅朗读引号内的内容</string>
+  <string name="setting_display_page_tts_only_read_quoted_desc">启用后，TTS 仅朗读引号（包括\" \"、\' \'、“”、‘’、「」、『』）内的内容</string>
   <string name="setting_display_page_tts_only_read_quoted_title">TTS仅朗读引用内容</string>
+  <string name="setting_display_page_tts_read_outside_brackets_desc">启用后，TTS将不朗读括号内的内容</string>
+  <string name="setting_display_page_tts_read_outside_brackets_title">TTS不朗读括号内的内容</string>
   <string name="setting_display_page_use_app_icon_style_loading_indicator_desc">使用应用图标动画替代默认的圆形加载指示器</string>
   <string name="setting_display_page_use_app_icon_style_loading_indicator_title">使用APP图标风格的加载指示器</string>
   <string name="setting_display_page_volume_key_scroll_desc">使用音量键翻页，非常适合电子墨水屏</string>
   <string name="setting_display_page_volume_key_scroll_ratio">滚动幅度</string>
   <string name="setting_display_page_volume_key_scroll_title">音量键翻页</string>
   <string name="setting_files_page_cancel_action">取消</string>
+  <string name="setting_files_page_clean_action">清理</string>
+  <string name="setting_files_page_clean_confirmation">将永久删除此分类中的全部文件，此操作无法撤销。</string>
+  <string name="setting_files_page_clean_content_description">清理文件</string>
+  <string name="setting_files_page_clean_failed_toast">部分文件清理失败</string>
+  <string name="setting_files_page_clean_title">清理文件？</string>
+  <string name="setting_files_page_cleaned_toast">文件已清理</string>
   <string name="setting_files_page_delete_action">删除</string>
   <string name="setting_files_page_delete_content_description">删除</string>
   <string name="setting_files_page_delete_failed_toast">删除失败</string>
@@ -946,6 +973,7 @@ mDNS 地址：使用 .local 主机名，同一网络中的其他设备可通过�
   <string name="setting_provider_page_scan_error">错误: %s</string>
   <string name="setting_provider_page_scan_qr_code">扫描二维码</string>
   <string name="setting_provider_page_search_providers">搜索提供商</string>
+  <string name="setting_provider_page_recommend">推荐提供商</string>
   <string name="setting_provider_page_select_all">全选（%1$d）</string>
   <string name="setting_provider_page_select_from_gallery">从相册选择</string>
   <string name="setting_provider_page_service_account_email">服务账户邮箱</string>
@@ -986,7 +1014,14 @@ mDNS 地址：使用 .local 主机名，同一网络中的其他设备可通过�
   <string name="setting_tts_page_provider_type">提供商类型</string>
   <string name="setting_tts_page_provider_type_description">选择TTS提供商类型</string>
   <string name="setting_tts_page_selected">已选择</string>
+  <string name="setting_tts_page_similarity_boost">相似度增强</string>
+  <string name="setting_tts_page_similarity_boost_description">控制语音与原始声音的匹配程度（0.0 - 1.0）</string>
   <string name="setting_tts_page_speech_rate">语音速度</string>
+  <string name="setting_tts_page_stability">稳定度</string>
+  <string name="setting_tts_page_stability_description">控制语音的稳定度（0.0 - 1.0，越低越有表现力）</string>
+  <string name="setting_tts_page_temperature">温度</string>
+  <string name="setting_tts_page_temperature_description">控制语音的随机性（0.0 - 1.0，越高越有表现力）</string>
+  <string name="setting_tts_page_fish_audio_speed_description">语音速度（0.5 - 2.0，1.0 为正常语速）</string>
   <string name="setting_tts_page_speech_rate_description">控制语音播放速度 (0.1 - 3.0，1.0为正常速度)</string>
   <string name="setting_tts_page_speed">语速</string>
   <string name="setting_tts_page_speed_description">语音合成速度 (0.25 - 4.0)</string>
@@ -1067,6 +1102,7 @@ mDNS 地址：使用 .local 主机名，同一网络中的其他设备可通过�
   <string name="text_area_save">保存</string>
   <string name="theme_name_autumn">秋黄</string>
   <string name="theme_name_black">中性黑</string>
+  <string name="theme_name_minimal">极简白</string>
   <string name="theme_name_ocean">海湾蓝</string>
   <string name="theme_name_sakura">樱花粉</string>
   <string name="theme_name_spring">原野绿</string>
@@ -2227,3 +2263,4 @@ mDNS 地址：使用 .local 主机名，同一网络中的其他设备可通过�
   <string name="chat_token_usage_latest">本次输入 %1$s · 新增 %2$s · 缓存 %3$s</string>
   <string name="chat_token_usage_turn">本轮输入 %1$s · %2$d 次调用 · 输出 %3$s</string>
 </resources>
+

@@ -128,7 +128,7 @@ class ProotShellRunner(
             command += "${mount.source.absolutePath}:${mount.target.trimEnd('/')}"
         }
 
-        listOf("/dev", "/proc", "/sys").forEach { path ->
+        WorkspaceManager.KERNEL_FS_MOUNTS.forEach { path ->
             if (File(path).exists()) {
                 command += "-b"
                 command += path
@@ -180,6 +180,6 @@ class ProotShellRunner(
     private companion object {
         private const val PROOT_EXEC = "libproot_exec.so"
         private const val PROOT_LOADER = "libproot_loader.so"
-        private const val WORKSPACE_DIR = "/workspace"
+        private val WORKSPACE_DIR = WorkspaceManager.ROOTFS_WORKSPACE_DIR
     }
 }

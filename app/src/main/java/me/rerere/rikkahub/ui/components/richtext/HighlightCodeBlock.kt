@@ -10,7 +10,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,14 +52,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import me.rerere.highlight.HighlightText
 import me.rerere.highlight.HighlightTextColorPalette
-import me.rerere.highlight.Highlighter
-import me.rerere.highlight.LocalHighlighter
 import me.rerere.highlight.buildHighlightText
+import me.rerere.highlight.CodeHighlightText
+import me.rerere.highlight.CodeHighlighter
 import me.rerere.hugeicons.HugeIcons
 import me.rerere.hugeicons.stroke.ArrowDown01
 import me.rerere.hugeicons.stroke.ArrowUp01
@@ -72,6 +69,7 @@ import me.rerere.hugeicons.stroke.View
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.Screen
 import me.rerere.rikkahub.ui.components.webview.WebView
+import me.rerere.rikkahub.ui.components.webview.WebViewContentCache
 import me.rerere.rikkahub.ui.components.webview.rememberWebViewState
 import me.rerere.rikkahub.ui.context.LocalNavController
 import me.rerere.rikkahub.ui.context.LocalSettings
@@ -81,7 +79,6 @@ import me.rerere.rikkahub.ui.theme.AtomOneDarkPalette
 import me.rerere.rikkahub.ui.theme.AtomOneLightPalette
 import me.rerere.rikkahub.ui.theme.JetbrainsMono
 import me.rerere.rikkahub.ui.theme.LocalDarkMode
-import me.rerere.rikkahub.utils.base64Encode
 import me.rerere.rikkahub.utils.toDp
 import kotlin.time.Clock
 
@@ -279,7 +276,7 @@ private fun CodeBlockWithLineNumbersWrapped(
                         softWrap = false,
                         modifier = Modifier.padding(end = 8.dp)
                     )
-                    HighlightText(
+                    CodeHighlightText(
                         code = line,
                         language = language,
                         fontSize = textStyle.fontSize,
@@ -339,7 +336,7 @@ private fun CodeBlockDefault(
 
         // 代码列
         SelectionContainer {
-            HighlightText(
+            CodeHighlightText(
                 code = displayCode,
                 language = language,
                 modifier = Modifier.animateContentSize(),
@@ -367,6 +364,7 @@ private fun HighlightCodeActions(
     canInlinePreview: Boolean = false,
     onTogglePreviewMode: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -463,7 +461,8 @@ private fun HighlightCodeActions(
                         .clip(RoundedCornerShape(4.dp))
                         .onClick {
                             val content = buildCodePreviewHtml(code = code, language = normalizedLanguage)
-                            navController.navigate(Screen.WebView(content = content.base64Encode()))
+                            val contentId = WebViewContentCache.store(context.cacheDir, content)
+                            navController.navigate(Screen.WebView(contentId = contentId))
                         }
                         .padding(4.dp)
                         .size(iconSize)
@@ -507,7 +506,7 @@ private fun buildCodePreviewHtml(code: String, language: String): String {
 
 class HighlightCodeVisualTransformation(
     val language: String,
-    val highlighter: Highlighter,
+    val highlighter: CodeHighlighter,
     val darkMode: Boolean
 ) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
@@ -516,12 +515,10 @@ class HighlightCodeVisualTransformation(
             if (text.text.isEmpty()) {
                 AnnotatedString("")
             } else {
-                runBlocking {
-                    val tokens = highlighter.highlight(text.text, language)
-                    buildAnnotatedString {
-                        tokens.forEach { token ->
-                            buildHighlightText(token, colorPalette)
-                        }
+                val tokens = highlighter.highlight(text.text, language)
+                buildAnnotatedString {
+                    tokens.forEach { token ->
+                        buildHighlightText(token, colorPalette)
                     }
                 }
             }
@@ -533,15 +530,6 @@ class HighlightCodeVisualTransformation(
         return TransformedText(
             text = annotatedString,
             offsetMapping = OffsetMapping.Identity
-        )
-    }
-
-    companion object {
-        @Composable
-        fun regex() = HighlightCodeVisualTransformation(
-            language = "regex",
-            highlighter = LocalHighlighter.current,
-            darkMode = LocalDarkMode.current,
         )
     }
 }

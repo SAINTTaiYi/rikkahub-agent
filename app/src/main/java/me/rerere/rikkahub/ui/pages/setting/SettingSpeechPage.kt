@@ -49,6 +49,7 @@ import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -82,6 +83,7 @@ import me.rerere.tts.provider.TTSProviderSetting
 import org.koin.androidx.compose.koinViewModel
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
+import kotlin.math.roundToInt
 
 @Composable
 fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
@@ -146,12 +148,21 @@ fun SettingSpeechPage(vm: SettingVM = koinViewModel()) {
         containerColor = CustomColors.topBarColors.containerColor,
     ) { innerPadding ->
         when (selectedPage) {
-            0 -> TTSProviderList(
-                settings = settings,
-                onUpdateSettings = vm::updateSettings,
-                onEdit = { editingTTSProvider = it },
-                modifier = Modifier.padding(innerPadding)
-            )
+            0 -> Column(modifier = Modifier.padding(innerPadding)) {
+                TTSPlaybackSpeedSetting(
+                    speed = settings.defaultTTSPlaybackSpeed,
+                    onSpeedChange = {
+                        vm.updateSettings(settings.copy(defaultTTSPlaybackSpeed = it))
+                    },
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
+                )
+                TTSProviderList(
+                    settings = settings,
+                    onUpdateSettings = vm::updateSettings,
+                    onEdit = { editingTTSProvider = it },
+                    modifier = Modifier.weight(1f),
+                )
+            }
 
             1 -> ASRProviderList(
                 settings = settings,
@@ -603,6 +614,22 @@ private fun AddASRProviderButton(onAdd: (ASRProviderSetting) -> Unit) {
                     showBottomSheet = true
                 }
             )
+            DropdownMenuItem(
+                text = { Text("MiMo") },
+                onClick = {
+                    currentProvider = ASRProviderSetting.MiMo()
+                    showTypeMenu = false
+                    showBottomSheet = true
+                }
+            )
+            DropdownMenuItem(
+                text = { Text("Step") },
+                onClick = {
+                    currentProvider = ASRProviderSetting.Step()
+                    showTypeMenu = false
+                    showBottomSheet = true
+                }
+            )
         }
     }
 
@@ -867,6 +894,8 @@ private fun ASRProviderItem(
                             is ASRProviderSetting.OpenAIRealtime -> "OpenAI Realtime"
                             is ASRProviderSetting.DashScope -> "DashScope"
                             is ASRProviderSetting.Volcengine -> "Volcengine"
+                            is ASRProviderSetting.MiMo -> "MiMo"
+                            is ASRProviderSetting.Step -> "Step"
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant

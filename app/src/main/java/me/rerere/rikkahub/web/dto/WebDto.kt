@@ -88,6 +88,22 @@ data class UpdateConversationInjectionsRequest(
 )
 
 @Serializable
+data class CreateFolderRequest(
+    val name: String
+)
+
+@Serializable
+data class RenameFolderRequest(
+    val name: String
+)
+
+@Serializable
+data class MoveConversationToFolderRequest(
+    // null 表示移出文件夹（未归类）
+    val folderId: String? = null
+)
+
+@Serializable
 data class UpdateAssistantRequest(
     val assistantId: String
 )
@@ -120,6 +136,7 @@ data class UpdateAssistantInjectionsRequest(
 
 @Serializable
 data class UpdateSearchEnabledRequest(
+    val assistantId: String,
     val enabled: Boolean,
     val assistantId: String? = null,
 )
@@ -154,9 +171,19 @@ data class ConversationListDto(
     val assistantId: String,
     val title: String,
     val isPinned: Boolean,
+    val folderId: String? = null,
     val createAt: Long,
     val updateAt: Long,
     val isGenerating: Boolean = false
+)
+
+@Serializable
+data class FolderDto(
+    val id: String,
+    val assistantId: String,
+    val name: String,
+    val sortIndex: Int,
+    val createAt: Long,
 )
 
 @Serializable
@@ -191,6 +218,8 @@ data class ConversationDto(
     val customSystemPrompt: String? = null,
     val modeInjectionIds: List<String> = emptyList(),
     val lorebookIds: List<String> = emptyList(),
+    val workspaceCwd: String? = null,
+    val folderId: String? = null,
     val createAt: Long,
     val updateAt: Long,
     val isGenerating: Boolean = false
@@ -293,6 +322,12 @@ data class ConversationListInvalidateEvent(
     val timestamp: Long
 )
 
+@Serializable
+data class FolderListEvent(
+    val assistantId: String,
+    val folders: List<FolderDto>,
+)
+
 // ========== Conversion Extensions ==========
 
 fun Conversation.toListDto(isGenerating: Boolean = false) = ConversationListDto(
@@ -300,9 +335,18 @@ fun Conversation.toListDto(isGenerating: Boolean = false) = ConversationListDto(
     assistantId = assistantId.toString(),
     title = title,
     isPinned = isPinned,
+    folderId = folderId?.toString(),
     createAt = createAt.toEpochMilli(),
     updateAt = updateAt.toEpochMilli(),
     isGenerating = isGenerating
+)
+
+fun me.rerere.rikkahub.data.model.Folder.toDto() = FolderDto(
+    id = id.toString(),
+    assistantId = assistantId.toString(),
+    name = name,
+    sortIndex = sortIndex,
+    createAt = createAt.toEpochMilli(),
 )
 
 fun Conversation.toDto(isGenerating: Boolean = false) = ConversationDto(
@@ -315,6 +359,8 @@ fun Conversation.toDto(isGenerating: Boolean = false) = ConversationDto(
     customSystemPrompt = customSystemPrompt,
     modeInjectionIds = modeInjectionIds.map { it.toString() },
     lorebookIds = lorebookIds.map { it.toString() },
+    workspaceCwd = workspaceCwd,
+    folderId = folderId?.toString(),
     createAt = createAt.toEpochMilli(),
     updateAt = updateAt.toEpochMilli(),
     isGenerating = isGenerating

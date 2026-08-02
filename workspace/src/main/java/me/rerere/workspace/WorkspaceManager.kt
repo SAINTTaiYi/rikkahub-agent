@@ -15,6 +15,9 @@ class WorkspaceManager(
 ) {
     private val fileSystem = WorkspaceFileSystem(config)
 
+    // 按 target 长度降序, 保证 /a/b 优先于 /a 匹配
+    private val sortedBindMounts = bindMounts.sortedByDescending { it.target.trimEnd('/').length }
+
     init {
         baseDir.mkdirs()
     }
@@ -244,6 +247,19 @@ class WorkspaceManager(
         private const val MANAGED_PROCESSES_DIR = "managed-processes"
         private const val STORAGE_MODE_FILE = ".storage-mode"
         const val DEFAULT_COMMAND_TIMEOUT_MS = 30_000L
+
+        /** Rootfs 内工作区文件区的挂载点 */
+        const val ROOTFS_WORKSPACE_DIR = "/workspace"
+
+        /** 由宿主机透传的内核伪文件系统, 只能通过 shell 访问 */
+        val KERNEL_FS_MOUNTS = listOf("/dev", "/proc", "/sys")
+
         private val ROOT_NAME_REGEX = Regex("[A-Za-z0-9._-]+")
     }
 }
+
+/** Rootfs 内绝对路径在宿主机上的落点 */
+data class RootfsLocation(
+    val rootDir: File,
+    val relativePath: String,
+)

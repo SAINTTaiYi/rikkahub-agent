@@ -605,6 +605,30 @@ class ResponseAPIMessageTest {
 
     // ==================== Helper Functions ====================
 
+    private fun createToolParams(
+        tools: List<Tool> = emptyList(),
+        builtInTools: Set<BuiltInTools> = emptySet()
+    ): TextGenerationParams {
+        return TextGenerationParams(
+            model = Model(
+                modelId = "test-model",
+                displayName = "test-model",
+                abilities = listOf(ModelAbility.TOOL),
+                tools = builtInTools
+            ),
+            tools = tools
+        )
+    }
+
+    private fun createFunctionTool(name: String): Tool {
+        return Tool(
+            name = name,
+            description = "test tool",
+            parameters = { InputSchema.Obj(properties = JsonObject(emptyMap())) },
+            execute = { emptyList() }
+        )
+    }
+
     private fun createExecutedTool(
         callId: String,
         name: String,

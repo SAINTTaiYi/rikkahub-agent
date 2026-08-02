@@ -34,10 +34,6 @@ val appModule = module {
     single<Json> { JsonInstant }
 
     single {
-        Highlighter(get())
-    }
-
-    single {
         AppEventBus()
     }
 
@@ -518,6 +514,17 @@ val appModule = module {
         SoundEffectPlayer(get())
     }
 
+    // 生成通知与业务解耦：ChatService 只发事件，通知由这里消费；
+    // createdAtStart 保证进程启动即订阅，否则后台生成的事件会因无订阅者而丢失
+    single(createdAtStart = true) {
+        ChatNotificationManager(
+            context = get(),
+            appScope = get(),
+            eventBus = get(),
+            settingsStore = get(),
+        )
+    }
+
     single {
         AILoggingManager(get(), get())
     }
@@ -799,6 +806,7 @@ val appModule = module {
         ChatService(
             context = get(),
             appScope = get(),
+            appEventBus = get(),
             settingsStore = get(),
             conversationRepo = get(),
             memoryRepository = get(),
@@ -873,6 +881,7 @@ val appModule = module {
             appScope = get(),
             chatService = get(),
             conversationRepo = get(),
+            folderRepo = get(),
             settingsStore = get(),
             filesManager = get()
         )
