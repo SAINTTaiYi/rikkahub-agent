@@ -19,37 +19,37 @@ w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/local-llm/build.gradle
 > Configure project :material3
 w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/build.gradle.kts:25:20: 'fun srcDir(srcDir: Any): Any' is deprecated. Use `directories` mutable set instead.
 
+> Task :ai:preBuild UP-TO-DATE
 > Task :common:preBuild UP-TO-DATE
 > Task :ai:generateDebugAssets UP-TO-DATE
-> Task :ai:preBuild UP-TO-DATE
 > Task :common:preDebugBuild UP-TO-DATE
 > Task :ai:preDebugBuild UP-TO-DATE
 > Task :common:writeDebugAarMetadata
 > Task :ai:prepareLintJarForPublish
-> Task :ai:mergeDebugJniLibFolders
 > Task :ai:generateDebugResources
+> Task :ai:mergeDebugJniLibFolders
 > Task :ai:processDebugNavigationResources
-> Task :ai:mergeDebugNativeLibs NO-SOURCE
 > Task :common:generateDebugResources
+> Task :ai:mergeDebugNativeLibs NO-SOURCE
 > Task :ai:stripDebugDebugSymbols NO-SOURCE
 > Task :ai:copyDebugJniLibsProjectAndLocalJars
 > Task :common:processDebugNavigationResources
+> Task :common:javaPreCompileDebug
 > Task :common:packageDebugResources
 > Task :ai:packageDebugResources
+> Task :ai:extractDeepLinksForAarDebug
+> Task :ai:mergeDebugAssets
 > Task :common:parseDebugLocalResources
+> Task :ai:javaPreCompileDebug
+> Task :ai:prepareDebugArtProfile
 > Task :ai:parseDebugLocalResources
 > Task :common:generateDebugRFile
 > Task :ai:generateDebugRFile
-> Task :ai:extractDeepLinksForAarDebug
-> Task :common:javaPreCompileDebug
-> Task :ai:mergeDebugAssets
-> Task :ai:javaPreCompileDebug
-> Task :ai:prepareDebugArtProfile
 > Task :ai:writeDebugAarMetadata
 > Task :app:preBuild UP-TO-DATE
 > Task :app:preDebugBuild UP-TO-DATE
 > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
-> Task :ai:processDebugManifest
+> Task :ai:checkDebugAarMetadata
 > Task :app:generateDebugBuildConfig
 > Task :ai:extractDebugSupportedLocales
 > Task :app:extractDebugSupportedLocales
@@ -66,28 +66,97 @@ w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/build.gradle
 > Task :local-llm:extractDebugSupportedLocales
 > Task :material3:preBuild UP-TO-DATE
 > Task :material3:preDebugBuild UP-TO-DATE
-> Task :ai:checkDebugAarMetadata
+> Task :material3:extractDebugSupportedLocales
 > Task :search:preBuild UP-TO-DATE
 > Task :search:preDebugBuild UP-TO-DATE
-> Task :material3:extractDebugSupportedLocales
+> Task :search:extractDebugSupportedLocales
 > Task :speech:preBuild UP-TO-DATE
 > Task :speech:preDebugBuild UP-TO-DATE
-> Task :search:extractDebugSupportedLocales
 > Task :speech:extractDebugSupportedLocales
+> Task :ai:processDebugManifest
 > Task :workspace:preBuild UP-TO-DATE
 > Task :workspace:preDebugBuild UP-TO-DATE
 > Task :workspace:extractDebugSupportedLocales
-> Task :web:installWebUiDeps FAILED
 > Task :app:generateDebugResources
+> Task :document:processDebugNavigationResources
+> Task :highlight:processDebugNavigationResources
+> Task :local-llm:processDebugNavigationResources
+> Task :material3:processDebugNavigationResources
+> Task :search:processDebugNavigationResources
+> Task :speech:processDebugNavigationResources
+> Task :workspace:processDebugNavigationResources
+> Task :document:generateDebugResources
+> Task :document:packageDebugResources
+
+> Task :web:installWebUiDeps
+bun install v1.3.14 (0d9b296a)
+Resolving... [1.55s] migrated lockfile from pnpm-lock.yaml
+
++ @react-router/dev@7.13.0 (v8.3.0 available)
++ @tailwindcss/vite@4.3.0 (v4.3.3 available)
++ @types/node@24.12.4 (v26.1.2 available)
++ @types/react@19.2.14 (v19.2.18 available)
++ @types/react-dom@19.2.3 (v19.2.4 available)
++ oxfmt@0.32.0 (v0.61.0 available)
++ oxlint@1.64.0 (v1.76.0 available)
++ tailwindcss@4.3.0 (v4.3.3 available)
++ tsx@4.21.0 (v4.23.1 available)
++ tw-animate-css@1.4.0
++ typescript@5.9.3 (v7.0.2 available)
++ vite@7.3.3 (v8.2.0 available)
++ vite-plugin-svgr@4.5.0 (v5.2.0 available)
++ vite-tsconfig-paths@5.1.4 (v6.1.1 available)
++ @react-router/node@7.13.0 (v8.3.0 available)
++ @react-router/serve@7.13.0 (v8.3.0 available)
++ @streamdown/cjk@1.0.3
++ @tanstack/react-query@5.100.10 (v5.101.4 available)
++ class-variance-authority@0.7.1
++ clsx@2.1.1
++ dayjs@1.11.20 (v1.11.21 available)
++ file-type@21.3.4 (v22.0.1 available)
++ i18next@25.10.10 (v26.3.6 available)
++ immer@11.1.8 (v11.1.15 available)
++ isbot@5.1.40 (v5.2.1 available)
++ katex@0.16.45 (v0.18.1 available)
++ ky@1.14.3 (v2.0.2 available)
++ lucide-react@0.564.0 (v1.28.0 available)
++ motion@12.38.0 (v12.43.0 available)
++ radix-ui@1.4.3 (v1.6.7 available)
++ react@19.2.6 (v19.2.8 available)
++ react-dom@19.2.6 (v19.2.8 available)
++ react-i18next@16.6.6 (v17.0.11 available)
++ react-infinite-scroll-component@6.1.1 (v7.2.1 available)
++ react-resizable-panels@4.11.1 (v4.12.2 available)
++ react-router@7.13.0 (v8.3.0 available)
++ rehype-katex@7.0.1
++ rehype-raw@7.0.0
++ remark-gfm@4.0.1
++ remark-math@6.0.0
++ shiki@3.23.0 (v4.4.1 available)
++ sonner@2.0.7
++ streamdown@2.5.0
++ tailwind-merge@3.6.0
++ use-stick-to-bottom@1.1.4 (v1.1.6 available)
++ uuid@13.0.2 (v14.0.1 available)
++ vaul@1.1.2
++ zod@4.4.3
++ zustand@5.0.13 (v5.0.14 available)
+
+612 packages installed [3.37s]
+
+> Task :document:parseDebugLocalResources
+> Task :document:generateDebugRFile
+> Task :web:buildWebUi FAILED
 > Task :app:compileDebugAidl
+> Task :document:compileDebugKotlin
 > Task :common:compileDebugKotlin
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/gradle_build-1785650715373.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/gradle_build-1785651142557.json
 
 FAILURE: Build failed with an exception.
 
 * What went wrong:
-Execution failed for task ':web:installWebUiDeps'.
-> A problem occurred starting process 'command 'bun''
+Execution failed for task ':web:buildWebUi'.
+> A problem occurred starting process 'command 'pnpm''
 
 * Try:
 > Run with --info or --debug option to get more log output.
@@ -95,7 +164,7 @@ Execution failed for task ':web:installWebUiDeps'.
 > Get more help at https://help.gradle.org.
 
 * Exception is:
-org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':web:installWebUiDeps'.
+org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':web:buildWebUi'.
 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:135)
 	at org.gradle.internal.Try$Failure.ifSuccessfulOrElse(Try.java:288)
 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:133)
@@ -127,9 +196,40 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':web:ins
 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:328)
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:146)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:131)
+	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$11(DefaultBuildLifecycleController.java:323)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:304)
+	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$9(StateTransitionController.java:215)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:45)
+	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:215)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:314)
+	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.lambda$withLocksAcquired$0(DefaultWorkerLeaseService.java:275)
+	at org.gradle.internal.work.ResourceLockStatistics$1.measure(ResourceLockStatistics.java:43)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocksAcquired(DefaultWorkerLeaseService.java:273)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:265)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:128)
+	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:182)
+	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:199)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:199)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
-Caused by: org.gradle.process.ProcessExecutionException: A problem occurred starting process 'command 'bun''
+Caused by: org.gradle.process.ProcessExecutionException: A problem occurred starting process 'command 'pnpm''
 	at org.gradle.process.internal.DefaultExecHandle.execExceptionFor(DefaultExecHandle.java:245)
 	at org.gradle.process.internal.DefaultExecHandle.setEndStateInfo(DefaultExecHandle.java:222)
 	at org.gradle.process.internal.DefaultExecHandle.failed(DefaultExecHandle.java:412)
@@ -137,7 +237,7 @@ Caused by: org.gradle.process.ProcessExecutionException: A problem occurred star
 	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
 	at org.gradle.process.internal.ExecHandleRunner.run(ExecHandleRunner.java:180)
 	... 2 more
-Caused by: net.rubygrapefruit.platform.NativeException: Could not start 'bun'
+Caused by: net.rubygrapefruit.platform.NativeException: Could not start 'pnpm'
 	at net.rubygrapefruit.platform.internal.DefaultProcessLauncher.start(DefaultProcessLauncher.java:27)
 	at net.rubygrapefruit.platform.internal.WrapperProcessLauncher.start(WrapperProcessLauncher.java:36)
 	at org.gradle.process.internal.ExecHandleRunner.startProcess(ExecHandleRunner.java:201)
@@ -145,13 +245,13 @@ Caused by: net.rubygrapefruit.platform.NativeException: Could not start 'bun'
 	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
 	at org.gradle.process.internal.ExecHandleRunner.run(ExecHandleRunner.java:158)
 	... 2 more
-Caused by: java.io.IOException: Cannot run program "bun" (in directory "/home/runner/work/rikkahub-agent/rikkahub-agent/web-ui"): Exec failed, error: 2 (No such file or directory) 
+Caused by: java.io.IOException: Cannot run program "pnpm" (in directory "/home/runner/work/rikkahub-agent/rikkahub-agent/web-ui"): Exec failed, error: 2 (No such file or directory) 
 	at net.rubygrapefruit.platform.internal.DefaultProcessLauncher.start(DefaultProcessLauncher.java:25)
 	... 7 more
 Caused by: java.io.IOException: Exec failed, error: 2 (No such file or directory) 
 	... 8 more
 
 
-BUILD FAILED in 3m
-38 actionable tasks: 38 executed
+BUILD FAILED in 2m 50s
+51 actionable tasks: 51 executed
 Configuration cache entry stored.
