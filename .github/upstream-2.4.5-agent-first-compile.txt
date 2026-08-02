@@ -1,0 +1,143 @@
+Upstream 2.4.5 integration compile failure
+Branch commit: 25262dc8464c85a8af2b97c09ae5026b018da701
+
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/local-llm/build.gradle.kts:26:35: 'fun setSrcDirs(srcDirs: Iterable<*>): Any' is deprecated. Use `directories` mutable set instead.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/build.gradle.kts:25:20: 'fun srcDir(srcDir: Any): Any' is deprecated. Use `directories` mutable set instead.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/workspace/src/main/java/me/rerere/workspace/WorkspaceManager.kt:19:36 Unresolved reference 'bindMounts'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/workspace/src/main/java/me/rerere/workspace/WorkspaceManager.kt:19:68 Unresolved reference 'it'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/material-color-utilities/kotlin/dynamiccolor/ColorSpec2025.kt:904:37 Unnecessary non-null assertion (!!) on a non-null receiver of type 'DynamicColor'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/material-color-utilities/kotlin/dynamiccolor/ColorSpec2025.kt:1107:36 Unnecessary non-null assertion (!!) on a non-null receiver of type 'DynamicColor'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/material-color-utilities/kotlin/dynamiccolor/ColorSpec2025.kt:1253:33 Unnecessary non-null assertion (!!) on a non-null receiver of type 'DynamicColor'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/speech/src/main/java/me/rerere/asr/providers/MiMoASRController.kt:256:41 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/context/ProviderContextPlanner.kt:361:22 'data class ToolCall : UIMessagePart' is deprecated. Use UIMessagePart.Tool instead.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/context/ProviderContextPlanner.kt:362:22 'data class ToolResult : UIMessagePart' is deprecated. Use UIMessagePart.Tool instead.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/context/ProviderContextPlanner.kt:364:19 'data object Search : UIMessagePart' is deprecated. Deprecated.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/ToolReplayArguments.kt:17:41 Non-public primary constructor is exposed via the generated 'copy()' method of the 'data' class.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:299:82 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:424:78 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/openai/ResponseAPI.kt:185:82 Unnecessary safe call on a non-null receiver of type 'HttpException'.
+FAILURE: Build failed with an exception.
+* What went wrong:
+   > Compilation error. See log for more details
+
+Last 120 build-log lines:
+rendering chunks...
+[2mbuild/server/[22m[32m.vite/manifest.json               [39m[1m[2m  0.23 kB[22m[1m[22m
+[2mbuild/server/[22m[2massets/[22m[35mserver-build-B-kJOKMr.css  [39m[1m[2m117.15 kB[22m[1m[22m
+[2mbuild/server/[22m[36mindex.js                          [39m[1m[2m 59.93 kB[22m[1m[22m
+
+[32m✓[39m 1 asset cleaned from React Router server build.
+[2mbuild/server/assets/server-build-B-kJOKMr.css[22m
+
+SPA Mode: Generated [1mbuild/client/index.html[22m
+Removing the server build in [32m/home/runner/work/rikkahub-agent/rikkahub-agent/web-ui/build/server[39m due to ssr:false
+[32m✓ built in 1.47s[39m
+📦 Starting build output copy...
+   Source: ./build/client
+   Target: ../web/src/main/resources/static
+🧹 Cleaned target directory
+✅ Build output copied successfully!
+
+> Task :web:preBuild
+> Task :web:preDebugBuild
+> Task :common:compileDebugKotlin
+> Task :web:extractDebugSupportedLocales
+> Task :app:generateDebugLocaleConfig
+> Task :document:compileDebugKotlin
+> Task :web:processDebugNavigationResources
+> Task :highlight:compileDebugKotlin
+> Task :app:packageDebugResources
+> Task :common:compileDebugJavaWithJavac NO-SOURCE
+> Task :common:bundleLibCompileToJarDebug
+> Task :app:processDebugNavigationResources
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile
+> Task :highlight:javaPreCompileDebug
+> Task :local-llm:generateDebugResources
+> Task :local-llm:packageDebugResources
+> Task :local-llm:parseDebugLocalResources
+> Task :local-llm:generateDebugRFile
+> Task :local-llm:javaPreCompileDebug
+> Task :material3:generateDebugResources
+> Task :material3:packageDebugResources
+> Task :material3:parseDebugLocalResources
+> Task :material3:generateDebugRFile
+> Task :document:compileDebugJavaWithJavac
+> Task :document:bundleLibCompileToJarDebug
+> Task :material3:javaPreCompileDebug
+> Task :search:generateDebugResources
+> Task :search:packageDebugResources
+> Task :search:parseDebugLocalResources
+> Task :search:generateDebugRFile
+> Task :search:javaPreCompileDebug
+> Task :speech:generateDebugResources
+> Task :speech:packageDebugResources
+> Task :speech:parseDebugLocalResources
+> Task :speech:generateDebugRFile
+> Task :highlight:compileDebugJavaWithJavac NO-SOURCE
+> Task :highlight:bundleLibCompileToJarDebug
+> Task :speech:javaPreCompileDebug
+> Task :web:generateDebugResources
+> Task :web:packageDebugResources
+> Task :web:parseDebugLocalResources
+> Task :web:generateDebugRFile
+> Task :web:compileDebugKotlin
+> Task :web:javaPreCompileDebug
+> Task :web:compileDebugJavaWithJavac NO-SOURCE
+> Task :web:bundleLibCompileToJarDebug
+> Task :workspace:generateDebugResources
+> Task :workspace:packageDebugResources
+> Task :workspace:parseDebugLocalResources
+> Task :workspace:generateDebugRFile
+
+> Task :workspace:compileDebugKotlin FAILED
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/workspace/src/main/java/me/rerere/workspace/WorkspaceManager.kt:19:36 Unresolved reference 'bindMounts'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/workspace/src/main/java/me/rerere/workspace/WorkspaceManager.kt:19:68 Unresolved reference 'it'.
+
+> Task :material3:compileDebugKotlin
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/material-color-utilities/kotlin/dynamiccolor/ColorSpec2025.kt:904:37 Unnecessary non-null assertion (!!) on a non-null receiver of type 'DynamicColor'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/material-color-utilities/kotlin/dynamiccolor/ColorSpec2025.kt:1107:36 Unnecessary non-null assertion (!!) on a non-null receiver of type 'DynamicColor'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/material-color-utilities/kotlin/dynamiccolor/ColorSpec2025.kt:1253:33 Unnecessary non-null assertion (!!) on a non-null receiver of type 'DynamicColor'.
+
+> Task :speech:compileDebugKotlin
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/speech/src/main/java/me/rerere/asr/providers/MiMoASRController.kt:256:41 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+
+> Task :ai:compileDebugKotlin
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/context/ProviderContextPlanner.kt:361:22 'data class ToolCall : UIMessagePart' is deprecated. Use UIMessagePart.Tool instead.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/context/ProviderContextPlanner.kt:362:22 'data class ToolResult : UIMessagePart' is deprecated. Use UIMessagePart.Tool instead.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/context/ProviderContextPlanner.kt:364:19 'data object Search : UIMessagePart' is deprecated. Deprecated.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/ToolReplayArguments.kt:17:41 Non-public primary constructor is exposed via the generated 'copy()' method of the 'data' class.
+
+The generated 'copy()' will change its visibility in future releases.
+
+To suppress the warning do one of the following:
+- Annotate the data class with the '@ConsistentCopyVisibility' annotation.
+- Use the '-Xconsistent-data-class-copy-visibility' compiler flag.
+- Annotate the data class with the '@ExposedCopyVisibility' annotation 
+  (Discouraged, but can be used to keep binary compatibility).
+
+To learn more, see the documentation of the '@ConsistentCopyVisibility' and '@ExposedCopyVisibility' annotations.
+
+This will become an error in language version 2.5. See https://youtrack.jetbrains.com/issue/KT-11914.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:299:82 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt:424:78 Unnecessary safe call on a non-null receiver of type 'ResponseBody'.
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/ai/src/main/java/me/rerere/ai/provider/providers/openai/ResponseAPI.kt:185:82 Unnecessary safe call on a non-null receiver of type 'HttpException'.
+
+[Incubating] Problems report is available at: file:///home/runner/work/rikkahub-agent/rikkahub-agent/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':workspace:compileDebugKotlin' (registered by plugin 'com.android.internal.library').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 3m 38s
+94 actionable tasks: 94 executed
+Configuration cache entry stored.
