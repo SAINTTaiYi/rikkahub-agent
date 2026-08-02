@@ -38,10 +38,17 @@ jobs:
           source = path.read_text()
           old = 'SELECT id, assistant_id as assistantId, title, is_pinned as isPinned, '
           new = 'SELECT id, assistant_id as assistantId, folder_id as folderId, title, is_pinned as isPinned, '
-          count = source.count(old)
-          if count != 2:
-              raise SystemExit(f'Expected two lightweight projections, found {count}')
-          path.write_text(source.replace(old, new))
+
+          for function in ('getRecentConversationSummaries', 'getConversationSummaryById'):
+              method_pos = source.index(f'suspend fun {function}')
+              query_pos = source.rfind('@Query', 0, method_pos)
+              query = source[query_pos:method_pos]
+              count = query.count(old)
+              if count != 1:
+                  raise SystemExit(f'Expected one projection in {function}, found {count}')
+              source = source[:query_pos] + query.replace(old, new) + source[method_pos:]
+
+          path.write_text(source)
           PY
 
           git rm -f --ignore-unmatch .github/upstream-2.4.5-agent-first-compile.txt
