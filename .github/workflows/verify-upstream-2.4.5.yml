@@ -36,8 +36,8 @@ jobs:
           from pathlib import Path
           path = Path('app/src/main/java/me/rerere/rikkahub/data/db/dao/ConversationDAO.kt')
           source = path.read_text()
-          old = 'SELECT id, assistantId, title, isPinned, createAt, updateAt'
-          new = 'SELECT id, assistantId, folderId, title, isPinned, createAt, updateAt'
+          old = 'SELECT id, assistant_id as assistantId, title, is_pinned as isPinned, '
+          new = 'SELECT id, assistant_id as assistantId, folder_id as folderId, title, is_pinned as isPinned, '
           count = source.count(old)
           if count != 2:
               raise SystemExit(f'Expected two lightweight projections, found {count}')
