@@ -1,4 +1,4 @@
-name: Build Unlimited Agent APK
+name: Build Long-Running Agent APK
 
 on:
   push:
@@ -24,20 +24,39 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Remove main-agent 32-step ceiling
+      - name: Remove call ceiling and extend turn budget
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          path = Path("app/src/main/java/me/rerere/rikkahub/service/ChatService.kt")
-          text = path.read_text()
-          old = "maxSteps = subAgentProfile?.generationMaxSteps() ?: 32,"
-          new = "maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE,"
-          if text.count(old) == 1 and new not in text:
+
+          changes = [
+              (
+                  Path("app/src/main/java/me/rerere/rikkahub/service/ChatService.kt"),
+                  "maxSteps = subAgentProfile?.generationMaxSteps() ?: 32,",
+                  "maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE,",
+              ),
+              (
+                  Path("app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt"),
+                  "const val DEFAULT_TURN_BUDGET_MS = 10L * 60L * 1_000L // 10 min",
+                  "const val DEFAULT_TURN_BUDGET_MS = 4L * 60L * 60L * 1_000L // 4 h",
+              ),
+              (
+                  Path("app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt"),
+                  "const val MAX_TURN_BUDGET_MS = 60L * 60L * 1_000L // 60 min",
+                  "const val MAX_TURN_BUDGET_MS = 8L * 60L * 60L * 1_000L // 8 h",
+              ),
+          ]
+          for path, old, new in changes:
+              text = path.read_text()
+              if new in text and old not in text:
+                  continue
+              if text.count(old) != 1:
+                  raise SystemExit(f"Refusing ambiguous patch in {path}: {old!r}")
               path.write_text(text.replace(old, new, 1))
-          elif text.count(new) != 1:
-              raise SystemExit("Refusing an ambiguous source patch")
           PY
           grep -F "maxSteps = subAgentProfile?.generationMaxSteps() ?: Int.MAX_VALUE," app/src/main/java/me/rerere/rikkahub/service/ChatService.kt
+          grep -F "DEFAULT_TURN_BUDGET_MS = 4L * 60L * 60L * 1_000L" app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
+          grep -F "MAX_TURN_BUDGET_MS = 8L * 60L * 60L * 1_000L" app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
 
       - uses: actions/setup-java@v4
         with:
@@ -80,18 +99,21 @@ jobs:
           code=${PIPESTATUS[0]}
           set -e
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
-          tail -n 120 gradle-build.log > gradle-build-tail.log
+          {
+            grep -E '(^e: |^.*\.kt:[0-9]+:[0-9]+:|^error:)' gradle-build.log | tail -n 40 || true
+            tail -n 60 gradle-build.log
+          } > gradle-build-diagnosis.log
 
       - name: Persist bounded failure diagnosis
         if: steps.build.outputs.exit_code != '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp gradle-build-tail.log .github/build-unlimited-agent-error.log
+          cp gradle-build-diagnosis.log .github/build-unlimited-agent-error.log
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .github/build-unlimited-agent-error.log
-          git commit -m "Record bounded unlimited-agent build failure [skip ci]"
+          git commit -m "Record long-agent build failure [skip ci]"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push origin "HEAD:${GITHUB_REF_NAME}"
           exit 1
@@ -100,7 +122,7 @@ jobs:
         run: test -n "$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
       - uses: actions/upload-artifact@v4
         with:
-          name: rikkahub-agent-unlimited-debug
+          name: rikkahub-agent-long-running-debug
           path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 30
@@ -109,10 +131,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          if git diff --quiet -- app/src/main/java/me/rerere/rikkahub/service/ChatService.kt app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt; then
+            echo "Verified source patch already committed."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt
-          git commit -m "Remove main-agent 32-step ceiling [skip ci]"
+          git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
+          git commit -m "Allow four-hour main-agent turns [skip ci]"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
@@ -121,5 +147,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
-          tag="unlimited-agent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Agent - unlimited steps" --notes "Main-agent maxSteps changed from 32 to Int.MAX_VALUE. Cancellation, wall-clock, and loop-guard protections remain enabled. Debug-signed APK."
+          tag="long-agent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Agent - long-running turns" --notes "Main-agent steps: Int.MAX_VALUE. Default wall-clock turn budget: 4 hours. Configurable upper limit: 8 hours. Manual cancellation, loop detection, and individual tool timeouts remain enabled. Debug-signed APK."
