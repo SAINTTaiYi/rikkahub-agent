@@ -1,0 +1,137 @@
+name: Fix and compile upstream 2.4.5 integration
+
+on:
+  push:
+    branches:
+      - integration/upstream-2.4.5-agent-first
+    paths:
+      - .github/workflows/fix-upstream-2.4.5-compile.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-2.4.5-compile-fix
+  cancel-in-progress: false
+
+jobs:
+  fix-and-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out integration branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: integration/upstream-2.4.5-agent-first
+
+      - name: Repair Agent integration boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          agent_baseline="6fdba2a578dc39f0ce071ff3a116a016c2965033"
+
+          git checkout "$agent_baseline" -- \
+            ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt \
+            ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt \
+            ai/src/main/java/me/rerere/ai/ui/Message.kt \
+            material3/src/main/java/me/rerere/material3/DynamicSchemeExt.kt
+
+          sed -i 's/CodeHighlightText/HighlightText/g' \
+            highlight/src/main/java/me/rerere/highlight/HighlighterPreview.kt
+
+          # These providers were merged without their setting types or registry wiring.
+          git rm -f --ignore-unmatch \
+            speech/src/main/java/me/rerere/tts/provider/providers/StepTTSProvider.kt \
+            speech/src/main/java/me/rerere/tts/provider/providers/FishAudioTTSProvider.kt \
+            speech/src/main/java/me/rerere/tts/provider/providers/ElevenLabsTTSProvider.kt
+          sed -i '/import me\.rerere\.tts\.provider\.providers\.StepTTSProvider/d' \
+            speech/src/main/java/me/rerere/tts/provider/TTSManager.kt
+
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          old_ratio = re.compile(
+              r'when \(params\.aspectRatio\) \{\s*'
+              r'ImageAspectRatio\.SQUARE -> "[^"]+"\s*'
+              r'ImageAspectRatio\.LANDSCAPE -> "[^"]+"\s*'
+              r'ImageAspectRatio\.PORTRAIT -> "[^"]+"\s*'
+              r'\}',
+              re.MULTILINE,
+          )
+
+          openai_path = Path('ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt')
+          openai = openai_path.read_text()
+          openai = openai.replace('import me.rerere.ai.ui.ImageAspectRatio\n', '')
+          openai, replacements = old_ratio.subn('params.size', openai)
+          if replacements != 3:
+              raise SystemExit(f'Expected 3 OpenAI size migrations, got {replacements}')
+          openai_path.write_text(openai)
+
+          google_path = Path('ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt')
+          google = google_path.read_text()
+          google = google.replace(
+              'import me.rerere.ai.ui.ImageAspectRatio\n',
+              'import me.rerere.ai.ui.ImageGenSize\n',
+          )
+          google_ratio = '''when (params.size) {
+                                  ImageGenSize.LANDSCAPE_1536.value,
+                                  ImageGenSize.LANDSCAPE_1792.value -> "16:9"
+                                  ImageGenSize.PORTRAIT_1536.value,
+                                  ImageGenSize.PORTRAIT_1792.value -> "9:16"
+                                  else -> "1:1"
+                              }'''
+          google, replacements = old_ratio.subn(google_ratio, google)
+          if replacements != 1:
+              raise SystemExit(f'Expected 1 Google size migration, got {replacements}')
+          google_path.write_text(google)
+          PY
+
+          git rm -f --ignore-unmatch .github/upstream-2.4.5-agent-first-compile.txt
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: align Agent providers and speech with upstream APIs"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+          fi
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Compile debug Kotlin
+        shell: bash
+        run: |
+          set +e
+          chmod +x gradlew
+          ./gradlew :app:compileDebugKotlin 2>&1 | tee /tmp/upstream-2.4.5-compile.log
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -ne 0 ]; then
+            {
+              echo "Upstream 2.4.5 integration compile failure"
+              echo "Branch commit: $(git rev-parse HEAD)"
+              echo
+              grep -E '^e: |^w: |FAILURE:|What went wrong|Compilation error' /tmp/upstream-2.4.5-compile.log | tail -n 300 || true
+              echo
+              echo "Last 120 build-log lines:"
+              tail -n 120 /tmp/upstream-2.4.5-compile.log
+            } > .github/upstream-2.4.5-agent-first-compile.txt
+            git add .github/upstream-2.4.5-agent-first-compile.txt
+            git commit -m "ci: record upstream integration compile diagnostics"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+            exit "$status"
+          fi

@@ -1,0 +1,139 @@
+name: Try agent-first upstream 2.4.5 merge
+
+on:
+  push:
+    branches:
+      - integration/upstream-2.4.5-agent-first
+    paths:
+      - .github/workflows/try-upstream-2.4.5-agent-first.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-2.4.5-agent-first
+  cancel-in-progress: false
+
+jobs:
+  integrate-and-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out trial branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: integration/upstream-2.4.5-agent-first
+
+      - name: Merge official RikkaHub 2.4.5
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add official https://github.com/rikkahub/rikkahub.git
+          git fetch --no-tags official refs/tags/2.4.5:refs/tags/official-2.4.5
+          upstream_sha="$(git rev-parse refs/tags/official-2.4.5^{commit})"
+
+          if git merge-base --is-ancestor "$upstream_sha" HEAD; then
+            echo "Official 2.4.5 is already integrated."
+            exit 0
+          fi
+
+          set +e
+          git merge --no-ff -X ours "$upstream_sha" -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
+          merge_status=$?
+          set -e
+
+          if [ "$merge_status" -ne 0 ]; then
+            git checkout HEAD -- \
+              app/src/main/java/me/rerere/rikkahub/data/ai/tools/LocalTools.kt \
+              highlight/src/main/java/me/rerere/highlight/HighlightText.kt
+
+            git rm -r -f --ignore-unmatch -- \
+              AGENTS.md \
+              CLAUDE.md \
+              README_ZH_CN.md \
+              README_ZH_TW.md \
+              app/src/release/generated/baselineProfiles/baseline-prof.txt \
+              app/src/release/generated/baselineProfiles/startup-prof.txt
+
+            git add -A
+            remaining="$(git diff --name-only --diff-filter=U)"
+            if [ -n "$remaining" ]; then
+              echo "::error::Unexpected unmerged paths remain:"
+              printf '%s\n' "$remaining"
+              exit 1
+            fi
+          fi
+
+          rm -rf .github/workflows
+          git checkout HEAD -- .github/workflows
+          git add -A -- .github/workflows
+
+          if git rev-parse -q --verify MERGE_HEAD >/dev/null; then
+            git commit -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
+          fi
+
+          git push origin HEAD:integration/upstream-2.4.5-agent-first
+
+      - name: Restore Agent integration boundary files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # The automatic merge corrupted function/API boundaries in these files.
+          # Restore the last known-good Agent variants and keep other 2.4.5 changes.
+          agent_baseline="6fdba2a578dc39f0ce071ff3a116a016c2965033"
+          git checkout "$agent_baseline" -- \
+            ai/src/main/java/me/rerere/ai/provider/providers/GoogleProvider.kt \
+            ai/src/main/java/me/rerere/ai/provider/providers/OpenAIProvider.kt \
+            ai/src/main/java/me/rerere/ai/ui/Message.kt \
+            highlight/src/main/java/me/rerere/highlight/HighlighterPreview.kt
+          git rm -f --ignore-unmatch .github/upstream-2.4.5-agent-first-compile.txt
+
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: restore Agent provider and highlighter integration boundaries"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+          fi
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Compile debug Kotlin
+        shell: bash
+        run: |
+          set +e
+          chmod +x gradlew
+          ./gradlew :app:compileDebugKotlin 2>&1 | tee /tmp/upstream-2.4.5-compile.log
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -ne 0 ]; then
+            {
+              echo "Agent-first upstream 2.4.5 compile failure"
+              echo "Branch commit: $(git rev-parse HEAD)"
+              echo
+              grep -E '^e: |^w: |FAILURE:|What went wrong|Compilation error' /tmp/upstream-2.4.5-compile.log | tail -n 300 || true
+              echo
+              echo "Last 120 build-log lines:"
+              tail -n 120 /tmp/upstream-2.4.5-compile.log
+            } > .github/upstream-2.4.5-agent-first-compile.txt
+            git add .github/upstream-2.4.5-agent-first-compile.txt
+            git commit -m "ci: record agent-first compile diagnostics"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+            exit "$status"
+          fi

@@ -1,0 +1,545 @@
+Upstream 2.4.5 integration compile failure
+Branch commit: f8bef05c9ce78ef7ee5ab9a14aae5a7a7c571e73
+
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:505:23 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:513:34 Unresolved reference 'cancel'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:519:32 Cannot access 'val BASE_RECONNECT_DELAY_MS: Long': it is private in file.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:520:46 Cannot access 'val MAX_RECONNECT_DELAY_MS: Long': it is private in file.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:537:80 Unresolved reference 'Dispatchers'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:546:30 Unresolved reference 'Implementation'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:553:23 Unresolved reference 'onClose'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:554:23 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:555:37 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:555:37 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:555:51 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:561:23 Unresolved reference 'onError'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:561:33 Cannot infer type for value parameter 'error'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:562:23 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:562:87 Unresolved reference 'message'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:563:37 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:563:37 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:563:51 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:575:19 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:9 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:23 Unresolved reference 'emit'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:28 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:42 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:48 Cannot infer type for type parameter 'K'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:48 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:63 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:580:69 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:581:13 Unresolved reference 'put'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:585:5 Conflicting overloads:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:586:16 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:586:30 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:586:34 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:651:13 Unresolved reference 'ToolSchema'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:651:36 Unresolved reference 'InputSchema'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:652:12 Unresolved reference 'InputSchema'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:652:41 Unresolved reference 'ToolSchema'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:652:46 Unresolved reference 'properties'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:652:95 Unresolved reference 'ToolSchema'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpManager.kt:652:100 Unresolved reference 'required'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:76:71 No parameter with name 'oauth' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:87:46 Unresolved reference 'oauth'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:105:37 Cannot infer type for type parameter 'K'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:105:37 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:105:37 This declaration needs opt-in. Its usage must be marked with '@kotlin.ExperimentalStdlibApi' or '@OptIn(kotlin.ExperimentalStdlibApi::class)'
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:111:46 Argument type mismatch: actual type is 'Map.Entry<uninferred ??? (Unknown type for type parameter K), uninferred ??? (Unknown type for type parameter V)>', but 'McpOAuthState?' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:112:72 No parameter with name 'oauth' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:122:34 Unresolved reference 'oauth'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:145:42 Unresolved reference 'oauth'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:149:45 Unresolved reference 'oauth'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:172:28 Argument type mismatch: actual type is 'Any', but 'String?' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:183:24 Argument type mismatch: actual type is 'Any', but 'String' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:192:18 Unresolved reference 'error'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:192:25 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:192:25 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:192:29 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:197:24 Argument type mismatch: actual type is 'Any', but 'String' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:199:20 Argument type mismatch: actual type is 'Int', but 'String' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:208:28 Argument type mismatch: actual type is 'Any', but 'String?' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:226:17 Unresolved reference 'McpOAuthCallback'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:226:37 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:228:24 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:229:13 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:232:22 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:232:48 Unresolved reference 'McpOAuthCallback'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:233:22 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:233:28 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:233:33 Unresolved reference 'state'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpOAuthCoordinator.kt:248:81 No parameter with name 'oauth' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpSessionRegistry.kt:490:31 Unresolved reference 'oauth'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpSessionRegistry.kt:490:38 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpSessionRegistry.kt:490:45 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpSessionRegistry.kt:490:50 Unresolved reference 'enabled'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/McpSessionRegistry.kt:490:61 Unresolved reference 'accessToken'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:107:12 'when' expression must be exhaustive. Add the 'Authorizing', 'NeedsAuthorization' branches or an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:175:21 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:175:29 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:175:43 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:182:18 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:182:32 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:254:32 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:254:46 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:288:22 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:288:30 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:288:44 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:407:21 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:410:27 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:410:35 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:410:49 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:417:21 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:517:17 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:522:21 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:526:27 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:526:35 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:526:49 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:553:17 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:601:53 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:601:67 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:613:55 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:613:69 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:652:27 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:652:35 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/mcp/control/McpControlTools.kt:652:49 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:17:19 Unresolved reference 'SkillManager'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:31:43 Unresolved reference 'getContent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:53:36 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:55:46 Unresolved reference 'readSkillBody'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:57:46 Unresolved reference 'readSkillFileCached'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:61:45 Unresolved reference 'trim'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:132:46 Unresolved reference 'SkillManager'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:161:48 Unresolved reference 'getSkillDir'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:162:63 Unresolved reference 'SkillManager'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:165:48 Unresolved reference 'readSkillBody'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:172:43 Unresolved reference 'resolveSkillFile'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/SkillsTools.kt:183:39 Unresolved reference 'SkillManager'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/WebSearchPolicy.kt:13:28 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/local/TextToSpeechTool.kt:32:15 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/tools/local/TextToSpeechTool.kt:32:32 Unresolved reference 'getPromptGuidance'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/transformers/TemplateTransformer.kt:5:25 Conflicting import: imported name 'TimeZone' is ambiguous.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/ai/transformers/TemplateTransformer.kt:15:25 Conflicting import: imported name 'TimeZone' is ambiguous.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/datastore/migration/PreferenceStoreV4Migration.kt:21:29 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/datastore/migration/PreferenceStoreV4Migration.kt:21:49 Unresolved reference 'ENABLE_WEB_SEARCH'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/files/SkillFrontmatterParser.kt:3:8 Redeclaration:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/files/SkillManager.kt:554:8 Redeclaration:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/files/SkillManager.kt:565:49 Unresolved reference 'BOM'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/files/SkillManager.kt:584:49 Unresolved reference 'BOM'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:18:1 Serializable class has duplicate serial name of property 'enableWebSearch', either in the class itself or its supertypes
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:32:9 Conflicting declarations:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:32:9 Conflicting declarations:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:69:9 Conflicting declarations:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:69:9 Conflicting declarations:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:164:26 Unresolved reference 'SimpleCache'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:165:27 Unresolved reference 'TimeUnit'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:169:39 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:169:39 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/model/Assistant.kt:169:43 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/repository/ConversationRepository.kt:530:25 Unresolved reference 'updateFolderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/repository/ConversationRepository.kt:545:24 Argument type mismatch: actual type is 'Uuid?', but 'String' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/data/repository/FolderRepository.kt:43:25 Unresolved reference 'clearFolder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/AppModule.kt:519:5 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/AppModule.kt:520:9 Unresolved reference 'ChatNotificationManager'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/AppModule.kt:521:23 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/AppModule.kt:522:24 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/AppModule.kt:523:24 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/AppModule.kt:524:29 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/DataSourceModule.kt:210:5 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/di/DataSourceModule.kt:211:28 Unresolved reference 'folderDao'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:198:32 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:198:46 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:265:21 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:267:25 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:267:33 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:267:47 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:275:46 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:275:60 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:284:17 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:288:21 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:290:17 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:290:25 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:290:39 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:303:55 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:303:69 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:340:22 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:340:30 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:340:44 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:349:19 Cannot infer type for type parameter 'V'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:349:27 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:349:41 Unresolved reference 'value'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:375:35 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/owner/OwnerMcpOperationHandler.kt:387:79 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/privilege/RepositoryPrivilegedManagementBackend.kt:109:60 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/privilege/RepositoryPrivilegedManagementBackend.kt:420:76 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/security/SecondUserSecretAdapters.kt:196:65 'when' expression must be exhaustive. Add the 'is MiMo', 'is Step' branches or an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/security/SecondUserSecretAdapters.kt:202:75 'when' expression must be exhaustive. Add the 'is MiMo', 'is Step' branches or an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/security/SecondUserSecretAdapters.kt:208:88 'when' expression must be exhaustive. Add the 'is MiMo', 'is Step' branches or an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:63:33 Unresolved reference 'ChatGenerationUpdate'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:64:33 Unresolved reference 'ChatGenerationEnded'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:71:56 Unresolved reference 'ChatGenerationUpdate'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:78:53 Unresolved reference 'conversationId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:80:36 Unresolved reference 'conversationId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:82:42 Unresolved reference 'conversationId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:82:64 Unresolved reference 'lastMessage'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:82:83 Unresolved reference 'senderName'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:85:55 Unresolved reference 'ChatGenerationEnded'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:86:44 Unresolved reference 'conversationId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:88:36 Unresolved reference 'contentPreview'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:91:46 Unresolved reference 'conversationId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt:91:68 Unresolved reference 'senderName'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:670:37 Unresolved reference 'LifecycleEventObserver'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:670:62 Cannot infer type for implicit value parameter 'it'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:670:65 Cannot infer type for value parameter 'event'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:672:13 Unresolved reference 'Lifecycle'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:673:13 Unresolved reference 'Lifecycle'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:680:9 Unresolved reference 'ProcessLifecycleOwner'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:680:37 Unresolved reference 'lifecycle'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:684:9 Unresolved reference 'ProcessLifecycleOwner'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:684:37 Unresolved reference 'lifecycle'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:2197:31 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3411:17 Unresolved reference 'sendNotification'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3412:25 Unresolved reference 'CHAT_COMPLETED_NOTIFICATION_CHANNEL_ID'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3415:13 Unresolved reference 'title'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3416:13 Unresolved reference 'content'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3417:13 Unresolved reference 'autoCancel'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3418:13 Unresolved reference 'useDefaults'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3419:13 Unresolved reference 'category'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3419:24 Unresolved reference 'NotificationCompat'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3420:13 Unresolved reference 'contentIntent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3439:17 Unresolved reference 'sendNotification'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3440:25 Unresolved reference 'CHAT_LIVE_UPDATE_NOTIFICATION_CHANNEL_ID'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3443:13 Unresolved reference 'title'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3444:13 Unresolved reference 'content'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3445:13 Unresolved reference 'subText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3446:13 Unresolved reference 'ongoing'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3447:13 Unresolved reference 'onlyAlertOnce'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3448:13 Unresolved reference 'category'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3448:24 Unresolved reference 'NotificationCompat'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3449:13 Unresolved reference 'useBigTextStyle'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3450:13 Unresolved reference 'contentIntent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3451:13 Unresolved reference 'requestPromotedOngoing'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3452:13 Unresolved reference 'shortCriticalText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3506:17 Unresolved reference 'cancelNotification'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3509:75 Unresolved reference 'PendingIntent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3510:22 Unresolved reference 'Intent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3510:65 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3510:71 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3511:13 Unresolved reference 'flags'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3511:21 Unresolved reference 'Intent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3511:55 Unresolved reference 'Intent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3512:13 Unresolved reference 'putExtra'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3514:16 Unresolved reference 'PendingIntent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3518:13 Unresolved reference 'PendingIntent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3518:45 Unresolved reference 'PendingIntent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3563:74 Argument type mismatch: actual type is 'Uuid?', but 'String' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3573:57 Operator '==' cannot be applied to 'String' and 'Uuid'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3585:23 Operator '==' cannot be applied to 'String' and 'Uuid'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3586:80 Null cannot be a value of a non-null type 'String'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/service/ChatService.kt:3587:9 Unresolved reference 'folderRepository'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/setup/SettingsSetupTransactionBackend.kt:197:67 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/activity/McpOAuthCallbackActivity.kt:26:30 Unresolved reference 'McpOAuthCallback'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:65:37 Unresolved reference 'freeStyleCropEnabled'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:71:9 Unresolved reference 'aspectRatio'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:71:22 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:71:22 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:71:28 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:71:28 Operator call 'component1()' is ambiguous for destructuring of type 'uninferred ??? (Unknown type for type parameter T)'. Applicable candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/CropLauncher.kt:71:28 Operator call 'component2()' is ambiguous for destructuring of type 'uninferred ??? (Unknown type for type parameter T)'. Applicable candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:67:16 Property delegate must have a 'getValue(Nothing?, KProperty0<??? (Unknown type for type parameter T)>)' method. None of the following functions is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:67:19 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:67:30 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:67:44 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:68:26 Unresolved reference 'values'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:68:39 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:135:21 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:171:16 Property delegate must have a 'getValue(Nothing?, KProperty0<??? (Unknown type for type parameter T)>)' method. None of the following functions is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:171:19 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:171:30 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:171:44 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:172:26 Unresolved reference 'values'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:172:39 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:287:38 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:305:25 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:308:25 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:321:33 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:322:33 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:323:33 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/ai/McpPicker.kt:324:33 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:49:28 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:376:33 Unresolved reference 'chat_message_tool_recent_chats'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:408:18 Unresolved reference 'chat_message_tool_conversation_search'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:442:33 Unresolved reference 'chat_message_tool_screen_time'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:457:48 Unresolved reference 'assistant_page_local_tools_screen_time_permission_required'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:476:52 Unresolved reference 'tool_ui_screen_time_total'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:525:72 Unresolved reference 'Calendar03'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:529:33 Unresolved reference 'chat_message_tool_calendar_query'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:566:72 Unresolved reference 'CalendarAdd01'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:571:40 Unresolved reference 'chat_message_tool_calendar_create'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:594:56 Unresolved reference 'tool_ui_screen_time_total'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/BuiltinToolUIs.kt:788:17 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/WorkspaceToolUIs.kt:32:28 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/message/tools/WorkspaceToolUIs.kt:249:9 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/richtext/HighlightCodeBlock.kt:59:28 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/richtext/HighlightCodeBlock.kt:279:21 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/richtext/HighlightCodeBlock.kt:339:13 Unresolved reference 'CodeHighlightText'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/richtext/HighlightCodeBlock.kt:465:67 No parameter with name 'contentId' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/richtext/Mermaid.kt:143:41 Unresolved reference 'WebViewContentCache'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/components/richtext/Mermaid.kt:144:63 No parameter with name 'contentId' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantBasicPage.kt:319:45 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantBasicPage.kt:434:50 Unresolved reference 'assistant_page_context_message_limit'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantBasicPage.kt:438:56 Unresolved reference 'assistant_page_context_message_limit_desc'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantBasicPage.kt:458:34 Unresolved reference 'assistant_page_context_message_limit_count'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantBasicPage.kt:460:52 Unresolved reference 'assistant_page_context_message_limit_unlimited'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantBasicPage.kt:465:31 Unresolved reference 'contextMessageSize'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/AssistantMcpPage.kt:56:13 No parameter with name 'contentPadding' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/PropertyEditor.kt:33:28 Unresolved reference 'LocalCodeHighlighter'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/assistant/detail/PropertyEditor.kt:189:51 Unresolved reference 'LocalCodeHighlighter'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:105:9 Conflicting declarations:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:107:9 Conflicting declarations:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:159:27 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:159:53 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:159:62 Null cannot be a value of a non-null type 'uninferred T (of fun <T> mutableStateOf)'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:160:27 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:160:53 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:160:62 Null cannot be a value of a non-null type 'uninferred T (of fun <T> mutableStateOf)'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:245:28 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:246:28 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:292:17 No parameter with name 'onMoveToFolder' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:293:48 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:483:52 Unresolved reference 'chat_page_move_to_folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:508:60 Unresolved reference 'chat_page_remove_from_folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:518:41 Operator '==' cannot be applied to 'Uuid' and 'String?'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:557:52 Unresolved reference 'chat_page_create_folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:564:66 Unresolved reference 'chat_page_folder_name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:585:21 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:585:21 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:585:21 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:585:27 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:586:21 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:586:21 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:586:37 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:586:43 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:586:65 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:589:52 Unresolved reference 'chat_page_rename_folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:593:46 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:601:54 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:616:21 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:616:21 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:616:21 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:616:27 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:619:52 Unresolved reference 'chat_page_delete_folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:620:51 Unresolved reference 'chat_page_delete_folder_confirm'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:620:91 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:624:58 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:628:69 Unresolved reference 'chat_page_delete_folder_generating'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:785:19 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:789:16 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:790:16 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:801:49 Unresolved reference 'chat_page_folder_default'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:807:15 Argument type mismatch: actual type is 'List<??? (Unresolved qualified name: Folder)>', but 'Int' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:811:36 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:813:59 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:814:49 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:822:63 Unresolved reference 'chat_page_rename'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:842:49 Unresolved reference 'chat_page_folder_add'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatVM.kt:144:27 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatVM.kt:147:19 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/extensions/workspace/WorkspaceDetailPage.kt:202:28 Unresolved reference 'shareFile'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/extensions/workspace/WorkspaceDetailPage.kt:202:65 Cannot infer type for value parameter 'file'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:20 Property delegate must have a 'getValue(Nothing?, KProperty0<??? (Unknown type for type parameter T)>)' method. None of the following functions is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:23 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:34 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:48 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:171:30 Unresolved reference 'values'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:171:43 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:171:73 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:176:32 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:244:30 Overload resolution ambiguity between candidates:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:296:21 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:299:21 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:337:25 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSearchDetailPage.kt:49:28 Unresolved reference 'LocalCodeHighlighter'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSearchDetailPage.kt:938:23 Unresolved reference 'LocalCodeHighlighter'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSpeechPage.kt:866:32 'when' expression must be exhaustive. Add the 'is MiMo', 'is Step' branches or an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt:675:29 Unresolved reference 'emotion'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt:676:58 No parameter with name 'emotion' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:52:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:52:54 Unresolved reference 'base64Decode'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:64:32 Unresolved reference 'contentId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:13 Unresolved reference 'WebViewContentCache'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:38 Function invocation 'context(...)' expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:46 Unresolved reference 'cacheDir'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:56 Unresolved reference 'contentId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:23:9 Unresolved reference 'workspaceCwd'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:23:33 Unresolved reference 'workspaceCwd'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:24:9 Unresolved reference 'folderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:24:29 Unresolved reference 'folderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:34:35 Unresolved reference 'MoveConversationToFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:268:32 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:268:40 Unresolved reference 'MoveConversationToFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:273:42 Unresolved reference 'folderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:273:52 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:273:59 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:17:35 Unresolved reference 'FolderListEvent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:96:44 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:97:29 Unresolved reference 'FolderListEvent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:99:51 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:99:60 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:18:35 Unresolved reference 'CreateFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:19:35 Unresolved reference 'RenameFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:32:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:32:34 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:32:43 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:37:32 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:37:40 Unresolved reference 'CreateFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:38:32 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:45:57 None of the following candidates is applicable:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:51:32 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:51:40 Unresolved reference 'RenameFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:52:32 Unresolved reference 'name'.
+FAILURE: Build failed with an exception.
+* What went wrong:
+   > Compilation error. See log for more details
+
+Last 140 build-log lines:
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:616:27 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:619:52 Unresolved reference 'chat_page_delete_folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:620:51 Unresolved reference 'chat_page_delete_folder_confirm'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:620:91 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:624:58 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:628:69 Unresolved reference 'chat_page_delete_folder_generating'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:785:19 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:789:16 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:790:16 Unresolved reference 'Folder'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:801:49 Unresolved reference 'chat_page_folder_default'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:807:15 Argument type mismatch: actual type is 'List<??? (Unresolved qualified name: Folder)>', but 'Int' was expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:811:36 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:813:59 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:814:49 Unresolved reference 'id'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:822:63 Unresolved reference 'chat_page_rename'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatDrawer.kt:842:49 Unresolved reference 'chat_page_folder_add'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatVM.kt:144:27 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/chat/ChatVM.kt:147:19 Overload resolution ambiguity between candidates:
+val enableWebSearch: Boolean
+val enableWebSearch: Boolean
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/extensions/workspace/WorkspaceDetailPage.kt:202:28 Unresolved reference 'shareFile'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/extensions/workspace/WorkspaceDetailPage.kt:202:65 Cannot infer type for value parameter 'file'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:20 Property delegate must have a 'getValue(Nothing?, KProperty0<??? (Unknown type for type parameter T)>)' method. None of the following functions is applicable:
+fun <T> State<T>.getValue(thisObj: Any?, property: KProperty<*>): T
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:23 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:34 Overload resolution ambiguity between candidates:
+val syncingStatus: ??? (Unresolved name: MutableStateFlow)
+val syncingStatus: StateFlow<Map<Uuid, McpStatus>>
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:168:48 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:171:30 Unresolved reference 'values'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:171:43 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:171:73 Unresolved reference 'it'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:176:32 Overload resolution ambiguity between candidates:
+suspend fun syncAll(): ??? (Unresolved name: syncAll)
+suspend fun syncAll(): Unit
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:244:30 Overload resolution ambiguity between candidates:
+fun getStatus(config: McpServerConfig): Flow<McpStatus>
+fun getStatus(config: McpServerConfig): Flow<McpStatus>
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:296:21 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:299:21 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingMcpPage.kt:337:25 Check for instance is always 'false'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSearchDetailPage.kt:49:28 Unresolved reference 'LocalCodeHighlighter'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSearchDetailPage.kt:938:23 Unresolved reference 'LocalCodeHighlighter'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSpeechPage.kt:866:32 'when' expression must be exhaustive. Add the 'is MiMo', 'is Step' branches or an 'else' branch.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt:675:29 Unresolved reference 'emotion'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt:676:58 No parameter with name 'emotion' found.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:52:26 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:52:54 Unresolved reference 'base64Decode'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:64:32 Unresolved reference 'contentId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:13 Unresolved reference 'WebViewContentCache'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:38 Function invocation 'context(...)' expected.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:46 Unresolved reference 'cacheDir'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/ui/pages/webview/WebViewPage.kt:65:56 Unresolved reference 'contentId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:23:9 Unresolved reference 'workspaceCwd'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:23:33 Unresolved reference 'workspaceCwd'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:24:9 Unresolved reference 'folderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationDiff.kt:24:29 Unresolved reference 'folderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:34:35 Unresolved reference 'MoveConversationToFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:268:32 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+suspend fun <reified T : Any> ApplicationCall.receive(): T
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:268:40 Unresolved reference 'MoveConversationToFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:273:42 Unresolved reference 'folderId'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:273:52 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/ConversationRoutes.kt:273:59 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:17:35 Unresolved reference 'FolderListEvent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:96:44 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:97:29 Unresolved reference 'FolderListEvent'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:99:51 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/EventsRoutes.kt:99:60 None of the following candidates is applicable:
+
+fun Conversation.toDto(isGenerating: Boolean = ...): ConversationDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun Conversation.toDto(isGenerating: Boolean = ...): ConversationDto
+
+fun MessageNode.toDto(): MessageNodeDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun MessageNode.toDto(): MessageNodeDto
+
+fun UIMessage.toDto(): MessageDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun UIMessage.toDto(): MessageDto
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:18:35 Unresolved reference 'CreateFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:19:35 Unresolved reference 'RenameFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:32:18 Cannot infer type for type parameter 'T'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:32:34 Cannot infer type for type parameter 'R'. Specify it explicitly.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:32:43 None of the following candidates is applicable:
+
+fun Conversation.toDto(isGenerating: Boolean = ...): ConversationDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun Conversation.toDto(isGenerating: Boolean = ...): ConversationDto
+
+fun MessageNode.toDto(): MessageNodeDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun MessageNode.toDto(): MessageNodeDto
+
+fun UIMessage.toDto(): MessageDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun UIMessage.toDto(): MessageDto
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:37:32 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+suspend fun <reified T : Any> ApplicationCall.receive(): T
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:37:40 Unresolved reference 'CreateFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:38:32 Unresolved reference 'name'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:45:57 None of the following candidates is applicable:
+
+fun Conversation.toDto(isGenerating: Boolean = ...): ConversationDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun Conversation.toDto(isGenerating: Boolean = ...): ConversationDto
+
+fun MessageNode.toDto(): MessageNodeDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun MessageNode.toDto(): MessageNodeDto
+
+fun UIMessage.toDto(): MessageDto:
+  Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+fun UIMessage.toDto(): MessageDto
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:51:32 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+suspend fun <reified T : Any> ApplicationCall.receive(): T
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:51:40 Unresolved reference 'RenameFolderRequest'.
+e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/app/src/main/java/me/rerere/rikkahub/web/routes/FolderRoutes.kt:52:32 Unresolved reference 'name'.
+
+> Task :app:compileDebugKotlin FAILED
+
+[Incubating] Problems report is available at: file:///home/runner/work/rikkahub-agent/rikkahub-agent/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin' (registered by plugin 'com.android.internal.application').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 5m 14s
+105 actionable tasks: 105 executed
+Configuration cache entry stored.

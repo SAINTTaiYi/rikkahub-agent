@@ -174,6 +174,19 @@ val DEFAULT_PROVIDERS = listOf(
         )
     ),
     ProviderSetting.OpenAI(
+        id = Uuid.parse("d6c4d8c6-3f62-4ca9-a6f3-7ade6b15ecc3"),
+        name = "月之暗面",
+        baseUrl = "https://api.moonshot.cn/v1",
+        apiKey = "",
+        enabled = true,
+        builtIn = true,
+        balanceOption = BalanceOption(
+            enabled = true,
+            apiPath = "/users/me/balance",
+            resultPath = "data.available_balance"
+        )
+    ),
+    ProviderSetting.OpenAI(
         id = Uuid.parse("d5734028-d39b-4d41-9841-fd648d65440e"),
         name = "OpenRouter",
         baseUrl = "https://openrouter.ai/api/v1",
@@ -232,19 +245,6 @@ val DEFAULT_PROVIDERS = listOf(
         builtIn = true
     ),
     ProviderSetting.OpenAI(
-        id = Uuid.parse("d6c4d8c6-3f62-4ca9-a6f3-7ade6b15ecc3"),
-        name = "月之暗面",
-        baseUrl = "https://api.moonshot.cn/v1",
-        apiKey = "",
-        enabled = false,
-        builtIn = true,
-        balanceOption = BalanceOption(
-            enabled = true,
-            apiPath = "/users/me/balance",
-            resultPath = "data.available_balance"
-        )
-    ),
-    ProviderSetting.OpenAI(
         id = Uuid.parse("3bc40dc1-b11a-46fa-863b-6306971223be"),
         name = "智谱AI开放平台",
         baseUrl = "https://open.bigmodel.cn/api/paas/v4",
@@ -296,6 +296,48 @@ val DEFAULT_PROVIDERS = listOf(
         enabled = false,
         builtIn = true,
         useResponseApi = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("aecf04fd-cb5c-4582-aed2-e8bf393923fd"),
+        name = "随想AI网关",
+        baseUrl = "https://sui-xiang.com/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+        description = {
+            Text(
+                text = buildAnnotatedString {
+                    append("可靠高效的 API 中继服务，提供 Claude、Codex、Gemini 等中继服务。注重隐私·无数据倒卖·无模型掺水，充值额度 1:1，按量付费。多线路冗余、跨区域容灾、自动故障切换，长链路 SSE 不中断。\n")
+                    append("官网：")
+                    withLink(LinkAnnotation.Url("https://sui-xiang.com")) {
+                        withStyle(SpanStyle(MaterialTheme.colorScheme.primary)) {
+                            append("https://sui-xiang.com")
+                        }
+                    }
+                }
+            )
+        },
+        shortDescription = {
+            Text(
+                text = "Claude、Codex、Gemini 等中继服务，1:1 充值"
+            )
+        },
+    ),
+    ProviderSetting.Claude(
+        id = Uuid.parse("b4deabea-20fb-4101-a74c-65679c7e4754"),
+        name = "MiniMax",
+        baseUrl = "https://api.minimaxi.com/anthropic/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
+    ),
+    ProviderSetting.OpenAI(
+        id = Uuid.parse("a2bafe83-eaf8-47bf-a8c7-3dd82d89f637"),
+        name = "MIMO",
+        baseUrl = "https://api.xiaomimimo.com/v1",
+        apiKey = "",
+        enabled = false,
+        builtIn = true,
     ),
     ProviderSetting.OpenAI(
         id = Uuid.parse("53027b08-1b58-43d5-90ed-29173203e3d8"),

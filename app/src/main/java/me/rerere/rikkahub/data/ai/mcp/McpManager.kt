@@ -8,24 +8,13 @@ import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.sse.SSE
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.util.StringValues
 import io.modelcontextprotocol.kotlin.sdk.client.Client
-import io.modelcontextprotocol.kotlin.sdk.client.SseClientTransport
-import io.modelcontextprotocol.kotlin.sdk.client.StreamableHttpClientTransport
-import io.modelcontextprotocol.kotlin.sdk.shared.AbstractTransport
-import io.modelcontextprotocol.kotlin.sdk.shared.RequestOptions
-import io.modelcontextprotocol.kotlin.sdk.types.CallToolRequest
-import io.modelcontextprotocol.kotlin.sdk.types.CallToolRequestParams
 import io.modelcontextprotocol.kotlin.sdk.types.ImageContent
-import io.modelcontextprotocol.kotlin.sdk.types.Implementation
 import io.modelcontextprotocol.kotlin.sdk.types.TextContent
-import io.modelcontextprotocol.kotlin.sdk.types.ToolSchema
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -34,7 +23,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.ClassDiscriminatorMode
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
-import me.rerere.ai.core.InputSchema
 import me.rerere.ai.ui.UIMessagePart
 import me.rerere.rikkahub.AppScope
 import me.rerere.rikkahub.assistant.SecondUserAuthorityRegistry
@@ -51,14 +39,14 @@ import okhttp3.OkHttpClient
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import kotlin.io.encoding.Base64
-import kotlin.time.Duration.Companion.seconds
 import kotlin.uuid.Uuid
 
-private const val TAG = "McpManager"
-private const val MAX_RECONNECT_ATTEMPTS = 5
-private const val BASE_RECONNECT_DELAY_MS = 1000L
-private const val MAX_RECONNECT_DELAY_MS = 30000L
-
+/**
+ * MCP 子系统的公共入口。
+ *
+ * 这里仅协调配置、OAuth、连接注册表与 UI 内容转换；单个服务器的连接状态机由
+ * [McpSessionRegistry] 管理，OAuth 协议细节由 [McpOAuthCoordinator] 管理。
+ */
 class McpManager(
     private val context: Context,
     private val settingsStore: SettingsStore,
@@ -66,7 +54,7 @@ class McpManager(
     private val filesManager: FilesManager,
     private val secretVault: SecondUserSecretVault,
 ) {
-    private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+    private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.MINUTES)
         .writeTimeout(120, TimeUnit.SECONDS)
@@ -75,7 +63,7 @@ class McpManager(
         .build()
         .also { me.rerere.rikkahub.utils.NetworkChangeMonitor.register(it) }
 
-    private val client = HttpClient(OkHttp) {
+    private val httpClient = HttpClient(OkHttp) {
         engine {
             preconfigured = okHttpClient
         }
@@ -152,17 +140,18 @@ class McpManager(
         }
     }
 
-    fun getClient(config: McpServerConfig): Client? {
-        return clients.entries.find { it.key.id == config.id }?.value
-    }
+    val syncingStatus: StateFlow<Map<Uuid, McpStatus>>
+        get() = statusStore.status
+
+    fun getClient(config: McpServerConfig): Client? = sessionRegistry.getClient(config.id)
+
+    fun getStatus(config: McpServerConfig): Flow<McpStatus> = sessionRegistry.getStatus(config.id)
 
     fun getAvailableToolsForAssistant(assistantId: Uuid): List<Triple<Uuid, String, McpTool>> {
         val settings = settingsStore.settingsFlow.value
         val assistant = settings.assistants.firstOrNull { it.id == assistantId } ?: return emptyList()
         return settings.mcpServers
-            .filter {
-                it.commonOptions.enable && it.id in assistant.mcpServers
-            }
+            .filter { it.commonOptions.enable && it.id in assistant.mcpServers }
             .flatMap { server ->
                 server.commonOptions.tools
                     .filter { tool -> tool.enable }
@@ -171,38 +160,48 @@ class McpManager(
     }
 
     suspend fun callTool(serverId: Uuid, toolName: String, args: JsonObject): List<UIMessagePart> {
-        val entry = clients.entries.find { it.key.id == serverId }
-        val client = entry?.value
-            ?: return listOf(UIMessagePart.Text("Failed to execute tool, because no such mcp client for the tool"))
-        val config = entry.key
-        Log.i(TAG, "callTool: $toolName / $args (server: ${config.commonOptions.name})")
-
-        if (client.transport == null) client.connect(getTransport(config))
-        val result = client.callTool(
-            request = CallToolRequest(
-                params = CallToolRequestParams(
-                    name = toolName,
-                    arguments = args,
-                ),
-            ),
-            options = RequestOptions(timeout = 120.seconds),
-        )
-        return result.content.map {
-            when(it) {
-                is TextContent -> UIMessagePart.Text(it.text)
-                is ImageContent -> convertImageContentToFilePart(it)
-                else -> UIMessagePart.Text(JsonInstant.encodeToString(it))
+        val result = try {
+            sessionRegistry.callTool(serverId, toolName, args)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: McpClientUnavailableException) {
+            return listOf(UIMessagePart.Text("Failed to execute MCP tool: ${e.message ?: e.javaClass.name}"))
+        }
+        return result.content.map { content ->
+            when (content) {
+                is TextContent -> UIMessagePart.Text(content.text)
+                is ImageContent -> convertImageContentToFilePart(content)
+                else -> UIMessagePart.Text(JsonInstant.encodeToString(content))
             }
         }
     }
 
+    suspend fun addClient(config: McpServerConfig) = sessionRegistry.addClient(config)
+
+    suspend fun removeClient(config: McpServerConfig) = sessionRegistry.removeClient(config)
+
+    suspend fun syncAll() = sessionRegistry.syncAll()
+
+    fun startAuthorization(config: McpServerConfig, context: Context) {
+        oauthCoordinator.startAuthorization(config, context)
+    }
+
+    fun cancelAuthorization(config: McpServerConfig) {
+        oauthCoordinator.cancelAuthorization(config.id)
+    }
+
+    suspend fun clearAuthorization(config: McpServerConfig) {
+        val freshConfig = oauthCoordinator.clearAuthorization(config)
+        sessionRegistry.addClient(freshConfig)
+    }
+
     private suspend fun convertImageContentToFilePart(image: ImageContent): UIMessagePart.Image {
         val bytes = Base64.decode(image.data)
-        val ext = android.webkit.MimeTypeMap.getSingleton()
+        val extension = android.webkit.MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(image.mimeType) ?: "bin"
         val entity = filesManager.saveUploadFromBytes(
             bytes = bytes,
-            displayName = "mcp_image.$ext",
+            displayName = "mcp_image.$extension",
             mimeType = image.mimeType,
         )
         val uri = filesManager.getFile(entity).toUri()

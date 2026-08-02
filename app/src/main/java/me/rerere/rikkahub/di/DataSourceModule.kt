@@ -208,6 +208,10 @@ val dataSourceModule = module {
     }
 
     single {
+        get<AppDatabase>().folderDao()
+    }
+
+    single {
         MessageFtsManager(get())
     }
     single<MemorySearchIndex> { MemoryFtsManager(get()) }

@@ -125,7 +125,7 @@ class RikkaHubApp : Application() {
         // cleanup workspace temp dirs (proot + rootfs /tmp)
         cleanupWorkspaceTempDirs()
 
-        // check workspace integrity (remove orphaned DB records after backup restore)
+        // check workspace integrity (mark workspaces with missing files as broken after backup restore)
         checkWorkspaceIntegrity()
 
         // Android 12+ only permits the first foreground-service launch while the app is

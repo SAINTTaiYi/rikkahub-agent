@@ -52,7 +52,10 @@ class WorkspaceDocumentsProvider : DocumentsProvider() {
             add(Root.COLUMN_ROOT_ID, ROOT_ID)
             add(Root.COLUMN_DOCUMENT_ID, ROOT_DOC_ID)
             add(Root.COLUMN_TITLE, ctx.getString(R.string.app_name))
-            add(Root.COLUMN_FLAGS, Root.FLAG_LOCAL_ONLY or Root.FLAG_SUPPORTS_IS_CHILD)
+            add(
+                Root.COLUMN_FLAGS,
+                Root.FLAG_LOCAL_ONLY or Root.FLAG_SUPPORTS_IS_CHILD or Root.FLAG_SUPPORTS_CREATE,
+            )
             add(Root.COLUMN_ICON, R.mipmap.ic_launcher)
             add(Root.COLUMN_MIME_TYPES, "*/*")
         }
@@ -278,7 +281,7 @@ class WorkspaceDocumentsProvider : DocumentsProvider() {
         val base = manager().filesDir(root).canonicalFile
         base.mkdirs()
         val normalized = relPath.trim().trimStart('/')
-        require(!normalized.contains(' ')) { "Path contains invalid character" }
+        require(!normalized.contains('\u0000')) { "Path contains invalid character" }
         if (normalized.isEmpty()) return base
         val target = File(base, normalized).canonicalFile
         require(target.path == base.path || target.path.startsWith(base.path + File.separator)) {

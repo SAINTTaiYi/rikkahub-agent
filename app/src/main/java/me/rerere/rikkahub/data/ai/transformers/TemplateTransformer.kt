@@ -2,6 +2,8 @@ package me.rerere.rikkahub.data.ai.transformers
 
 import io.pebbletemplates.pebble.PebbleEngine
 import io.pebbletemplates.pebble.loader.Loader
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import me.rerere.ai.ui.UIMessage
 import me.rerere.ai.ui.UIMessagePart
 import me.rerere.rikkahub.data.datastore.SettingsStore
@@ -36,6 +38,7 @@ class TemplateTransformer(
         messages: List<UIMessage>,
     ): List<UIMessage> {
         val template = engine.getTemplate(ctx.assistant.id.toString())
+        val timeZone = TimeZone.currentSystemDefault()
         return messages.map { message ->
             val messageClock = templateMessageClock(message.createdAt)
             message.copy(

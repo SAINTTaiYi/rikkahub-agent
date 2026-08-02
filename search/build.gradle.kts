@@ -58,4 +58,5 @@ dependencies {
     implementation(libs.androidx.material3)
     api(libs.jsoup)
     implementation(libs.quickjs)
+    testImplementation(libs.junit)
 }

@@ -1,0 +1,132 @@
+name: Restore unchanged Agent app files
+
+on:
+  push:
+    branches:
+      - integration/upstream-2.4.5-agent-first
+    paths:
+      - .github/workflows/restore-unchanged-agent-files.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-2.4.5-restore-unchanged
+  cancel-in-progress: false
+
+jobs:
+  restore-and-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out integration branch with submodules
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: integration/upstream-2.4.5-agent-first
+          submodules: recursive
+
+      - name: Restore Agent files untouched by upstream
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add official https://github.com/rikkahub/rikkahub.git
+          git fetch --no-tags official \
+            refs/tags/2.4.2:refs/tags/official-2.4.2 \
+            refs/tags/2.4.5:refs/tags/official-2.4.5
+
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+          import subprocess
+
+          diagnostic = Path('.github/upstream-2.4.5-agent-first-compile.txt').read_text()
+          errors = set(re.findall(
+              r'e: file:///home/runner/work/rikkahub-agent/rikkahub-agent/(.*?):\d+',
+              diagnostic,
+          ))
+          changed = set(subprocess.check_output([
+              'git', 'diff', '--name-only',
+              'refs/tags/official-2.4.2', 'refs/tags/official-2.4.5',
+          ], text=True).splitlines())
+
+          restore = errors - changed
+          restore.update({
+              'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/components/TTSProviderConfigure.kt',
+              'app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingSpeechPage.kt',
+          })
+
+          expected_missing = {
+              'app/src/main/java/me/rerere/rikkahub/service/ChatNotificationManager.kt',
+              'app/src/main/java/me/rerere/rikkahub/ui/activity/McpOAuthCallbackActivity.kt',
+          }
+
+          if len(errors) != 32:
+              raise SystemExit(f'Expected 32 app error files, found {len(errors)}')
+          if len(errors - changed) != 18:
+              raise SystemExit(f'Expected 18 upstream-untouched error files, found {len(errors - changed)}')
+
+          baseline = '6fdba2a578dc39f0ce071ff3a116a016c2965033'
+          missing = {p for p in restore if subprocess.run(
+              ['git', 'cat-file', '-e', f'{baseline}:{p}'],
+              stdout=subprocess.DEVNULL,
+              stderr=subprocess.DEVNULL,
+          ).returncode}
+          if missing != expected_missing:
+              raise SystemExit(f'Unexpected Agent baseline gaps: {sorted(missing)}')
+
+          restore -= missing
+          if len(restore) != 18:
+              raise SystemExit(f'Expected 18 restorable Agent files, found {len(restore)}')
+
+          subprocess.run(['git', 'checkout', baseline, '--', *sorted(restore)], check=True)
+          Path('/tmp/restored-agent-files.txt').write_text('\n'.join(sorted(restore)) + '\n')
+          print(f'Restored {len(restore)} Agent files')
+          PY
+
+          cat /tmp/restored-agent-files.txt
+          git rm -f --ignore-unmatch .github/upstream-2.4.5-agent-first-compile.txt
+          git add -A
+          git commit -m "fix: restore Agent app files untouched by upstream"
+          git push origin HEAD:integration/upstream-2.4.5-agent-first
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Compile debug Kotlin
+        shell: bash
+        run: |
+          set +e
+          chmod +x gradlew
+          ./gradlew :app:compileDebugKotlin 2>&1 | tee /tmp/upstream-2.4.5-compile.log
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -ne 0 ]; then
+            {
+              echo "Upstream 2.4.5 integration compile failure"
+              echo "Branch commit: $(git rev-parse HEAD)"
+              echo
+              grep -E '^e: |^w: |FAILURE:|What went wrong|Compilation error|\[ksp\]' /tmp/upstream-2.4.5-compile.log | tail -n 400 || true
+              echo
+              echo "Last 140 build-log lines:"
+              tail -n 140 /tmp/upstream-2.4.5-compile.log
+            } > .github/upstream-2.4.5-agent-first-compile.txt
+            git add .github/upstream-2.4.5-agent-first-compile.txt
+            git commit -m "ci: record post-restore compile diagnostics"
+            git push origin HEAD:integration/upstream-2.4.5-agent-first
+            exit "$status"
+          fi

@@ -28,6 +28,8 @@ import me.rerere.hugeicons.stroke.Download01
 import me.rerere.hugeicons.stroke.View
 import me.rerere.rikkahub.R
 import me.rerere.rikkahub.Screen
+import me.rerere.rikkahub.ui.components.webview.WEB_VIEW_ASSET_URL
+import me.rerere.rikkahub.ui.components.webview.WEB_VIEW_BASE_URL
 import me.rerere.rikkahub.ui.components.webview.WebView
 import me.rerere.rikkahub.ui.components.webview.MERMAID_ASSET_PATH
 import me.rerere.rikkahub.ui.components.webview.MERMAID_RENDERER_MARKER
@@ -37,7 +39,6 @@ import me.rerere.rikkahub.ui.components.webview.rememberRikkaHubAssetWebViewClie
 import me.rerere.rikkahub.ui.context.LocalNavController
 import me.rerere.rikkahub.ui.context.LocalToaster
 import me.rerere.rikkahub.ui.theme.LocalDarkMode
-import me.rerere.rikkahub.utils.base64Encode
 import me.rerere.rikkahub.utils.escapeHtml
 import me.rerere.rikkahub.utils.exportImage
 import me.rerere.rikkahub.utils.toCssHex
@@ -139,7 +140,8 @@ fun Mermaid(
             ) {
                 IconButton(
                     onClick = {
-                        navController.navigate(Screen.WebView(content = html.base64Encode()))
+                        val contentId = WebViewContentCache.store(context.cacheDir, html)
+                        navController.navigate(Screen.WebView(contentId = contentId))
                     },
                 ) {
                     Icon(

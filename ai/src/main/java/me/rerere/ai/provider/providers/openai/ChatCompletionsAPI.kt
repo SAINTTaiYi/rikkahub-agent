@@ -2,8 +2,11 @@ package me.rerere.ai.provider.providers.openai
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.onFailure
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -496,6 +499,10 @@ class ChatCompletionsAPI(
                         if (modelId in siliconflowThinkingModels) {
                             put("enable_thinking", level.isEnabled)
                         }
+                    }
+
+                    "aiping.cn" -> {
+                        put("enable_thinking", level.isEnabled)
                     }
 
                     "open.bigmodel.cn" -> {
@@ -991,6 +998,53 @@ class ChatCompletionsAPI(
                 }
             }
         })
+    }
+
+    private fun UIMessagePart.Tool.toToolResultContent(supportInputModalities: List<Modality>): JsonElement {
+        // 只考虑文字和图片;只有模型支持图片输入时,图片才作为多模态内容回传,否则以文本占位,避免发给不支持的模型报错
+        val supportsImageInput = Modality.IMAGE in supportInputModalities
+        val hasImageToSend = output.any { it is UIMessagePart.Image && supportsImageInput }
+        return if (!hasImageToSend) {
+            JsonPrimitive(output.mapNotNull { part ->
+                when (part) {
+                    is UIMessagePart.Text -> part.text
+                    is UIMessagePart.Image -> "[Image output omitted: current model does not support image input]"
+                    else -> null
+                }
+            }.joinToString("\n"))
+        } else {
+            buildJsonArray {
+                output.forEach { part ->
+                    when (part) {
+                        is UIMessagePart.Text -> {
+                            if (part.text.isNotBlank()) {
+                                add(buildJsonObject {
+                                    put("type", "text")
+                                    put("text", part.text)
+                                })
+                            }
+                        }
+
+                        is UIMessagePart.Image -> {
+                            add(buildJsonObject {
+                                part.encodeBase64().onSuccess { encodedImage ->
+                                    put("type", "image_url")
+                                    put("image_url", buildJsonObject {
+                                        put("url", encodedImage.base64)
+                                    })
+                                }.onFailure {
+                                    Log.w(TAG, "encode tool result image failed: ${part.url}", it)
+                                    put("type", "text")
+                                    put("text", "Error: Failed to encode image to base64")
+                                }
+                            })
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+        }
     }
 
     private fun parseMessage(jsonObject: JsonObject): UIMessage {
