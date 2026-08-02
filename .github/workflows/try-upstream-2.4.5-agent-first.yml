@@ -24,10 +24,10 @@ jobs:
           fetch-depth: 0
           ref: integration/upstream-2.4.5-agent-first
 
-      - name: Merge 2.4.5 while preserving Agent conflict hunks
+      - name: Merge 2.4.5 while preserving Agent conflict paths
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote add official https://github.com/rikkahub/rikkahub.git
@@ -39,34 +39,59 @@ jobs:
             exit 0
           fi
 
-          set +e
           git merge --no-ff -X ours "$upstream_sha" -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
           merge_status=$?
-          set -e
 
           if [ "$merge_status" -ne 0 ]; then
-            mapfile -t conflicts < <(git diff --name-only --diff-filter=U)
-            printf 'Resolving %d residual file-state conflicts in favor of Agent\n' "${#conflicts[@]}"
+            git diff --name-only --diff-filter=U -z > /tmp/agent-first-conflicts.zlist
+            resolution_status=0
+            conflict_count=0
 
-            for file in "${conflicts[@]}"; do
-              echo "Resolving: $file"
-              if git cat-file -e ":2:$file" 2>/dev/null; then
-                mkdir -p "$(dirname "$file")"
-                git show ":2:$file" > "$file"
-                git add -- "$file"
+            while IFS= read -r -d '' file; do
+              conflict_count=$((conflict_count + 1))
+              echo "Restoring Agent path: $file"
+              rm -rf -- "$file"
+
+              if git cat-file -e "HEAD:$file" 2>/dev/null; then
+                git checkout HEAD -- "$file" || resolution_status=1
               else
-                rm -rf -- "$file"
-                git rm -f --ignore-unmatch -- "$file"
+                git rm -r -f --ignore-unmatch -- "$file" || resolution_status=1
               fi
-            done
+              git add -A -- "$file" || resolution_status=1
+            done < /tmp/agent-first-conflicts.zlist
 
             remaining="$(git diff --name-only --diff-filter=U)"
-            if [ -n "$remaining" ]; then
-              echo "::error::Unmerged paths remain:"
-              printf '%s\n' "$remaining"
+            if [ "$resolution_status" -ne 0 ] || [ -n "$remaining" ]; then
+              {
+                echo "Agent-first path resolution failed"
+                echo "Upstream commit: $upstream_sha"
+                echo "Conflict paths processed: $conflict_count"
+                echo
+                echo "Remaining unmerged paths:"
+                printf '%s\n' "$remaining"
+                echo
+                echo "Index conflict entries:"
+                git ls-files -u
+              } > /tmp/agent-first-resolution.txt
+
+              git merge --abort
+              cp /tmp/agent-first-resolution.txt .github/upstream-2.4.5-agent-first-resolution.txt
+              git add .github/upstream-2.4.5-agent-first-resolution.txt
+              git commit -m "ci: record agent-first path resolution diagnostics"
+              git push origin HEAD:integration/upstream-2.4.5-agent-first
               exit 1
             fi
+
             git commit -m "merge: integrate RikkaHub 2.4.5 with Agent-first conflict policy"
+            if [ "$?" -ne 0 ]; then
+              git status --short > /tmp/agent-first-commit-status.txt
+              git merge --abort
+              cp /tmp/agent-first-commit-status.txt .github/upstream-2.4.5-agent-first-resolution.txt
+              git add .github/upstream-2.4.5-agent-first-resolution.txt
+              git commit -m "ci: record agent-first merge commit diagnostics"
+              git push origin HEAD:integration/upstream-2.4.5-agent-first
+              exit 1
+            fi
           fi
 
           git push origin HEAD:integration/upstream-2.4.5-agent-first
