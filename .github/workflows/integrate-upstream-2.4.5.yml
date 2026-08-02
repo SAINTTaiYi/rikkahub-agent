@@ -1,0 +1,63 @@
+name: Integrate upstream 2.4.5
+
+on:
+  push:
+    branches:
+      - feature/upstream-2.4.5-stability
+    paths:
+      - .github/workflows/integrate-upstream-2.4.5.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-2.4.5-integration
+  cancel-in-progress: false
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out integration branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: feature/upstream-2.4.5-stability
+
+      - name: Merge official RikkaHub 2.4.5
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add official https://github.com/rikkahub/rikkahub.git
+          git fetch --no-tags official refs/tags/2.4.5:refs/tags/official-2.4.5
+
+          upstream_sha="$(git rev-parse refs/tags/official-2.4.5^{commit})"
+          if git merge-base --is-ancestor "$upstream_sha" HEAD; then
+            echo "Official 2.4.5 is already integrated."
+            exit 0
+          fi
+
+          if ! git merge --no-ff "$upstream_sha" -m "merge: integrate upstream RikkaHub 2.4.5"; then
+            echo "::error::Upstream merge has conflicts in these files:"
+            git diff --name-only --diff-filter=U
+            exit 1
+          fi
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Compile debug Kotlin
+        shell: bash
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:compileDebugKotlin
+
+      - name: Push verified merge
+        shell: bash
+        run: git push origin HEAD:feature/upstream-2.4.5-stability
