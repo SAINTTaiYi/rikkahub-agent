@@ -307,10 +307,14 @@ private const val LOOP_GUARD_REPEAT_THRESHOLD = 3
 /**
  * Max number of times the loop guard can trip in a single turn before we force-end the
  * turn entirely. Prevents the "model keeps trying different tools, each gets loop-detected"
- * pattern that produced the 27-step / 141K-token disaster: one trip means the model is
- * confused; six trips means it's not coming back.
+ * pattern that produced the 27-step / 141K-token disaster. Ultra keeps the detector but
+ * allows a long, bounded chain before it asks the model for a tool-free final response.
  */
-private const val MAX_LOOP_GUARD_TRIPS_PER_TURN = 6
+// The wall-clock budget, user cancellation, and tool safety checks still bound execution.
+internal const val ULTRA_MAX_TOOL_LOOP_STEPS = 512
+
+internal fun ultraLoopGuardNeedsFinalization(loopGuardTripCount: Int): Boolean =
+    loopGuardTripCount >= ULTRA_MAX_TOOL_LOOP_STEPS
 
 /**
  * Number of most-recent tool-result-bearing messages whose `Image` parts are kept
@@ -459,7 +463,7 @@ class GenerationHandler(
         /** False for a restricted child profile that did not inherit `memory_tool`. */
         memoryToolAllowed: Boolean = true,
         startableTools: Map<String, me.rerere.rikkahub.data.ai.tools.StartableTool> = emptyMap(),
-        maxSteps: Int = 32,
+        maxSteps: Int = ULTRA_MAX_TOOL_LOOP_STEPS + 1,
         processingStatus: MutableStateFlow<String?> = MutableStateFlow(null),
         // Returns true when the user has pre-approved [toolName] for this turn (e.g.
         // "Allow for this chat" or "Always Allow" granted earlier). When true, the loop
@@ -619,7 +623,7 @@ class GenerationHandler(
             // N trips we just stop — the model is not going to recover, and every extra
             // step is paid for in tokens.
             val loopGuardNeedsFinalization =
-                loopGuardTripCount >= MAX_LOOP_GUARD_TRIPS_PER_TURN
+                ultraLoopGuardNeedsFinalization(loopGuardTripCount)
             val finalizationStep = generationFinalizationStep(
                 stepIndex = stepIndex,
                 maxSteps = maxSteps,

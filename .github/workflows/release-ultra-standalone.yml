@@ -52,7 +52,7 @@ jobs:
         run: |
           chmod +x gradlew
           set +e
-          ./gradlew assembleRelease --stacktrace 2>&1 | tee gradle-build.log
+          ./gradlew :app:testDebugUnitTest assembleRelease --stacktrace 2>&1 | tee gradle-build.log
           code=${PIPESTATUS[0]}
           set -e
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
