@@ -1,0 +1,157 @@
+Downloading https://services.gradle.org/distributions/gradle-9.4.1-bin.zip
+.............10%.............20%.............30%.............40%.............50%.............60%..............70%.............80%.............90%.............100%
+
+Welcome to Gradle 9.4.1!
+
+Here are the highlights of this release:
+ - Java 26 support
+ - Non-class-based JVM tests
+ - Enhanced console progress bar
+
+For more details see https://docs.gradle.org/9.4.1/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+Calculating task graph as no cached configuration is available for tasks: assembleDebug
+
+> Configure project :local-llm
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/local-llm/build.gradle.kts:26:35: 'fun setSrcDirs(srcDirs: Iterable<*>): Any' is deprecated. Use `directories` mutable set instead.
+
+> Configure project :material3
+w: file:///home/runner/work/rikkahub-agent/rikkahub-agent/material3/build.gradle.kts:25:20: 'fun srcDir(srcDir: Any): Any' is deprecated. Use `directories` mutable set instead.
+
+> Task :common:preBuild UP-TO-DATE
+> Task :ai:generateDebugAssets UP-TO-DATE
+> Task :ai:preBuild UP-TO-DATE
+> Task :common:preDebugBuild UP-TO-DATE
+> Task :ai:preDebugBuild UP-TO-DATE
+> Task :common:writeDebugAarMetadata
+> Task :ai:prepareLintJarForPublish
+> Task :ai:mergeDebugJniLibFolders
+> Task :ai:generateDebugResources
+> Task :ai:processDebugNavigationResources
+> Task :ai:mergeDebugNativeLibs NO-SOURCE
+> Task :common:generateDebugResources
+> Task :ai:stripDebugDebugSymbols NO-SOURCE
+> Task :ai:copyDebugJniLibsProjectAndLocalJars
+> Task :common:processDebugNavigationResources
+> Task :common:packageDebugResources
+> Task :ai:packageDebugResources
+> Task :common:parseDebugLocalResources
+> Task :ai:parseDebugLocalResources
+> Task :common:generateDebugRFile
+> Task :ai:generateDebugRFile
+> Task :ai:extractDeepLinksForAarDebug
+> Task :common:javaPreCompileDebug
+> Task :ai:mergeDebugAssets
+> Task :ai:javaPreCompileDebug
+> Task :ai:prepareDebugArtProfile
+> Task :ai:writeDebugAarMetadata
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :ai:processDebugManifest
+> Task :app:generateDebugBuildConfig
+> Task :ai:extractDebugSupportedLocales
+> Task :app:extractDebugSupportedLocales
+> Task :app:mapDebugSourceSetPaths
+> Task :common:extractDebugSupportedLocales
+> Task :document:preBuild UP-TO-DATE
+> Task :document:preDebugBuild UP-TO-DATE
+> Task :document:extractDebugSupportedLocales
+> Task :highlight:preBuild UP-TO-DATE
+> Task :highlight:preDebugBuild UP-TO-DATE
+> Task :highlight:extractDebugSupportedLocales
+> Task :local-llm:preBuild UP-TO-DATE
+> Task :local-llm:preDebugBuild UP-TO-DATE
+> Task :local-llm:extractDebugSupportedLocales
+> Task :material3:preBuild UP-TO-DATE
+> Task :material3:preDebugBuild UP-TO-DATE
+> Task :ai:checkDebugAarMetadata
+> Task :search:preBuild UP-TO-DATE
+> Task :search:preDebugBuild UP-TO-DATE
+> Task :material3:extractDebugSupportedLocales
+> Task :speech:preBuild UP-TO-DATE
+> Task :speech:preDebugBuild UP-TO-DATE
+> Task :search:extractDebugSupportedLocales
+> Task :speech:extractDebugSupportedLocales
+> Task :workspace:preBuild UP-TO-DATE
+> Task :workspace:preDebugBuild UP-TO-DATE
+> Task :workspace:extractDebugSupportedLocales
+> Task :web:installWebUiDeps FAILED
+> Task :app:generateDebugResources
+> Task :app:compileDebugAidl
+> Task :common:compileDebugKotlin
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/gradle_build-1785650715373.json
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':web:installWebUiDeps'.
+> A problem occurred starting process 'command 'bun''
+
+* Try:
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':web:installWebUiDeps'.
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:135)
+	at org.gradle.internal.Try$Failure.ifSuccessfulOrElse(Try.java:288)
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:133)
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:121)
+	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTaskExecuter.java:41)
+	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+	at org.gradle.execution.plan.DefaultNodeExecutor.executeLocalTaskNode(DefaultNodeExecutor.java:55)
+	at org.gradle.execution.plan.DefaultNodeExecutor.execute(DefaultNodeExecutor.java:34)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:355)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:343)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:339)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:339)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:328)
+	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+Caused by: org.gradle.process.ProcessExecutionException: A problem occurred starting process 'command 'bun''
+	at org.gradle.process.internal.DefaultExecHandle.execExceptionFor(DefaultExecHandle.java:245)
+	at org.gradle.process.internal.DefaultExecHandle.setEndStateInfo(DefaultExecHandle.java:222)
+	at org.gradle.process.internal.DefaultExecHandle.failed(DefaultExecHandle.java:412)
+	at org.gradle.process.internal.ExecHandleRunner.lambda$run$3(ExecHandleRunner.java:181)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+	at org.gradle.process.internal.ExecHandleRunner.run(ExecHandleRunner.java:180)
+	... 2 more
+Caused by: net.rubygrapefruit.platform.NativeException: Could not start 'bun'
+	at net.rubygrapefruit.platform.internal.DefaultProcessLauncher.start(DefaultProcessLauncher.java:27)
+	at net.rubygrapefruit.platform.internal.WrapperProcessLauncher.start(WrapperProcessLauncher.java:36)
+	at org.gradle.process.internal.ExecHandleRunner.startProcess(ExecHandleRunner.java:201)
+	at org.gradle.process.internal.ExecHandleRunner.lambda$run$0(ExecHandleRunner.java:159)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+	at org.gradle.process.internal.ExecHandleRunner.run(ExecHandleRunner.java:158)
+	... 2 more
+Caused by: java.io.IOException: Cannot run program "bun" (in directory "/home/runner/work/rikkahub-agent/rikkahub-agent/web-ui"): Exec failed, error: 2 (No such file or directory) 
+	at net.rubygrapefruit.platform.internal.DefaultProcessLauncher.start(DefaultProcessLauncher.java:25)
+	... 7 more
+Caused by: java.io.IOException: Exec failed, error: 2 (No such file or directory) 
+	... 8 more
+
+
+BUILD FAILED in 3m
+38 actionable tasks: 38 executed
+Configuration cache entry stored.
