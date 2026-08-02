@@ -64,6 +64,19 @@ jobs:
           grep -E "DEFAULT_TURN_BUDGET_MS.*4L \* 60L \* 60L" app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
           grep -E "MAX_TURN_BUDGET_MS.*8L \* 60L \* 60L" app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
 
+      - name: Persist requested source changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
+          if ! git diff --cached --quiet; then
+            git commit -m "Allow four-hour main-agent turns [skip ci]"
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -121,19 +134,6 @@ jobs:
           path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 30
-
-      - name: Commit verified source patch
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/src/main/java/me/rerere/rikkahub/service/ChatService.kt app/src/main/java/me/rerere/rikkahub/data/preferences/TermuxDefaults.kt
-          if ! git diff --cached --quiet; then
-            git commit -m "Allow four-hour main-agent turns [skip ci]"
-            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
 
       - name: Publish prerelease APK
         env:
