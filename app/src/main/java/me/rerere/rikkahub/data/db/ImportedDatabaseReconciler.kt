@@ -588,7 +588,24 @@ object ImportedDatabaseReconciler {
 
                 db.beginTransaction()
                 try {
-                    FORK_ONLY_DDL.forEach(db::execSQL)
+                    // A legacy database must be allowed to grow through Room's migration
+                    // chain. In particular, the v28 scheduled_jobs definition contains
+                    // targetConversationId; creating that latest table for a v1–v27 backup
+                    // makes a later migration add the same column again.
+                    FORK_ONLY_DDL
+                        .asSequence()
+                        // `scheduled_jobs` is fork-only in older upstream backups. Keep creating
+                        // it when it is absent, but use the declared database-version shape:
+                        // targetConversationId is a v28 column and must be added only by the
+                        // registered 27→28 migration.
+                        .map { ddl ->
+                            if (version < 28 && ddl.contains("CREATE TABLE IF NOT EXISTS `scheduled_jobs`")) {
+                                ddl.replace(", `targetConversationId` TEXT", "")
+                            } else {
+                                ddl
+                            }
+                        }
+                        .forEach(db::execSQL)
                     // `targetConversationId` first appears in schema v28. For an imported v27
                     // database, Room must perform 27 -> 28 itself; adding it here would make
                     // Room run the same ALTER TABLE twice and brick startup. Databases already
