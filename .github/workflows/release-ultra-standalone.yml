@@ -3,7 +3,11 @@ name: Release Ultra Standalone APK
 on:
   push:
     branches: [build/unlimited-agent-steps]
-    paths: [.github/workflows/release-ultra-standalone.yml]
+    paths:
+      - .github/workflows/release-ultra-standalone.yml
+      - app/src/main/java/me/rerere/rikkahub/data/db/**
+      - app/src/main/java/me/rerere/rikkahub/di/DataSourceModule.kt
+      - app/src/test/java/me/rerere/rikkahub/data/db/**
   workflow_dispatch:
 
 permissions:
@@ -63,7 +67,7 @@ jobs:
         run: |
           chmod +x gradlew
           set +e
-          ./gradlew :app:testDebugUnitTest --tests me.rerere.rikkahub.data.ai.GenerationHandlerFinalizationTest --tests me.rerere.rikkahub.data.datastore.migration.SettingsJsonMigratorTest assembleRelease --stacktrace 2>&1 | tee gradle-build.log
+          ./gradlew :app:testDebugUnitTest --tests me.rerere.rikkahub.data.ai.GenerationHandlerFinalizationTest --tests me.rerere.rikkahub.data.datastore.migration.SettingsJsonMigratorTest --tests me.rerere.rikkahub.data.db.ImportedDatabaseReconcilerContractTest assembleRelease --stacktrace 2>&1 | tee gradle-build.log
           code=${PIPESTATUS[0]}
           set -e
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
