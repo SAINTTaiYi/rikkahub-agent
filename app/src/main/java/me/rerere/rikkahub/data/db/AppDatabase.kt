@@ -129,7 +129,6 @@ import me.rerere.rikkahub.owner.db.HostOperationEventEntity
     // setting later cannot split or enlarge a batch that has already been accepted.
     version = 42,
     autoMigrations = [
-        AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5),

@@ -589,7 +589,11 @@ object ImportedDatabaseReconciler {
                 db.beginTransaction()
                 try {
                     FORK_ONLY_DDL.forEach(db::execSQL)
-                    ensureScheduledJobsV29Column(db)
+                    // `targetConversationId` first appears in schema v28. For an imported v27
+                    // database, Room must perform 27 -> 28 itself; adding it here would make
+                    // Room run the same ALTER TABLE twice and brick startup. Databases already
+                    // at v28+ cannot revisit that migration, so they still need this repair.
+                    if (version >= 28) ensureScheduledJobsV29Column(db)
                     ensureConversationFolderV29Column(db)
 
                     // A shared upstream user_version may already be ahead of the first agent
