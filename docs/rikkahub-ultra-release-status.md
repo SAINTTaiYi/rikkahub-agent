@@ -1,6 +1,6 @@
 # RikkaHub Ultra Release Status
 
-**Status date:** 2026-08-03
+**Status date:** 2026-08-04
 **Repository / branch:** \ / \
 
 ## Current delivery status
@@ -51,6 +51,30 @@ The Ultra profile is implemented as the high reasoning tier:
 - OpenAI/Codex-compatible provider mapping: \
 
 The remaining recommended device-side validation is to select **Ultra** in the app with a provider that exposes request logs, then confirm that the provider receives the \ request field. Providers that do not support that field may ignore or map it to their own reasoning controls.
+
+## Backup restore compatibility (Grok)
+
+A legacy local backup could contain a provider entry with `"type":"grok"`. The current app no longer has a dedicated Grok `ProviderSetting` serializer, which previously made the entire settings restore fail at provider deserialization.
+
+The compatibility migration now:
+
+1. Converts legacy `grok` provider entries into the supported `openai` provider format.
+2. Preserves the common provider fields, including provider ID, name, enabled state, models, and balance options.
+3. Uses `https://api.x.ai/v1` as the default endpoint only when the legacy entry has no endpoint value.
+4. Skips malformed or unsupported provider entries so they cannot prevent the rest of a backup from restoring.
+
+Regression coverage was added in `SettingsJsonMigratorTest`. The fix was implemented in commits [`3aed39e3d`](https://github.com/SAINTTaiYi/rikkahub-agent/commit/3aed39e3d0e280eda4107126c8e823788453d05d) and [`ef4d7538c`](https://github.com/SAINTTaiYi/rikkahub-agent/commit/ef4d7538ce8fd6ecd9befded44a361c81a87271d), then validated by [GitHub Actions run 30847129762](https://github.com/SAINTTaiYi/rikkahub-agent/actions/runs/30847129762).
+
+### Verified restore-fix artifact
+
+- APK: `RikkaHub-Ultra-arm64-grok-restore-fix.apk`
+- Package ID: `me.rerere.rikkahub.longagent`
+- ABI: `arm64-v8a` only
+- APK size: 60,145,216 bytes
+- SHA-256: `d470e5e7d83ab622960f6589273ebb6d33d79961e606f25c2c3b6acdaed3a31f`
+- Signature: verified with `apksigner`
+
+After installing this build, retry importing the same local backup. The legacy Grok provider should appear as an OpenAI-compatible xAI provider rather than causing the settings restore to fail.
 
 ## Termux compatibility
 
