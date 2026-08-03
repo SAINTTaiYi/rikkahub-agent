@@ -87,10 +87,7 @@ object SettingsJsonMigrator {
                 )
                 root["providers"] = JsonArray(
                     providers.mapNotNull { providerElement ->
-                        val provider = providerElement as? JsonObject ?: run {
-                            Log.w(TAG, "migrate: Dropping malformed provider entry from backup")
-                            return@mapNotNull null
-                        }
+                        val provider = providerElement as? JsonObject ?: return@mapNotNull null
                         when (val type = provider["type"]?.toString()?.trim('"')) {
                             "grok" -> JsonObject(provider.toMutableMap().apply {
                                 put("type", JsonPrimitive("openai"))
@@ -99,10 +96,7 @@ object SettingsJsonMigrator {
                                 }
                             })
                             in supportedProviderTypes -> provider
-                            else -> {
-                                Log.w(TAG, "migrate: Dropping unsupported provider type: $type")
-                                null
-                            }
+                            else -> null
                         }
                     }
                 )
