@@ -37,6 +37,17 @@ jobs:
         with:
           version: 10
 
+      - name: Materialize Release signing identity
+        env:
+          KEY_BASE64: ${{ secrets.KEY_BASE64 }}
+          SIGNING_CONFIG: ${{ secrets.SIGNING_CONFIG }}
+        run: |
+          test -n "$KEY_BASE64"
+          test -n "$SIGNING_CONFIG"
+          printf '%s' "$KEY_BASE64" | base64 --decode > app/rikkahub-ultra-release.p12
+          printf '%s\n' "$SIGNING_CONFIG" > local.properties
+          chmod 600 app/rikkahub-ultra-release.p12 local.properties
+
       - name: Create standalone Google Services config
         run: |
           if [ ! -f app/google-services.json ]; then
@@ -45,7 +56,7 @@ jobs:
           EOF
           fi
 
-      - name: Build unsigned release APK
+      - name: Build signed optimized arm64 Release APK
         id: build
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx6g
@@ -71,11 +82,30 @@ jobs:
         if: steps.build.outputs.exit_code != '0'
         run: exit 1
 
-      - name: Verify and upload APK
-        run: test -n "$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
+      - name: Verify signed arm64 Release APK
+        run: |
+          mapfile -t apks < <(find app/build/outputs/apk -type f -name '*release*.apk' | sort)
+          test "${#apks[@]}" -gt 0
+          apksigner="$(find "${ANDROID_HOME}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          test -n "$apksigner"
+          for apk in "${apks[@]}"; do
+            "$apksigner" verify --verbose --print-certs "$apk"
+            mapfile -t abis < <(unzip -Z1 "$apk" | sed -n 's#^lib/\([^/]*\)/.*#\1#p' | sort -u)
+            test "${#abis[@]}" -gt 0
+            test "${abis[*]}" = "arm64-v8a"
+          done
+          rm -rf release-artifact
+          mkdir -p release-artifact
+          cp "${apks[@]}" release-artifact/
+          (cd release-artifact && sha256sum *.apk > SHA256SUMS)
+
+      - name: Remove temporary signing material
+        if: always()
+        run: rm -f app/rikkahub-ultra-release.p12 local.properties
+
       - uses: actions/upload-artifact@v4
         with:
-          name: rikkahub-ultra-long-agent-arm64-unsigned-release
-          path: app/build/outputs/apk/**/*.apk
+          name: rikkahub-ultra-long-agent-arm64-signed-optimized-release
+          path: release-artifact/
           if-no-files-found: error
           retention-days: 30
