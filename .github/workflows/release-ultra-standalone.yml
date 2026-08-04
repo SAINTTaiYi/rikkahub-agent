@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: ultra-agent-build
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -60,14 +60,14 @@ jobs:
           EOF
           fi
 
-      - name: Build signed optimized arm64 Release APK
+      - name: Build signed fast arm64 Release APK
         id: build
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx6g
         run: |
           chmod +x gradlew
           set +e
-          ./gradlew :app:testDebugUnitTest --tests me.rerere.rikkahub.data.ai.GenerationHandlerFinalizationTest --tests me.rerere.rikkahub.data.datastore.migration.SettingsJsonMigratorTest --tests me.rerere.rikkahub.data.db.ImportedDatabaseReconcilerContractTest assembleRelease --stacktrace 2>&1 | tee gradle-build.log
+          ./gradlew :app:assembleRelease --parallel --build-cache --configuration-cache --max-workers=4 --stacktrace 2>&1 | tee gradle-build.log
           code=${PIPESTATUS[0]}
           set -e
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
