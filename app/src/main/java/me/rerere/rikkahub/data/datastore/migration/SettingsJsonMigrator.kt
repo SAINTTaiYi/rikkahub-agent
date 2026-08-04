@@ -75,6 +75,33 @@ object SettingsJsonMigrator {
                 root["assistants"] = JsonInstant.parseToJsonElement(migrated)
             }
 
+            // V5: Grok used to have its own ProviderSetting discriminator. It is now
+            // OpenAI-compatible, so old backups restore it as an OpenAI provider while
+            // retaining the provider ID, name, models and any user-supplied endpoint.
+            // Drop an unrecognized provider entry instead of making one obsolete provider
+            // prevent the rest of a settings backup from being restored.
+            root["providers"]?.let { element ->
+                val providers = element as? JsonArray ?: return@let
+                val supportedProviderTypes = setOf(
+                    "openai", "google", "claude", "aicore", "local_litert", "codex"
+                )
+                root["providers"] = JsonArray(
+                    providers.mapNotNull { providerElement ->
+                        val provider = providerElement as? JsonObject ?: return@mapNotNull null
+                        when (val type = provider["type"]?.toString()?.trim('"')) {
+                            "grok" -> JsonObject(provider.toMutableMap().apply {
+                                put("type", JsonPrimitive("openai"))
+                                if ("baseUrl" !in this) {
+                                    put("baseUrl", JsonPrimitive("https://api.x.ai/v1"))
+                                }
+                            })
+                            in supportedProviderTypes -> provider
+                            else -> null
+                        }
+                    }
+                )
+            }
+
             JsonInstant.encodeToString(JsonObject(root))
         }.onFailure {
             Log.e(TAG, "migrate: Failed to migrate settings JSON, using original", it)

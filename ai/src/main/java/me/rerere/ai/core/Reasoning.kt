@@ -19,7 +19,7 @@ enum class ReasoningLevel(
     @SerialName("high")
     HIGH(8_000, "high"),
     @SerialName("xhigh")
-    XHIGH(16_000, "xhigh");
+    XHIGH(64_000, "xhigh");
 
     val isEnabled: Boolean
         get() = this != OFF

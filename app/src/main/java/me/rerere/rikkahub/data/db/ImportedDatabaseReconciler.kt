@@ -47,12 +47,12 @@ object ImportedDatabaseReconciler {
 
     /**
      * Room's schema version and identity hash for [AppDatabase]. Both are copied verbatim
-     * from app/schemas/me.rerere.rikkahub.data.db.AppDatabase/41.json. When the schema
+     * from app/schemas/me.rerere.rikkahub.data.db.AppDatabase/42.json. When the schema
      * version is bumped, update BOTH constants (and the table DDL below if the fork-only
      * tables changed) or this reconciliation will silently stop matching.
      */
-    internal const val EXPECTED_VERSION = 41
-    internal const val EXPECTED_IDENTITY_HASH = "0fc584fa99bb47672eb041a415f4b8c7"
+    internal const val EXPECTED_VERSION = 42
+    internal const val EXPECTED_IDENTITY_HASH = "1cee9962080483881bef799c83219b40"
     internal const val PRE_STORAGE_MODE_V35_IDENTITY_HASH = "2a74d694211f0df9f9094c7571ec71dd"
 
     internal enum class ReconcilePlan {
@@ -142,6 +142,151 @@ object ImportedDatabaseReconciler {
         "CREATE INDEX IF NOT EXISTS `index_memory_revisions_memory_id_created_at_ms` ON `memory_revisions` (`memory_id`, `created_at_ms`)",
         "CREATE INDEX IF NOT EXISTS `index_memory_revisions_candidate_id` ON `memory_revisions` (`candidate_id`)",
     )
+
+    private fun tableExists(db: SQLiteDatabase, table: String): Boolean = db.rawQuery(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name=? LIMIT 1",
+        arrayOf(table),
+    ).use { cursor -> cursor.moveToFirst() }
+
+    private fun tableColumns(db: SQLiteDatabase, table: String): Set<String> =
+        db.rawQuery("PRAGMA table_info(`$table`)", null).use { cursor ->
+            val nameIndex = cursor.getColumnIndex("name")
+            buildSet {
+                if (nameIndex >= 0) while (cursor.moveToNext()) add(cursor.getString(nameIndex))
+            }
+        }
+
+    /** Remove only fork-only tables that cannot legally exist at an older user_version. */
+    private fun dropPrematureForkTables(db: SQLiteDatabase, version: Int) {
+        val introductions = listOf(
+            19 to "ssh_hosts",
+            20 to "telegram_chats",
+            21 to "scheduled_job_runs",
+            22 to "workflows",
+            22 to "workflow_runs",
+            24 to "agent_runs",
+            26 to "workspaces",
+            27 to "alarms",
+            29 to "pending_chat_commands",
+            31 to "memory_captures",
+            31 to "memory_candidates",
+            31 to "memory_revisions",
+            31 to "memory_evidence",
+            31 to "memory_links",
+            32 to "memory_relation_candidates",
+            32 to "memory_backfill_runs",
+            35 to "execution_records",
+            35 to "capability_grants",
+        )
+        introductions.filter { (introduced, _) -> version < introduced }.forEach { (_, table) ->
+            moveTableToLegacyRecovery(db, table)
+        }
+    }
+
+    private fun moveTableToLegacyRecovery(db: SQLiteDatabase, table: String): String? {
+        if (!tableExists(db, table)) return null
+        // SQLite index names are database-global and are not renamed when their table is
+        // renamed. Drop only the recovery table's secondary indexes so Room can recreate
+        // the canonical indexes on the historical table without name collisions.
+        db.rawQuery("PRAGMA index_list(`$table`)", null).use { cursor ->
+            val nameIndex = cursor.getColumnIndex("name")
+            if (nameIndex >= 0) {
+                val indexes = buildList {
+                    while (cursor.moveToNext()) add(cursor.getString(nameIndex))
+                }
+                indexes.filterNot { it.startsWith("sqlite_autoindex_") }.forEach {
+                    db.execSQL("DROP INDEX IF EXISTS `$it`")
+                }
+            }
+        }
+        var recovery = "${table}_legacy_recovery"
+        var suffix = 2
+        while (tableExists(db, recovery)) {
+            recovery = "${table}_legacy_recovery_${suffix++}"
+        }
+        db.execSQL("ALTER TABLE `$table` RENAME TO `$recovery`")
+        return recovery
+    }
+
+    private fun normalizeLegacyWorkspaces(db: SQLiteDatabase) {
+        if (!tableExists(db, "workspaces")) return
+        if ("storage_mode" !in tableColumns(db, "workspaces")) return
+        val recovery = moveTableToLegacyRecovery(db, "workspaces") ?: return
+        val columns = listOf("id", "name", "root", "shell_status", "created_at", "updated_at", "last_access_at", "tool_approvals")
+        db.execSQL("""
+            CREATE TABLE `workspaces` (
+                `id` TEXT NOT NULL, `name` TEXT NOT NULL, `root` TEXT NOT NULL,
+                `shell_status` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL,
+                `last_access_at` INTEGER, `tool_approvals` TEXT NOT NULL DEFAULT '{}', PRIMARY KEY(`id`)
+            )
+        """.trimIndent())
+        val existing = tableColumns(db, recovery)
+        val common = columns.filter(existing::contains)
+        if (common.isNotEmpty()) {
+            val quoted = common.joinToString(", ") { "`$it`" }
+            db.execSQL("INSERT INTO `workspaces` ($quoted) SELECT $quoted FROM `$recovery`")
+        }
+        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_workspaces_root` ON `workspaces` (`root`)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_workspaces_updated_at` ON `workspaces` (`updated_at`)")
+    }
+
+    private fun dropPrematureScheduledJobsTable(db: SQLiteDatabase) {
+        // Preserve any unexpected rows rather than deleting them; Room can ignore the
+        // recovery table while its numbered migration recreates the historical table.
+        moveTableToLegacyRecovery(db, "scheduled_jobs")
+    }
+
+    /** Restore the schema valid at the declared version before Room runs numbered migrations. */
+    private fun normalizeLegacyScheduledJobs(db: SQLiteDatabase, version: Int) {
+        if (!tableExists(db, "scheduled_jobs")) return
+        val existing = tableColumns(db, "scheduled_jobs")
+        val legacyV20 = version < 21
+        val needsRebuild = if (legacyV20) {
+            existing.any {
+                it in setOf(
+                    "mode", "actionsJson", "cronExpression", "timezone", "startAtUnixMs",
+                    "endAtUnixMs", "maxRuns", "runsSoFar", "catchup", "description", "tags",
+                    "targetConversationId",
+                )
+            }
+        } else {
+            version < 28 && "targetConversationId" in existing
+        }
+        if (!needsRebuild) return
+        val columns = if (legacyV20) {
+            listOf("id", "name", "prompt", "assistantId", "scheduleType", "atUnixMs", "intervalSeconds", "enabled", "createdAtMs", "lastRunAtMs", "nextRunAtMs")
+        } else {
+            listOf("id", "name", "prompt", "assistantId", "scheduleType", "atUnixMs", "intervalSeconds", "enabled", "createdAtMs", "lastRunAtMs", "nextRunAtMs", "mode", "actionsJson", "cronExpression", "timezone", "startAtUnixMs", "endAtUnixMs", "maxRuns", "runsSoFar", "catchup", "description", "tags")
+        }
+        val create = if (legacyV20) """
+            `id` TEXT NOT NULL, `name` TEXT NOT NULL, `prompt` TEXT,
+            `assistantId` TEXT NOT NULL, `scheduleType` TEXT NOT NULL, `atUnixMs` INTEGER,
+            `intervalSeconds` INTEGER, `enabled` INTEGER NOT NULL, `createdAtMs` INTEGER NOT NULL,
+            `lastRunAtMs` INTEGER, `nextRunAtMs` INTEGER, PRIMARY KEY(`id`)
+        """.trimIndent() else """
+            `id` TEXT NOT NULL, `name` TEXT NOT NULL, `prompt` TEXT,
+            `assistantId` TEXT NOT NULL, `scheduleType` TEXT NOT NULL, `atUnixMs` INTEGER,
+            `intervalSeconds` INTEGER, `enabled` INTEGER NOT NULL, `createdAtMs` INTEGER NOT NULL,
+            `lastRunAtMs` INTEGER, `nextRunAtMs` INTEGER,
+            `mode` TEXT NOT NULL DEFAULT 'llm', `actionsJson` TEXT, `cronExpression` TEXT,
+            `timezone` TEXT, `startAtUnixMs` INTEGER, `endAtUnixMs` INTEGER, `maxRuns` INTEGER,
+            `runsSoFar` INTEGER NOT NULL DEFAULT 0, `catchup` TEXT NOT NULL DEFAULT 'fire_once',
+            `description` TEXT, `tags` TEXT, PRIMARY KEY(`id`)
+        """.trimIndent()
+        val recovery = moveTableToLegacyRecovery(db, "scheduled_jobs") ?: return
+        val common = columns.filter(tableColumns(db, recovery)::contains)
+        db.execSQL("DROP TABLE IF EXISTS `scheduled_jobs_legacy`")
+        db.execSQL("CREATE TABLE `scheduled_jobs_legacy` ($create)")
+        if (common.isNotEmpty()) {
+            val quoted = common.joinToString(", ") { "`$it`" }
+            db.execSQL("INSERT INTO `scheduled_jobs_legacy` ($quoted) SELECT $quoted FROM `$recovery`")
+        }
+        db.execSQL("ALTER TABLE `scheduled_jobs_legacy` RENAME TO `scheduled_jobs`")
+    }
+
+    private fun dropPrematurePendingChatCommandsTable(db: SQLiteDatabase) {
+        moveTableToLegacyRecovery(db, "pending_chat_commands")
+    }
 
     private fun ensureConversationFolderV29Column(db: SQLiteDatabase) {
         val hasFolderId = db.rawQuery("PRAGMA table_info(`ConversationEntity`)", null).use { cursor ->
@@ -538,7 +683,7 @@ object ImportedDatabaseReconciler {
             )
             ensureExecutionV35Schema(db)
             ensureCapabilityGrantsV35Schema(db)
-            ensurePendingCommandAuthorityV39Schema(db)
+            // authoritySubjectId belongs to MIGRATION_38_39; never add it to a v35 database.
             stampCurrentIdentity(db)
             db.setTransactionSuccessful()
         } finally {
@@ -588,9 +733,73 @@ object ImportedDatabaseReconciler {
 
                 db.beginTransaction()
                 try {
-                    FORK_ONLY_DDL.forEach(db::execSQL)
-                    ensureScheduledJobsV29Column(db)
-                    ensureConversationFolderV29Column(db)
+                    // `pending_chat_commands` was introduced by the v28→v29 migration. An
+                    // earlier compatibility build could create its latest form before Room ran,
+                    // which made every later ADD COLUMN migration collide with a future field.
+                    // A database declaring <v29 cannot contain legitimate command-queue rows,
+                    // so discard only that premature table and let Room create its historical
+                    // v29 shape before applying its subsequent migrations.
+                    dropPrematureForkTables(db, version)
+                    if (version < 35) normalizeLegacyWorkspaces(db)
+                    if (version < 18) dropPrematureScheduledJobsTable(db)
+                    else normalizeLegacyScheduledJobs(db, version)
+                    if (version < 29) dropPrematurePendingChatCommandsTable(db)
+
+                    // A legacy database must be allowed to grow through Room's migration
+                    // chain. In particular, the v28 scheduled_jobs definition contains
+                    // targetConversationId; creating that latest table for a v1–v27 backup
+                    // makes a later migration add the same column again.
+                    FORK_ONLY_DDL
+                        .asSequence()
+                        // `scheduled_jobs` is fork-only in older upstream backups. Keep creating
+                        // it when it is absent, but use the declared database-version shape:
+                        // targetConversationId is a v28 column and must be added only by the
+                        // registered 27→28 migration.
+                        .map { ddl ->
+                            when {
+                                version < 18 && ddl.contains("CREATE TABLE IF NOT EXISTS `scheduled_jobs`") -> null
+                                version < 19 && ddl.contains("CREATE TABLE IF NOT EXISTS `ssh_hosts`") -> null
+                                version < 20 && ddl.contains("CREATE TABLE IF NOT EXISTS `telegram_chats`") -> null
+                                version < 21 && ddl.contains("CREATE TABLE IF NOT EXISTS `scheduled_job_runs`") -> null
+                                version < 22 && (ddl.contains("CREATE TABLE IF NOT EXISTS `workflows`") || ddl.contains("CREATE TABLE IF NOT EXISTS `workflow_runs`")) -> null
+                                version < 24 && ddl.contains("CREATE TABLE IF NOT EXISTS `agent_runs`") -> null
+                                version < 26 && ddl.contains("CREATE TABLE IF NOT EXISTS `workspaces`") -> null
+                                version < 35 && ddl.contains("CREATE TABLE IF NOT EXISTS `workspaces`") ->
+                                    ddl.replace(", `storage_mode` TEXT NOT NULL DEFAULT 'PRIVATE'", "")
+                                version < 27 && ddl.contains("CREATE TABLE IF NOT EXISTS `alarms`") -> null
+                                version < 29 && ddl.contains("CREATE TABLE IF NOT EXISTS `pending_chat_commands`") -> null
+                                version < 31 && ddl.contains("CREATE TABLE IF NOT EXISTS `memory_") -> null
+                                version < 32 && (ddl.contains("CREATE TABLE IF NOT EXISTS `memory_relation_candidates`") || ddl.contains("CREATE TABLE IF NOT EXISTS `memory_backfill_runs`")) -> null
+                                version < 35 && (ddl.contains("CREATE TABLE IF NOT EXISTS `execution_records`") || ddl.contains("CREATE TABLE IF NOT EXISTS `capability_grants`")) -> null
+                                version < 21 && ddl.contains("CREATE TABLE IF NOT EXISTS `scheduled_jobs`") ->
+                                    ddl
+                                        .replace(", `mode` TEXT NOT NULL DEFAULT 'llm'", "")
+                                        .replace(", `actionsJson` TEXT", "")
+                                        .replace(", `cronExpression` TEXT", "")
+                                        .replace(", `timezone` TEXT", "")
+                                        .replace(", `startAtUnixMs` INTEGER", "")
+                                        .replace(", `endAtUnixMs` INTEGER", "")
+                                        .replace(", `maxRuns` INTEGER", "")
+                                        .replace(", `runsSoFar` INTEGER NOT NULL DEFAULT 0", "")
+                                        .replace(", `catchup` TEXT NOT NULL DEFAULT 'fire_once'", "")
+                                        .replace(", `description` TEXT", "")
+                                        .replace(", `tags` TEXT", "")
+                                        .replace(", `targetConversationId` TEXT", "")
+                                version < 28 && ddl.contains("CREATE TABLE IF NOT EXISTS `scheduled_jobs`") ->
+                                    ddl.replace(", `targetConversationId` TEXT", "")
+                                version < 39 && ddl.contains("CREATE TABLE IF NOT EXISTS `pending_chat_commands`") ->
+                                    ddl.replace(", `authoritySubjectId` TEXT", "")
+                                else -> ddl
+                            }
+                        }
+                        .filterNotNull()
+                        .forEach(db::execSQL)
+                    // `targetConversationId` first appears in schema v28. For an imported v27
+                    // database, Room must perform 27 -> 28 itself; adding it here would make
+                    // Room run the same ALTER TABLE twice and brick startup. Databases already
+                    // at v28+ cannot revisit that migration, so they still need this repair.
+                    if (version >= 28) ensureScheduledJobsV29Column(db)
+                    if (version >= 29) ensureConversationFolderV29Column(db)
 
                     // A shared upstream user_version may already be ahead of the first agent
                     // memory migration. Add only the schema floors Room will no longer visit.

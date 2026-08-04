@@ -111,6 +111,7 @@ val dataSourceModule = module {
         Room.databaseBuilder(context, AppDatabase::class.java, "rikka_hub")
             .setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
             .addMigrations(
+                me.rerere.rikkahub.data.db.migrations.MIGRATION_1_2,
                 Migration_6_7,
                 Migration_11_12,
                 Migration_13_14,

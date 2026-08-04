@@ -17,7 +17,7 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "me.rerere.rikkahub"
+        applicationId = "me.rerere.rikkahub.longagent"
         minSdk = 26
         targetSdk = 37
         versionCode = 184
@@ -25,9 +25,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        ndk {
-            abiFilters += listOf("arm64-v8a", "x86_64")
-        }
     }
 
     splits {
@@ -37,8 +34,8 @@ android {
             val isBuildingBundle = gradle.startParameter.taskNames.any { it.lowercase().contains("bundle") }
             isEnable = !isBuildingBundle
             reset()
-            include("arm64-v8a", "x86_64")
-            isUniversalApk = true
+            include("arm64-v8a")
+            isUniversalApk = false
         }
     }
 
@@ -84,7 +81,16 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            // Leave the release unsigned when no local signing material is configured.
+            // This supports reproducible CI builds that are signed only on the local device.
+            if (
+                localProperties.getProperty("storeFile") != null &&
+                localProperties.getProperty("storePassword") != null &&
+                localProperties.getProperty("keyAlias") != null &&
+                localProperties.getProperty("keyPassword") != null
+            ) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

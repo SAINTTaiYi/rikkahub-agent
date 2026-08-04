@@ -1140,6 +1140,7 @@ internal fun parseChatCompletionsTokenUsage(jsonObject: JsonObject?): TokenUsage
             ?.intOrNull
             ?.coerceAtLeast(0)
             ?: 0,
+        intField("cached_tokens"),
         intField("cache_read_input_tokens"),
         intField("cache_read_tokens"),
         intField("cached_input_tokens"),

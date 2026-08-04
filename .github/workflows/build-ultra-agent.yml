@@ -1,0 +1,134 @@
+name: Build Ultra Long Agent APK
+
+on:
+  push:
+    branches: [build/unlimited-agent-steps]
+    paths: [.github/workflows/build-ultra-agent.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ultra-agent-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: build/unlimited-agent-steps
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Apply Ultra thinking profile
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          changes = [
+              (
+                  Path("ai/src/main/java/me/rerere/ai/core/Reasoning.kt"),
+                  'XHIGH(16_000, "xhigh");',
+                  'XHIGH(64_000, "xhigh");',
+              ),
+              (
+                  Path("app/src/main/res/values/strings.xml"),
+                  '<string name="reasoning_xhigh">XHigh</string>',
+                  '<string name="reasoning_xhigh">Ultra</string>',
+              ),
+          ]
+          for path, old, new in changes:
+              text = path.read_text()
+              if old in text:
+                  if text.count(old) != 1:
+                      raise SystemExit(f"Ambiguous match in {path}")
+                  path.write_text(text.replace(old, new, 1))
+              elif new not in text:
+                  raise SystemExit(f"Expected text missing in {path}")
+          PY
+          grep -F 'XHIGH(64_000, "xhigh");' ai/src/main/java/me/rerere/ai/core/Reasoning.kt
+          grep -F '<string name="reasoning_xhigh">Ultra</string>' app/src/main/res/values/strings.xml
+
+      - name: Persist Ultra source changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ai/src/main/java/me/rerere/ai/core/Reasoning.kt app/src/main/res/values/strings.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "Add 64K Ultra reasoning profile [skip ci]"
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Create standalone Google Services config
+        run: |
+          if [ ! -f app/google-services.json ]; then
+            cat > app/google-services.json <<'EOF'
+          {"project_info":{"project_number":"123456789000","project_id":"rikkahub-unlimited-local","storage_bucket":"rikkahub-unlimited-local.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:123456789000:android:0000000000000000","android_client_info":{"package_name":"me.rerere.rikkahub.longagent"}},"oauth_client":[],"api_key":[{"current_key":"AIzaSyDUMMY000000000000000000000000000"}],"services":{"appinvite_service":{"other_platform_oauth_client":[]}}}],"configuration_version":"1"}
+          EOF
+          fi
+
+      - name: Build standalone debug APK
+        id: build
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx4g
+        run: |
+          chmod +x gradlew
+          set +e
+          ./gradlew assembleDebug --stacktrace 2>&1 | tee gradle-build.log
+          code=${PIPESTATUS[0]}
+          set -e
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          { grep -E '(^e: |\.kt:[0-9]+:[0-9]+:|^error:)' gradle-build.log | tail -n 40 || true; tail -n 60 gradle-build.log; } > gradle-build-diagnosis.log
+
+      - name: Persist bounded failure diagnosis
+        if: steps.build.outputs.exit_code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp gradle-build-diagnosis.log .github/build-ultra-agent-error.log
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/build-ultra-agent-error.log
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Ultra agent build failure [skip ci]"
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+          exit 1
+
+      - name: Verify and upload APK
+        run: test -n "$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rikkahub-ultra-long-agent-standalone-debug
+          path: app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish prerelease APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mapfile -t apks < <(find app/build/outputs/apk -type f -name '*.apk' | sort)
+          tag="ultra-agent-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          gh release create "$tag" "${apks[@]}" --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title "RikkaHub Long Agent - Ultra standalone" --notes "Standalone package ID: me.rerere.rikkahub.longagent. Main-agent steps: Int.MAX_VALUE. Default wall-clock turn budget: 4 hours, max: 8 hours. Ultra thinking profile: 64K token budget; OpenAI/Codex-compatible APIs receive safe xhigh effort. Debug-signed APK."

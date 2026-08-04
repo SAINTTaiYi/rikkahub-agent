@@ -107,10 +107,10 @@ class TermuxManagedStartableTool(
         val parsed = TermuxManagedCommandParser.parse(args).getOrElse { failure ->
             return completedLegacy(context, errorResult(failure.message ?: "termux_command_invalid"))
         }
-        if (parsed.interactive) {
+        if (parsed.interactive || !parsed.background) {
             val deferred = scope.async { legacyTool.execute(args) }
             return LegacyToolExecutionHandle(
-                executionId = "termux-interactive-${context.runId}",
+                executionId = if (parsed.interactive) "termux-interactive-${context.runId}" else "termux-capture-${context.runId}",
                 result = deferred,
             )
         }
